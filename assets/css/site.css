@@ -211,7 +211,7 @@ section{padding:clamp(88px,11vw,150px) 0}
 .shot figcaption{position:absolute;left:14px;right:14px;bottom:14px;z-index:2;padding:12px 14px;border-radius:12px;background:rgba(7,8,12,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);font-size:14px;color:var(--text);line-height:1.45}
 .shot figcaption small{display:block;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:3px}
 .shot.cert img{object-position:40% 38%}
-.shot.sign img{object-position:55% 40%}
+.shot.sign img{object-position:50% 30%}
 
 /* ---------- domain ---------- */
 .domain{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
