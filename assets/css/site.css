@@ -439,3 +439,8 @@ button.btn{font:inherit;font-size:15px;font-weight:500;background:transparent;cu
 .case-split{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center;margin-top:clamp(40px,5vw,72px)}
 .case-split .shot{aspect-ratio:4/5}
 @media (max-width:900px){.case-split{grid-template-columns:1fr}.case-split .shot{max-width:520px}}
+
+.pcard.wide{display:grid;grid-template-columns:.9fr 1.1fr}
+.pcard.wide .pcard-visual{height:auto;min-height:320px;border-bottom:0;border-right:1px solid var(--line)}
+.pcard.wide .pcard-copy{justify-content:center}
+@media (max-width:900px){.pcard.wide{grid-template-columns:1fr}.pcard.wide .pcard-visual{min-height:220px;border-right:0;border-bottom:1px solid var(--line)}}

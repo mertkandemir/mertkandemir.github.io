@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mert Kandemir — Code, factories and curiosity</title>
-<meta name="description" content="Mert Kandemir — software developer in İzmir working on the production module of CANIAS ERP. Personal apps MotoHane and Garantim, and workshop experiments with PLCs and sensors.">
+<meta name="description" content="Mert Kandemir — software developer in İzmir working on the production module of CANIAS ERP. Workshop experiments with PLCs, sensors and resin printing.">
 <meta name="theme-color" content="#07080c">
 <link rel="canonical" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/">
@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="tr_TR">
 <meta property="og:title" content="Mert Kandemir — Code, factories and curiosity">
-<meta property="og:description" content="CANIAS ERP production by day; personal apps and workshop experiments by night. Mert Kandemir, İzmir.">
+<meta property="og:description" content="CANIAS ERP production by day; PLCs and sensors in the workshop by night. Mert Kandemir, İzmir.">
 <meta property="og:url" content="https://mkandemir.com.tr/">
 <meta property="og:image" content="https://mkandemir.com.tr/assets/og-image.jpg?v=2">
 <meta property="og:image:width" content="1200">
@@ -27,7 +27,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/fonts.css?v=2">
-<link rel="stylesheet" href="/assets/css/site.css?v=7">
+<link rel="stylesheet" href="/assets/css/site.css?v=8">
 <link rel="preload" as="image" href="/assets/hyundai/stage-wide.webp" type="image/webp" media="(min-width: 641px)">
 <script>
 document.documentElement.classList.replace('no-js','js');
@@ -49,7 +49,7 @@ document.documentElement.classList.replace('no-js','js');
   <div class="wrap">
     <a class="brand" href="/" aria-label="Mert Kandemir — home">mert kandemir<b>.</b></a>
     <nav class="nav" aria-label="Main">
-      <a href="#work">Projects</a>
+      <a href="#work">Workshop</a>
       <a href="#hyundai">Hyundai</a>
       <a href="#expertise">Expertise</a>
       <a href="#about">About</a>
@@ -67,7 +67,7 @@ document.documentElement.classList.replace('no-js','js');
 
 <div class="mobile-menu" id="mobile-menu">
   <nav aria-label="Mobile">
-    <a href="#work">Projects <small>01</small></a>
+    <a href="#work">Workshop <small>01</small></a>
     <a href="#hyundai">Hyundai <small>02</small></a>
     <a href="#expertise">Expertise <small>03</small></a>
     <a href="#about">About <small>04</small></a>
@@ -87,9 +87,9 @@ document.documentElement.classList.replace('no-js','js');
     <div>
       <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">Mert Kandemir · İzmir</span></div>
       <h1 id="hero-title"><span class="line"><span>Code,</span></span><span class="line"><span><em>factories</em> and</span></span><span class="line"><span><em>curiosity.</em></span></span></h1>
-      <p class="lead fade-in d2">By day I work on the production module of CANIAS ERP at IAS; in the evenings I build my own apps and tinker with PLCs and sensors in my workshop. This is where I share what I've made and what I'm making.</p>
+      <p class="lead fade-in d2">By day I work on the production module of CANIAS ERP at IAS; in the evenings I tinker with PLCs and sensors in my workshop. This is where I share what I've made and what I'm making.</p>
       <div class="hero-actions fade-in d3">
-        <a class="btn primary" href="#work" data-magnetic>See my projects <span class="arr down" aria-hidden="true">↓</span></a>
+        <a class="btn primary" href="#work" data-magnetic>Visit the workshop <span class="arr down" aria-hidden="true">↓</span></a>
         <a class="btn" href="#about" data-magnetic>About me <span class="arr down" aria-hidden="true">↓</span></a>
       </div>
       <div class="hero-scroll fade-in d3" aria-hidden="true"><i></i>Scroll</div>
@@ -128,65 +128,25 @@ document.documentElement.classList.replace('no-js','js');
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <div class="marquee-group"><span>Manufacturing software</span><span><em>Mobile apps</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
-    <div class="marquee-group"><span>Manufacturing software</span><span><em>Mobile apps</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
+    <div class="marquee-group"><span>Manufacturing software</span><span><em>Automation</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
+    <div class="marquee-group"><span>Manufacturing software</span><span><em>Automation</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
   </div>
 </div>
 
-<!-- ===== PROJECTS ===== -->
+<!-- ===== WORKSHOP ===== -->
 <section id="work" aria-labelledby="work-title">
   <div class="wrap">
     <div class="sec-head">
       <div data-reveal>
-        <span class="label accent">What I'm working on</span>
-        <h2 class="h2" id="work-title">After hours, <em>my own projects.</em></h2>
-        <p class="lead">Apps I take from idea to store on my own — and a workshop that's never quite finished.</p>
+        <span class="label accent">After hours</span>
+        <h2 class="h2" id="work-title">In the workshop, <em>experiments that never end.</em></h2>
+        <p class="lead">Things I build purely out of curiosity — no commercial purpose.</p>
       </div>
       <span class="sec-index" data-reveal>01 / 05</span>
     </div>
-
-    <article class="product">
-      <div class="phones" aria-hidden="true">
-        <div class="phone p2" style="background-image:url('/assets/motohane/private-clubs.jpeg')"></div>
-        <div class="phone p3" style="background-image:url('/assets/motohane/marketplace.jpeg')"></div>
-        <div class="phone p1" style="background-image:url('/assets/motohane/discover.jpeg')"></div>
-      </div>
-      <div class="product-copy">
-        <div class="status-row">
-          <span class="chip ok"><i></i>iOS · LIVE ON THE APP STORE</span>
-          <span class="chip"><i></i>ANDROID · COMING SOON</span>
-        </div>
-        <h3>MotoHane — one app for life on two wheels.</h3>
-        <p>A mobile product that brings couriers, businesses and motorcycle riders together around work, roads and community: job matching, live road updates, a rider community and private clubs. I own it end to end — product design, the mobile app, the data model and the business rules.</p>
-        <div class="tags"><span>React Native</span><span>Expo</span><span>TypeScript</span><span>Supabase</span></div>
-        <div class="product-links">
-          <a class="btn primary" href="https://apps.apple.com/app/motohane/id6827661637" target="_blank" rel="noopener" data-magnetic>Download on the App Store <span class="arr" aria-hidden="true">↗</span></a>
-          <a class="link" href="/motohane-support/">Support</a>
-          <a class="link" href="/motohane-support/privacy/">Privacy</a>
-        </div>
-      </div>
-    </article>
-
-    <div class="projects-row">
-      <article class="pcard" data-reveal>
-        <div class="pcard-visual" aria-hidden="true"><svg viewBox="0 0 220 170" fill="none">
-            <rect x="60" y="10" width="100" height="150" rx="6" fill="#f2efe8" opacity=".95"/>
-            <g stroke="#9aa0ad" stroke-width="3" stroke-linecap="round"><path d="M75 34h50M75 50h70M75 66h40M75 82h62M75 98h48"/></g>
-            <path d="M75 122h70" stroke="#ff6a2b" stroke-width="4" stroke-linecap="round"/>
-            <path d="M75 138h30" stroke="#9aa0ad" stroke-width="3" stroke-linecap="round"/>
-            <g class="scan-line"><rect x="48" y="18" width="124" height="2" rx="1" fill="#ff6a2b"/><rect x="48" y="12" width="124" height="14" fill="#ff6a2b" opacity=".12"/></g>
-            <g stroke="#ffb27e" stroke-width="2.5"><path d="M44 8v18M44 8h18M176 8v18M176 8h-18M44 162v-18M44 162h18M176 162v-18M176 162h-18"/></g>
-          </svg></div>
-        <div class="pcard-copy">
-          <div class="status-row" style="margin:0"><span class="chip wait"><i></i>iOS · AWAITING APPLE REVIEW</span></div>
-          <h3>Garantim — snap the receipt, keep the warranty.</h3>
-          <p>An iPhone app that reads receipts and invoices and keeps your products and warranty periods in one place. It also estimates tax-free refunds for purchases abroad. Your data stays on your device, in six languages.</p>
-          <div class="tags"><span>iOS</span><span>Receipt scanning</span><span>6 languages</span><span>On-device data</span></div>
-        </div>
-      </article>
-
-      <article class="pcard" data-reveal style="--d:.1s">
-        <div class="pcard-visual" aria-hidden="true"><svg viewBox="0 0 240 160" fill="none">
+    <article class="pcard wide" data-reveal>
+      <div class="pcard-visual" aria-hidden="true">
+          <svg viewBox="0 0 240 160" fill="none">
             <rect x="14" y="30" width="62" height="100" rx="6" stroke="#80869a" stroke-width="2"/>
             <rect x="24" y="42" width="42" height="14" rx="2" fill="#5fd3a0" opacity=".25"/>
             <g fill="#80869a"><circle cx="28" cy="72" r="3"/><circle cx="40" cy="72" r="3"/><circle cx="52" cy="72" r="3"/></g>
@@ -197,15 +157,15 @@ document.documentElement.classList.replace('no-js','js');
             <g stroke="#262b36"><path d="M112 50h104M112 80h104M112 110h104"/></g>
             <polyline class="trace" points="112,112 126,98 138,104 150,74 162,86 174,58 186,70 198,44 214,52" stroke="#ff6a2b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
             <text x="114" y="36" fill="#a3a8b6" font-family="monospace" font-size="10">SENSOR · °C</text>
-          </svg></div>
-        <div class="pcard-copy">
-          <div class="status-row" style="margin:0"><span class="chip run"><i></i>IN THE WORKSHOP · ALWAYS ON</span></div>
-          <h3>Workshop: PLCs, sensors and resin printing.</h3>
-          <p>I read sensor data with Arduino and PLCs and try out ways to turn it into reports that actually mean something. My Elegoo resin printer makes the enclosures and parts. Most ideas start with: "could I read this from the PLC and report on it?"</p>
-          <div class="tags"><span>Arduino</span><span>PLC</span><span>Sensors</span><span>Elegoo resin printer</span></div>
-        </div>
-      </article>
-    </div>
+          </svg>
+      </div>
+      <div class="pcard-copy">
+        <div class="status-row" style="margin:0"><span class="chip run"><i></i>IN THE WORKSHOP · ALWAYS ON</span></div>
+        <h3>PLCs, sensors and resin printing.</h3>
+        <p>I read sensor data with Arduino and PLCs and try out ways to turn it into reports that actually mean something. My Elegoo resin printer makes the enclosures and parts. Most ideas start with: "could I read this from the PLC and report on it?"</p>
+        <div class="tags"><span>Arduino</span><span>PLC</span><span>Sensors</span><span>Elegoo resin printer</span></div>
+      </div>
+    </article>
   </div>
 </section>
 
