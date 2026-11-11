@@ -431,3 +431,6 @@ button.btn{font:inherit;font-size:15px;font-weight:500;background:transparent;cu
   .pcard{border-radius:20px}
   .pcard-visual{height:180px}
 }
+.case-split{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center;margin-top:clamp(40px,5vw,72px)}
+.case-split .shot{aspect-ratio:4/5}
+@media (max-width:900px){.case-split{grid-template-columns:1fr}.case-split .shot{max-width:520px}}
