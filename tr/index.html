@@ -52,6 +52,8 @@
 <script>
 (()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!reduce&&'IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('reveal');observer.unobserve(e.target)}})},{threshold:.08});document.querySelectorAll('.metric,.project,.about,.job,.cv-panel,.contact').forEach(el=>observer.observe(el))}
+
+document.querySelectorAll('.language a').forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem('mk-language',link.textContent.trim().toLowerCase())}catch(error){}}));
 const bar=document.querySelector('.progress');let ticking=false;function progress(){const height=document.documentElement.scrollHeight-innerHeight;bar.style.width=(height>0?scrollY/height*100:0)+'%';ticking=false}addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(progress);ticking=true}},{passive:true});progress();
 if(!reduce&&matchMedia('(pointer:fine)').matches){let mx=-500,my=-500,raf=false;addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;if(!raf){requestAnimationFrame(()=>{document.documentElement.style.setProperty('--mouse-x',mx+'px');document.documentElement.style.setProperty('--mouse-y',my+'px');raf=false});raf=true}},{passive:true})}
 })();
