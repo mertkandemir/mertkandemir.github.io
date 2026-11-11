@@ -385,3 +385,49 @@ footer a:hover{color:var(--text)}
 /* button element reset */
 button.btn{font:inherit;font-size:15px;font-weight:500;background:transparent;cursor:pointer}
 @media (max-width:640px){.socials .btn:first-child{grid-column:1/-1}}
+
+/* ---------- projects: secondary cards ---------- */
+.projects-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.6vw,20px);margin-top:clamp(14px,1.6vw,20px)}
+.pcard{position:relative;display:flex;flex-direction:column;border:1px solid var(--line2);border-radius:26px;overflow:hidden;background:linear-gradient(145deg,#12151d,#0b0d13);isolation:isolate}
+.pcard::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .5s;background:radial-gradient(460px circle at var(--mx,50%) var(--my,50%),rgba(255,106,43,.10),transparent 55%)}
+.pcard:hover::before{opacity:1}
+.pcard-visual{height:220px;display:grid;place-items:center;border-bottom:1px solid var(--line);background:radial-gradient(circle at 50% 60%,rgba(255,106,43,.14),transparent 60%);overflow:hidden}
+.pcard-visual svg{width:min(78%,320px);height:auto}
+.pcard-copy{padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;flex:1}
+.pcard-copy h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.035em;line-height:1.1;margin-top:18px}
+.pcard-copy p{color:var(--muted);margin-top:14px;line-height:1.7}
+.pcard-copy .tags{margin:22px 0 0}
+.chip.wait{color:#ffd27e;border-color:rgba(255,210,126,.35);background:rgba(255,210,126,.07)}
+.chip.wait i{animation:ping 2.4s infinite}
+/* receipt scan */
+.scan-line{animation:scan 3.2s var(--ease) infinite}
+@keyframes scan{0%,100%{transform:translateY(0)}50%{transform:translateY(118px)}}
+/* sensor trace */
+.trace{stroke-dasharray:520;stroke-dashoffset:520;animation:trace 4s linear infinite}
+@keyframes trace{60%,100%{stroke-dashoffset:0}}
+.blink{animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(36px,6vw,90px);align-items:start}
+.about-text p{font-size:clamp(17px,1.5vw,21px);line-height:1.7;color:var(--muted)}
+.about-text p+p{margin-top:20px}
+.about-text p strong{color:var(--text);font-weight:500}
+.interests{display:grid;gap:12px}
+.interest{border:1px solid var(--line2);border-radius:20px;padding:20px 22px;background:var(--bg2)}
+.interest .label{display:block;margin-bottom:12px;color:var(--accent2)}
+.interest ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.interest li{font-size:15px;padding:8px 14px;border-radius:999px;border:1px solid var(--line2);color:var(--text)}
+.interest p{color:var(--muted);font-size:15px;margin-top:12px;line-height:1.6}
+.journey{margin-top:clamp(48px,6vw,80px);padding-top:32px;border-top:1px solid var(--line);display:grid;grid-template-columns:.35fr .65fr;gap:clamp(20px,4vw,60px)}
+.journey p{color:var(--muted);line-height:1.8;font-size:16px}
+.journey p+p{margin-top:14px}
+.case-body.single{grid-template-columns:1fr;max-width:860px}
+
+@media (max-width:900px){
+  .projects-row,.about-grid,.journey{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .pcard{border-radius:20px}
+  .pcard-visual{height:180px}
+}

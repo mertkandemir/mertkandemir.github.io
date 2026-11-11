@@ -114,7 +114,7 @@
     addEventListener('pointermove', e => {
       spot && (spot.style.setProperty('--sx', e.clientX + 'px'), spot.style.setProperty('--sy', e.clientY + 'px'));
     }, { passive: true });
-    document.querySelectorAll('.card').forEach(c => c.addEventListener('pointermove', e => {
+    document.querySelectorAll('.card, .pcard').forEach(c => c.addEventListener('pointermove', e => {
       const r = c.getBoundingClientRect();
       c.style.setProperty('--mx', e.clientX - r.left + 'px');
       c.style.setProperty('--my', e.clientY - r.top + 'px');
