@@ -62,6 +62,7 @@ if(!reduce&&'IntersectionObserver'in window){const observer=new IntersectionObse
 
 document.querySelectorAll('.language a').forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem('mk-language',link.textContent.trim().toLowerCase())}catch(error){}}));
 const motoDownload=document.querySelector('[data-motohane-download]');if(motoDownload)motoDownload.addEventListener('click',event=>{const ua=navigator.userAgent||'';const ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);if(ios){event.preventDefault();location.href='https://apps.apple.com/tr/app/motohane/id6827661637?l=tr'}});
+const motoStatus=document.querySelector('.moto-project .status');if(motoStatus)motoStatus.textContent='LIVE ON APP STORE';
 const bar=document.querySelector('.progress');let ticking=false;function progress(){const height=document.documentElement.scrollHeight-innerHeight;bar.style.width=(height>0?scrollY/height*100:0)+'%';ticking=false}addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(progress);ticking=true}},{passive:true});progress();
 if(!reduce&&matchMedia('(pointer:fine)').matches){let mx=-500,my=-500,raf=false;addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;if(!raf){requestAnimationFrame(()=>{document.documentElement.style.setProperty('--mouse-x',mx+'px');document.documentElement.style.setProperty('--mouse-y',my+'px');raf=false});raf=true}},{passive:true})}
 })();
