@@ -1,287 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="tr" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mert Kandemir — Code, factories and curiosity</title>
-<meta name="description" content="Mert Kandemir — software developer in İzmir working on the production module of CANIAS ERP. Workshop experiments with PLCs, sensors and resin printing.">
-<meta name="theme-color" content="#07080c">
+<title>Mert Kandemir</title>
+<meta name="description" content="İzmir&#x27;de yaşayan bir yazılımcı. Üretim yazılımları, atölyede PLC ve sensörler, hafta sonları deniz ve kort.">
+<meta name="theme-color" content="#f3efe6">
 <link rel="canonical" href="https://mkandemir.com.tr/">
-<link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/">
-<link rel="alternate" hreflang="tr" href="https://mkandemir.com.tr/tr/">
+<link rel="alternate" hreflang="tr" href="https://mkandemir.com.tr/">
+<link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/en/">
 <link rel="alternate" hreflang="x-default" href="https://mkandemir.com.tr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mert Kandemir">
-<meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="tr_TR">
-<meta property="og:title" content="Mert Kandemir — Code, factories and curiosity">
-<meta property="og:description" content="CANIAS ERP production by day; PLCs and sensors in the workshop by night. Mert Kandemir, İzmir.">
+<meta property="og:title" content="Mert Kandemir">
+<meta property="og:description" content="İzmir&#x27;de yaşayan bir yazılımcı. Üretim yazılımları, atölyede PLC ve sensörler, hafta sonları deniz ve kort.">
 <meta property="og:url" content="https://mkandemir.com.tr/">
-<meta property="og:image" content="https://mkandemir.com.tr/assets/og-image.jpg?v=2">
+<meta property="og:image" content="https://mkandemir.com.tr/assets/og-home-tr.jpg?v=9">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mert Kandemir — Code, factories and curiosity">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css?v=2">
-<link rel="stylesheet" href="/assets/css/site.css?v=8">
-<link rel="preload" as="image" href="/assets/hyundai/stage-wide.webp" type="image/webp" media="(min-width: 641px)">
-<script>
-document.documentElement.classList.replace('no-js','js');
-(()=>{try{const saved=localStorage.getItem('mk-language');const langs=navigator.languages||[navigator.language||''];const pref=saved||(langs.some(l=>/^tr(?:-|$)/i.test(l))?'tr':'en');if(pref==='tr'&&(location.pathname==='/'||location.pathname==='/index.html'))location.replace('/tr/'+location.search+location.hash)}catch(e){}})();
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Mert Kandemir","url":"https://mkandemir.com.tr/","jobTitle":"Software Specialist","worksFor":{"@type":"Organization","name":"IAS — Industrial Application Software"},"address":{"@type":"PostalAddress","addressLocality":"İzmir","addressCountry":"TR"},"alumniOf":{"@type":"CollegeOrUniversity","name":"İzmir University"},"knowsAbout":["CANIAS ERP","TROIA","Production planning","Manufacturing execution","SQL","React Native",".NET"],"sameAs":["https://github.com/mertkandemir","https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}
-</script>
+<link rel="stylesheet" href="/assets/css/fonts.css?v=9">
+<link rel="stylesheet" href="/assets/css/site.css?v=9">
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="ambient" aria-hidden="true"><i></i><i></i></div>
-<div class="gridlines" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
-<div class="spot" aria-hidden="true"></div>
-<div class="progress" aria-hidden="true"></div>
-
-<header class="header">
+<a class="skip" href="#main">İçeriğe geç</a>
+<header class="wrap top"><a class="brand" href="/">mert kandemir<b>.</b></a><nav aria-label="Menü"><a href="/sozluk/">Sözlük</a><a href="/en/" lang="en" hreflang="en">EN</a></nav></header>
+<main id="main" class="home">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Mert Kandemir — home">mert kandemir<b>.</b></a>
-    <nav class="nav" aria-label="Main">
-      <a href="#work">Workshop</a>
-      <a href="#hyundai">Hyundai</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="header-end">
-      <div class="lang" aria-label="Language">
-        <a href="/" lang="en" hreflang="en" aria-current="page" data-lang="en">EN</a>
-        <a href="/tr/" lang="tr" hreflang="tr" data-lang="tr">TR</a>
-      </div>
-      <button class="menu-btn" type="button" data-open="Open menu" data-close="Close menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-
-<div class="mobile-menu" id="mobile-menu">
-  <nav aria-label="Mobile">
-    <a href="#work">Workshop <small>01</small></a>
-    <a href="#hyundai">Hyundai <small>02</small></a>
-    <a href="#expertise">Expertise <small>03</small></a>
-    <a href="#about">About <small>04</small></a>
-    <a href="#contact">Contact <small>05</small></a>
-  </nav>
-  <div class="mm-foot">
-    <a href="#contact" data-mail="mertkandemir01|gmail.com"><span data-mail-text>mertkandemir01 [at] gmail.com</span></a>
-    <a href="https://www.linkedin.com/in/mert-kandemir-8798bb8b" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/mertkandemir" target="_blank" rel="noopener">GitHub</a>
-  </div>
-</div>
-
-<main id="main">
-<!-- ===== HERO ===== -->
-<section class="hero" aria-labelledby="hero-title">
-  <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">Mert Kandemir · İzmir</span></div>
-      <h1 id="hero-title"><span class="line"><span>Code,</span></span><span class="line"><span><em>factories</em> and</span></span><span class="line"><span><em>curiosity.</em></span></span></h1>
-      <p class="lead fade-in d2">By day I work on the production module of CANIAS ERP at IAS; in the evenings I tinker with PLCs and sensors in my workshop. This is where I share what I've made and what I'm making.</p>
-      <div class="hero-actions fade-in d3">
-        <a class="btn primary" href="#work" data-magnetic>Visit the workshop <span class="arr down" aria-hidden="true">↓</span></a>
-        <a class="btn" href="#about" data-magnetic>About me <span class="arr down" aria-hidden="true">↓</span></a>
-      </div>
-      <div class="hero-scroll fade-in d3" aria-hidden="true"><i></i>Scroll</div>
+      <div class="hello rise"><i aria-hidden="true"></i>Merhaba · İzmir</div>
+      <h1 class="rise d1">Mert<br><em>Kandemir.</em></h1>
+      <p class="intro rise d2">İzmir'de yaşayan bir yazılımcıyım. Günlerim <strong>üretim yazılımlarıyla</strong>, akşamlarım atölyede PLC ve sensörlerle, hafta sonlarım çoğu zaman <strong>denizde ya da kortta</strong> geçiyor.</p>
     </div>
-
-    <div class="wo" data-wo aria-hidden="true" data-labels='["PLANNED","RELEASED","IN PROGRESS","CONFIRMED"]'>
-      <div class="wo-top">
-        <div class="wo-id">WORK ORDER · 24017<small>Sample flow · Assembly line A</small></div>
-        <span class="chip" data-wo-status><i></i>PLANNED</span>
-      </div>
-      <div class="wo-sec">
-        <div class="label"><span>Bill of materials</span><span>QTY</span></div>
-        <ul class="bom">
-          <li>Front axle module <span>480</span></li>
-          <li>Subframe <span>1×</span></li>
-          <li>Bearing set <span>2×</span></li>
-          <li>Brake unit <span>2×</span></li>
-        </ul>
-      </div>
-      <div class="wo-sec">
-        <div class="label"><span>Routing</span><span>PROGRESS</span></div>
-        <div class="ops">
-          <div class="op"><b>0010</b><div><span class="op-name">Cutting</span><div class="bar"></div></div><span class="pct">0%</span></div>
-          <div class="op"><b>0020</b><div><span class="op-name">Welding</span><div class="bar"></div></div><span class="pct">0%</span></div>
-          <div class="op"><b>0030</b><div><span class="op-name">Assembly</span><div class="bar"></div></div><span class="pct">0%</span></div>
-          <div class="op"><b>0040</b><div><span class="op-name">Quality check</span><div class="bar"></div></div><span class="pct">0%</span></div>
-        </div>
-      </div>
-      <div class="wo-foot">
-        <div><strong><span data-wo-qty data-target="480">0</span> / 480</strong><small>CONFIRMED PCS</small></div>
-        <div><strong data-wo-scrap>1.2%</strong><small>SCRAP RATE</small></div>
-      </div>
+    <div class="rise d3">
+      <ul class="links"><li><a class="feature" href="/sozluk/">Üretim Sözlüğü<span>Ücretsiz kaynak →</span></a></li><li><a href="https://www.linkedin.com/in/mert-kandemir-8798bb8b" target="_blank" rel="noopener">LinkedIn<span>↗</span></a></li><li><a href="https://github.com/mertkandemir" target="_blank" rel="noopener">GitHub<span>↗</span></a></li><li><a href="#" data-mail="mertkandemir01|gmail.com"><span data-mail-text style="font:inherit;letter-spacing:inherit;color:inherit">E-posta</span><span>@</span></a></li></ul>
+      <p class="clock mono">İzmir'de saat şu an <span data-clock>—</span></p>
     </div>
   </div>
-</section>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <div class="marquee-group"><span>Manufacturing software</span><span><em>Automation</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
-    <div class="marquee-group"><span>Manufacturing software</span><span><em>Automation</em></span><span>The workshop</span><span><em>PLCs & sensors</em></span><span>Resin printing</span><span><em>Sailing</em></span><span>Tennis</span><span><em>Swimming</em></span><span>Learning new things</span><span><em>İzmir</em></span></div>
-  </div>
-</div>
-
-<!-- ===== WORKSHOP ===== -->
-<section id="work" aria-labelledby="work-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <div data-reveal>
-        <span class="label accent">After hours</span>
-        <h2 class="h2" id="work-title">In the workshop, <em>experiments that never end.</em></h2>
-        <p class="lead">Things I build purely out of curiosity — no commercial purpose.</p>
-      </div>
-      <span class="sec-index" data-reveal>01 / 05</span>
-    </div>
-    <article class="pcard wide" data-reveal>
-      <div class="pcard-visual" aria-hidden="true">
-          <svg viewBox="0 0 240 160" fill="none">
-            <rect x="14" y="30" width="62" height="100" rx="6" stroke="#80869a" stroke-width="2"/>
-            <rect x="24" y="42" width="42" height="14" rx="2" fill="#5fd3a0" opacity=".25"/>
-            <g fill="#80869a"><circle cx="28" cy="72" r="3"/><circle cx="40" cy="72" r="3"/><circle cx="52" cy="72" r="3"/></g>
-            <circle class="blink" cx="62" cy="72" r="3" fill="#5fd3a0"/>
-            <g stroke="#80869a" stroke-width="2"><path d="M24 96h42M24 108h42M24 120h30"/></g>
-            <path d="M76 80h26" stroke="#ffb27e" stroke-width="2" stroke-dasharray="4 4"/>
-            <rect x="102" y="20" width="124" height="120" rx="10" stroke="#3a4152" stroke-width="2" fill="#10131b"/>
-            <g stroke="#262b36"><path d="M112 50h104M112 80h104M112 110h104"/></g>
-            <polyline class="trace" points="112,112 126,98 138,104 150,74 162,86 174,58 186,70 198,44 214,52" stroke="#ff6a2b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-            <text x="114" y="36" fill="#a3a8b6" font-family="monospace" font-size="10">SENSOR · °C</text>
-          </svg>
-      </div>
-      <div class="pcard-copy">
-        <div class="status-row" style="margin:0"><span class="chip run"><i></i>IN THE WORKSHOP · ALWAYS ON</span></div>
-        <h3>PLCs, sensors and resin printing.</h3>
-        <p>I read sensor data with Arduino and PLCs and try out ways to turn it into reports that actually mean something. My Elegoo resin printer makes the enclosures and parts. Most ideas start with: "could I read this from the PLC and report on it?"</p>
-        <div class="tags"><span>Arduino</span><span>PLC</span><span>Sensors</span><span>Elegoo resin printer</span></div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ===== HYUNDAI ===== -->
-<section id="hyundai" aria-labelledby="hyundai-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <div data-reveal>
-        <span class="label accent">A team project I'm proud of</span>
-        <h2 class="h2" id="hyundai-title">With the IAS team, <em>all the way to Korea.</em></h2>
-      </div>
-      <span class="sec-index" data-reveal>02 / 05</span>
-    </div>
-
-    <div class="case-hero">
-      <picture>
-        <source media="(max-width: 640px)" srcset="/assets/hyundai/stage-sm.webp" type="image/webp">
-        <source media="(max-width: 640px)" srcset="/assets/hyundai/stage-sm.jpg">
-        <source srcset="/assets/hyundai/stage-wide.webp" type="image/webp">
-        <img src="/assets/hyundai/stage-wide.jpg" width="1600" height="1137" alt="The project car on stage at the IAS | Hyundai Project celebration, with the banner “Bu başarı hepimizin” — this success belongs to all of us." loading="lazy" decoding="async">
-      </picture>
-      <div class="case-cap">
-        <q>This success belongs to all of us.</q>
-        <span class="label">IAS | Hyundai Project celebration</span>
-      </div>
-    </div>
-
-    <div class="case-split">
-      <div data-reveal>
-        <p class="lead">As the IAS team, we brought CANIAS ERP to Hyundai's automotive manufacturing. I worked on Production Management applications and production reports, and spent three months of the project on-site in South Korea alongside the local teams. The achievement certificate we received as a team — and the car carrying all our signatures — are some of my favourite memories of this work.</p>
-      </div>
-      <figure class="shot sign" data-reveal>
-        <picture><source srcset="/assets/hyundai/signing-sm.webp 640w, /assets/hyundai/signing.webp 822w" sizes="(max-width:900px) 100vw, 40vw" type="image/webp"><img src="/assets/hyundai/signing.jpg" width="822" height="1028" alt="Mert Kandemir signing the hood of the project car alongside the team's signatures." loading="lazy" decoding="async"></picture>
-        <figcaption><small>Team</small>The team's signatures on the project car</figcaption>
-      </figure>
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== EXPERTISE ===== -->
-<section id="expertise" aria-labelledby="expertise-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <div data-reveal>
-        <span class="label accent">My day job</span>
-        <h2 class="h2" id="expertise-title">My days are spent <em>inside production.</em></h2>
-        <p class="lead">At IAS I work on the CANIAS ERP Production (PRD) module — standard-product and customer-specific development. The topics I spend most of my time on:</p>
-      </div>
-      <span class="sec-index" data-reveal>03 / 05</span>
-    </div>
-
-    <div class="domain">
-      <article class="card" data-reveal><div class="num">01<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><div><h3>Production orders</h3><p>Creating, releasing and tracking work orders through their full lifecycle.</p></div></article>
-      <article class="card" data-reveal style="--d:.05s"><div class="num">02<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg></div><div><h3>Bills of materials</h3><p>Multi-level product structures, explosions and component logic.</p></div></article>
-      <article class="card" data-reveal style="--d:.1s"><div class="num">03<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 12h3"/></svg></div><div><h3>Routings &amp; work centers</h3><p>Operation sequences, capacities and the logic that schedules them.</p></div></article>
-      <article class="card" data-reveal><div class="num">04<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div><div><h3>Material requirements</h3><p>Requirements and reservations that keep the line supplied on time.</p></div></article>
-      <article class="card" data-reveal style="--d:.05s"><div class="num">05<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></div><div><h3>Production confirmations</h3><p>Capturing what was actually produced — quantities, time and scrap.</p></div></article>
-      <article class="card" data-reveal style="--d:.1s"><div class="num">06<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><h3>Production reporting</h3><p>Reports that turn shop-floor data into decisions for planners and managers.</p></div></article>
-    </div>  </div>
-</section>
-
-<!-- ===== ABOUT ===== -->
-<section id="about" aria-labelledby="about-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <div data-reveal>
-        <span class="label accent">About</span>
-        <h2 class="h2" id="about-title">Curiosity doesn't <em>clock out.</em></h2>
-      </div>
-      <span class="sec-index" data-reveal>04 / 05</span>
-    </div>
-    <div class="about-grid">
-      <div class="about-text" data-reveal>
-        <p>I'm Mert — someone who genuinely enjoys his work and keeps thinking about it after hours. Most evenings I'm in my workshop, building things with <strong>Arduino, PLCs and sensors</strong>, wondering "how would I read this from the PLC and report on it?" or "what could I print for this on the resin printer?"</p>
-        <p>I'm eager about life and anything new. I love being on the court, in the water or on a boat, and I never pass up a chance to learn something new.</p>
-      </div>
-      <div class="interests">
-        <div class="interest" data-reveal><span class="label">In the workshop</span><ul><li>Arduino</li><li>PLC</li><li>Sensors</li><li>Elegoo resin printer</li></ul></div>
-        <div class="interest" data-reveal style="--d:.06s"><span class="label">On the court &amp; water</span><ul><li>Sailing</li><li>Tennis</li><li>Swimming</li></ul></div>
-      </div>
-    </div>
-    <div class="journey" data-reveal>
-      <span class="label">My journey</span>
-      <div>
-        <p>I studied Mathematics and Computer Science at İzmir University. My career started on the factory floor: writing shop-floor applications connected to PLCs and SCADA, and serving as second project lead on the turnkey installation of a feed mill in Sakarya.</p>
-        <p>I've been at IAS since 2022, working on the production module of CANIAS ERP — a journey that took me all the way to South Korea with the Hyundai project.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== CONTACT ===== -->
-<section id="contact" class="contact" aria-labelledby="contact-title">
-  <div class="wrap">
-    <span class="label accent" data-reveal>Contact · 05 / 05</span>
-    <h2 id="contact-title" data-reveal style="margin-top:22px">Let's stay <em>in touch.</em></h2>
-    <p class="lead" data-reveal style="margin-top:22px">Always happy to talk manufacturing software, CANIAS or workshop experiments.</p>
-    <div class="contact-row" data-reveal>
-      <a class="mail" href="#contact" data-mail="mertkandemir01|gmail.com"><span class="circle" aria-hidden="true">↗</span><span data-mail-text>mertkandemir01 [at] gmail.com</span></a>
-      <div class="socials">
-        <button class="btn" type="button" data-copy="mertkandemir01|gmail.com" data-done="Copied ✓" aria-live="polite">Copy e-mail</button>
-        <a class="btn" href="https://www.linkedin.com/in/mert-kandemir-8798bb8b" target="_blank" rel="noopener">LinkedIn <span class="arr" aria-hidden="true">↗</span></a>
-        <a class="btn" href="https://github.com/mertkandemir" target="_blank" rel="noopener">GitHub <span class="arr" aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-  </div>
-</section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <span>© <span data-year>2026</span> Mert Kandemir · İzmir, Türkiye</span>
-    <span><a href="/tr/" data-lang="tr">Türkçe</a> · <a href="#main">Back to top ↑</a></span>
-  </div>
-</footer>
-<script src="/assets/js/site.js?v=7" defer></script>
+<footer><div class="wrap"><span>© 2026 Mert Kandemir · İzmir</span><span><a href="/en/" lang="en">English</a></span></div></footer>
+<script src="/assets/js/site.js?v=9" defer></script>
 </body>
 </html>
