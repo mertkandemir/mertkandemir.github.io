@@ -33,6 +33,18 @@ header:before{left:calc(-1 * (50vw - 50%));right:calc(-1 * (50vw - 50%))}
 @media(max-width:420px){.wrap{width:calc(100% - 28px)}nav{font-size:10px}.language{padding-left:10px}.project-visual,.project:nth-child(even) .project-visual{min-height:286px}.phone{transform:rotate(-2deg) scale(.92)}.project:hover .phone{transform:rotate(-1deg) scale(.92)}.expertise-row{grid-template-columns:1fr;gap:6px}.project-links{display:grid;gap:6px}.project-links a{padding:7px 0}.contact-links{grid-template-columns:1fr}.contact-links a{justify-content:flex-start}.cv-panel{padding:21px}.map-caption span:first-child{max-width:78%}}
 @media(hover:none){.button:hover,.project:hover{transform:none}.project:hover .phone{transform:rotate(-2deg) scale(.92)}.project:hover .dashboard{transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+/* Real MotoHane product screens */
+.moto{background:radial-gradient(circle at 50% 34%,#ee7a392b,transparent 42%),linear-gradient(145deg,#151a25,#0d1119)}
+.moto .phone{position:relative;z-index:3;width:184px;height:auto;aspect-ratio:707/1536;padding:0;border:6px solid #2b313b;border-radius:25px;background:#11151c url('/assets/motohane/discover.jpeg') center top/cover no-repeat;box-shadow:0 28px 65px #000b;transform:none;transition:transform .55s ease}
+.moto .phone>*{display:none}
+.moto .phone:before,.moto .phone:after{content:"";position:absolute;z-index:-1;top:50%;width:160px;aspect-ratio:707/1536;border:6px solid #2b313b;border-radius:25px;background-position:center top;background-size:cover;background-repeat:no-repeat;box-shadow:0 25px 58px #000a;transition:transform .55s ease,filter .55s ease}
+.moto .phone:before{right:82%;background-image:url('/assets/motohane/private-clubs.jpeg');transform:translateY(-50%) rotate(-8deg);filter:brightness(.72)}
+.moto .phone:after{left:82%;background-image:url('/assets/motohane/marketplace.jpeg');transform:translateY(-50%) rotate(8deg);filter:brightness(.78)}
+.project:hover .moto .phone{transform:translateY(-6px)}
+.project:hover .moto .phone:before{transform:translate(-8px,-50%) rotate(-11deg);filter:brightness(.9)}
+.project:hover .moto .phone:after{transform:translate(8px,-50%) rotate(11deg);filter:brightness(.9)}
+@media(max-width:420px){.project-visual.moto{min-height:320px}.moto .phone{width:150px;border-width:5px;border-radius:20px}.moto .phone:before,.moto .phone:after{width:123px;border-width:5px;border-radius:20px}}
+@media(hover:none){.project:hover .moto .phone{transform:none}.project:hover .moto .phone:before{transform:translateY(-50%) rotate(-8deg);filter:brightness(.72)}.project:hover .moto .phone:after{transform:translateY(-50%) rotate(8deg);filter:brightness(.78)}}
 </style>
 </head>
 <body><div class="progress" aria-hidden="true"></div><div class="cursor-glow" aria-hidden="true"></div>
