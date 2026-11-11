@@ -128,14 +128,21 @@
     });
   }
 
+  // e-mail is assembled at runtime so scrapers don't find it in the HTML
+  document.querySelectorAll('[data-mail]').forEach(el => {
+    const addr = el.dataset.mail.replace('|', '@');
+    el.href = 'mailto:' + addr;
+    const t = el.querySelector('[data-mail-text]'); if (t) t.textContent = addr;
+  });
+
   // copy e-mail
   document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText(btn.dataset.copy);
+      await navigator.clipboard.writeText(btn.dataset.copy.replace('|', '@'));
       const label = btn.dataset.label || (btn.dataset.label = btn.textContent);
       btn.textContent = btn.dataset.done || label; btn.classList.add('done');
       setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); }, 1800);
-    } catch (e) { location.href = 'mailto:' + btn.dataset.copy; }
+    } catch (e) { location.href = 'mailto:' + btn.dataset.copy.replace('|', '@'); }
   }));
 
   // work-order simulation (illustrative)
