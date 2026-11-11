@@ -27,7 +27,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/fonts.css?v=2">
-<link rel="stylesheet" href="/assets/css/site.css?v=2">
+<link rel="stylesheet" href="/assets/css/site.css?v=3">
 <link rel="preload" as="image" href="/assets/hyundai/stage-wide.webp" type="image/webp" media="(min-width: 641px)">
 <script>
 document.documentElement.classList.replace('no-js','js');
@@ -53,14 +53,14 @@ document.documentElement.classList.replace('no-js','js');
       <a href="#expertise">Expertise</a>
       <a href="#work">Products</a>
       <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="header-end">
       <div class="lang" aria-label="Language">
         <a href="/" lang="en" hreflang="en" aria-current="page" data-lang="en">EN</a>
         <a href="/tr/" lang="tr" hreflang="tr" data-lang="tr">TR</a>
       </div>
-      <a class="cta-mini" href="#contact">Get in touch</a>
-      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+      <button class="menu-btn" type="button" data-open="Open menu" data-close="Close menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
     </div>
   </div>
 </header>
@@ -85,19 +85,19 @@ document.documentElement.classList.replace('no-js','js');
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">Software Specialist · CANIAS ERP · İzmir</span></div>
+      <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">IAS · CANIAS ERP · İzmir</span></div>
       <h1 id="hero-title"><span class="line"><span>Software that</span></span><span class="line"><span>keeps <em>production</em></span></span><span class="line"><span><em>moving.</em></span></span></h1>
-      <p class="lead fade-in d2">I build CANIAS ERP Production (PRD) software at IAS — work orders, bills of materials, routings, confirmations and reporting — for manufacturers from İzmir to South Korea. On the side, I ship my own mobile products end to end.</p>
+      <p class="lead fade-in d2">At IAS, I'm part of the team behind CANIAS ERP Production (PRD) — work orders, bills of materials, routings, confirmations and reporting — for manufacturers from İzmir to South Korea. After hours, I build my own mobile products.</p>
       <div class="hero-actions fade-in d3">
         <a class="btn primary" href="#hyundai" data-magnetic>See the Hyundai project <span class="arr down" aria-hidden="true">↓</span></a>
-        <a class="btn" href="/assets/Mert_Kandemir_CV_EN.pdf" target="_blank" rel="noopener" data-magnetic>Résumé (PDF) <span class="arr" aria-hidden="true">↗</span></a>
+        <a class="btn" href="#work" data-magnetic>See MotoHane <span class="arr down" aria-hidden="true">↓</span></a>
       </div>
       <div class="hero-scroll fade-in d3" aria-hidden="true"><i></i>Scroll</div>
     </div>
 
     <div class="wo" data-wo aria-hidden="true" data-labels='["PLANNED","RELEASED","IN PROGRESS","CONFIRMED"]'>
       <div class="wo-top">
-        <div class="wo-id">WORK ORDER · WO-24017<small>Assembly line A · Shift 2</small></div>
+        <div class="wo-id">WORK ORDER · 24017<small>Sample flow · Assembly line A</small></div>
         <span class="chip" data-wo-status><i></i>PLANNED</span>
       </div>
       <div class="wo-sec">
@@ -120,9 +120,8 @@ document.documentElement.classList.replace('no-js','js');
       </div>
       <div class="wo-foot">
         <div><strong><span data-wo-qty data-target="480">0</span> / 480</strong><small>CONFIRMED PCS</small></div>
-        <div><strong data-wo-oee>78%</strong><small>OEE</small></div>
+        <div><strong data-wo-scrap>1.2%</strong><small>SCRAP RATE</small></div>
       </div>
-      <span class="wo-tag">ILLUSTRATIVE</span>
     </div>
   </div>
 </section>
@@ -136,10 +135,9 @@ document.documentElement.classList.replace('no-js','js');
 
 <div class="wrap">
   <div class="metrics" aria-label="Highlights">
-    <div class="metric" data-reveal><strong><span data-count="4">4</span><sup>+</sup><small>years</small></strong><p>CANIAS ERP Production (PRD) development</p></div>
+    <div class="metric" data-reveal><strong><span data-count="4">4</span><sup>+</sup><small>years</small></strong><p>CANIAS ERP Production (PRD) development at IAS</p></div>
     <div class="metric" data-reveal style="--d:.08s"><strong><span data-count="3">3</span><small>months</small></strong><p>On-site in South Korea for the Hyundai project</p></div>
-    <div class="metric" data-reveal style="--d:.16s"><strong><span data-count="10">10</span><small>years</small></strong><p>Writing software professionally since 2016</p></div>
-    <div class="metric" data-reveal style="--d:.24s"><strong><span data-count="1">1</span><small>app</small></strong><p>Independent product live on the App Store</p></div>
+    <div class="metric" data-reveal style="--d:.16s"><strong><span data-count="3">3</span><small>global manufacturers</small></strong><p>Software in use at Hyundai, Mitsubishi Electric and Philip Morris facilities</p></div>
   </div>
 </div>
 
@@ -148,10 +146,10 @@ document.documentElement.classList.replace('no-js','js');
   <div class="wrap">
     <div class="sec-head">
       <div data-reveal>
-        <span class="label accent">Featured project · IAS × Hyundai</span>
+        <span class="label accent">Featured project · with the IAS team</span>
         <h2 class="h2" id="hyundai-title">Three months on the shop floor, <em>in South Korea.</em></h2>
       </div>
-      <span class="sec-index" data-reveal>01 / 04</span>
+      <span class="sec-index" data-reveal>01 / 05</span>
     </div>
 
     <div class="case-hero">
@@ -172,7 +170,7 @@ document.documentElement.classList.replace('no-js','js');
         <p class="lead">As part of the IAS team delivering CANIAS ERP for Hyundai's automotive manufacturing, I develop Production Management applications and production reports that support end-to-end vehicle production. I was selected for a three-month on-site assignment in South Korea — working directly with local business and technical teams — and continued development and support remotely after returning to Türkiye.</p>
         <div class="award">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="15" r="10"/><path d="M14 23.5 11 36l9-4.5 9 4.5-3-12.5"/><path d="m16 15 3 3 5-6"/></svg>
-          <div><strong>IAS | Hyundai Project Achievement Certificate</strong><span>Recognised at the project celebration for my contribution.</span></div>
+          <div><strong>IAS | Hyundai Project Achievement Certificate</strong><span>Awarded to project team members at the project celebration.</span></div>
         </div>
       </div>
       <div data-reveal style="--d:.1s">
@@ -212,7 +210,7 @@ document.documentElement.classList.replace('no-js','js');
         <h2 class="h2" id="expertise-title">I speak <em>production.</em></h2>
         <p class="lead">Not a generalist who happens to know an ERP — a developer who works inside the production module every day, on standard product and customer-specific projects.</p>
       </div>
-      <span class="sec-index" data-reveal>02 / 04</span>
+      <span class="sec-index" data-reveal>02 / 05</span>
     </div>
 
     <div class="domain">
@@ -237,10 +235,10 @@ document.documentElement.classList.replace('no-js','js');
   <div class="wrap">
     <div class="sec-head">
       <div data-reveal>
-        <span class="label accent">Independent product</span>
+        <span class="label accent">Personal project</span>
         <h2 class="h2" id="work-title">Built after hours, <em>shipped for real.</em></h2>
       </div>
-      <span class="sec-index" data-reveal>03 / 04</span>
+      <span class="sec-index" data-reveal>03 / 05</span>
     </div>
 
     <article class="product">
@@ -271,8 +269,8 @@ document.documentElement.classList.replace('no-js','js');
 <section id="experience" aria-labelledby="experience-title">
   <div class="wrap exp">
     <div class="exp-side" data-reveal>
-      <span class="label accent">Experience</span>
-      <h2 class="h2" id="experience-title" style="margin-top:22px">Ten years, <em>one thread:</em> manufacturing.</h2>
+      <span class="label accent">Experience · 04 / 05</span>
+      <h2 class="h2" id="experience-title" style="margin-top:22px">One thread <em>through it all:</em> manufacturing.</h2>
       <p class="lead" style="margin-top:22px">From PLC-connected shop-floor apps to ERP production modules — always close to where things get made.</p>
     </div>
     <div>
@@ -315,14 +313,6 @@ document.documentElement.classList.replace('no-js','js');
           <div class="org">İzmir University · Bilge Adam .NET specialization</div>
         </article>
       </div>
-
-      <div class="cv" id="cv" data-reveal>
-        <div><span class="label">Résumé · PDF</span><h3 style="margin-top:10px">The full story, in one document.</h3><p>Professional working proficiency in English.</p></div>
-        <div class="actions">
-          <a class="btn" href="/assets/Mert_Kandemir_CV_EN.pdf" target="_blank" rel="noopener">View <span class="arr" aria-hidden="true">↗</span></a>
-          <a class="btn primary" href="/assets/Mert_Kandemir_CV_EN.pdf" download>Download <span class="arr down" aria-hidden="true">↓</span></a>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -330,8 +320,9 @@ document.documentElement.classList.replace('no-js','js');
 <!-- ===== CONTACT ===== -->
 <section id="contact" class="contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <span class="label accent" data-reveal>Contact · 04 / 04</span>
-    <h2 id="contact-title" data-reveal style="margin-top:22px">Have a project — <em>or a production problem?</em></h2>
+    <span class="label accent" data-reveal>Contact · 05 / 05</span>
+    <h2 id="contact-title" data-reveal style="margin-top:22px">Let's stay <em>in touch.</em></h2>
+    <p class="lead" data-reveal style="margin-top:22px">Always happy to talk about manufacturing software, CANIAS and building products.</p>
     <div class="contact-row" data-reveal>
       <a class="mail" href="mailto:mertkandemir01@gmail.com"><span class="circle" aria-hidden="true">↗</span>mertkandemir01@gmail.com</a>
       <div class="socials">
@@ -350,6 +341,6 @@ document.documentElement.classList.replace('no-js','js');
     <span><a href="/tr/" data-lang="tr">Türkçe</a> · <a href="#main">Back to top ↑</a></span>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=2" defer></script>
+<script src="/assets/js/site.js?v=3" defer></script>
 </body>
 </html>
