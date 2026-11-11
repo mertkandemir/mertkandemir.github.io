@@ -27,7 +27,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/fonts.css?v=2">
-<link rel="stylesheet" href="/assets/css/site.css?v=2">
+<link rel="stylesheet" href="/assets/css/site.css?v=3">
 <link rel="preload" as="image" href="/assets/hyundai/stage-wide.webp" type="image/webp" media="(min-width: 641px)">
 <script>document.documentElement.classList.replace('no-js','js');</script>
 <script type="application/ld+json">
@@ -50,14 +50,14 @@
       <a href="#expertise">Uzmanlık</a>
       <a href="#work">Ürünler</a>
       <a href="#experience">Deneyim</a>
+      <a href="#contact">İletişim</a>
     </nav>
     <div class="header-end">
       <div class="lang" aria-label="Dil">
         <a href="/" lang="en" hreflang="en" data-lang="en">EN</a>
         <a href="/tr/" lang="tr" hreflang="tr" aria-current="page" data-lang="tr">TR</a>
       </div>
-      <a class="cta-mini" href="#contact">İletişime geç</a>
-      <button class="menu-btn" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+      <button class="menu-btn" type="button" data-open="Menüyü aç" data-close="Menüyü kapat" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
     </div>
   </div>
 </header>
@@ -82,19 +82,19 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">Yazılım Uzmanı · CANIAS ERP · İzmir</span></div>
+      <div class="eyebrow fade-in"><span class="dot" aria-hidden="true"></span><span class="label">IAS · CANIAS ERP · İzmir</span></div>
       <h1 id="hero-title"><span class="line"><span>Üretimi</span></span><span class="line"><span><em>akışta</em> tutan</span></span><span class="line"><span><em>yazılımlar.</em></span></span></h1>
-      <p class="lead fade-in d2">IAS'te CANIAS ERP Üretim (PRD) modülü için geliştirme yapıyorum: iş emirleri, ürün ağaçları, rotalar, teyitler ve raporlama. İzmir'den Güney Kore'ye üreticiler için çalışıyorum; bunun yanında kendi mobil ürünlerimi uçtan uca hayata geçiriyorum.</p>
+      <p class="lead fade-in d2">IAS'te, CANIAS ERP Üretim (PRD) modülünü geliştiren ekibin bir parçasıyım: iş emirleri, ürün ağaçları, rotalar, teyitler ve raporlama. İzmir'den Güney Kore'ye üreticiler için çalışıyoruz. Mesai dışında ise kendi mobil ürünlerimi geliştiriyorum.</p>
       <div class="hero-actions fade-in d3">
         <a class="btn primary" href="#hyundai" data-magnetic>Hyundai projesini incele <span class="arr down" aria-hidden="true">↓</span></a>
-        <a class="btn" href="/assets/Mert_Kandemir_CV_TR.pdf" target="_blank" rel="noopener" data-magnetic>Özgeçmiş (PDF) <span class="arr" aria-hidden="true">↗</span></a>
+        <a class="btn" href="#work" data-magnetic>MotoHane'yi gör <span class="arr down" aria-hidden="true">↓</span></a>
       </div>
       <div class="hero-scroll fade-in d3" aria-hidden="true"><i></i>Kaydır</div>
     </div>
 
     <div class="wo" data-wo aria-hidden="true" data-labels='["PLANLANDI","SERBEST","ÜRETİMDE","TEYİT EDİLDİ"]'>
       <div class="wo-top">
-        <div class="wo-id">İŞ EMRİ · WO-24017<small>Montaj hattı A · 2. vardiya</small></div>
+        <div class="wo-id">İŞ EMRİ · 24017<small>Örnek akış · Montaj hattı A</small></div>
         <span class="chip" data-wo-status><i></i>PLANLANDI</span>
       </div>
       <div class="wo-sec">
@@ -117,9 +117,8 @@
       </div>
       <div class="wo-foot">
         <div><strong><span data-wo-qty data-target="480">0</span> / 480</strong><small>TEYİTLİ ADET</small></div>
-        <div><strong data-wo-oee>78%</strong><small>OEE</small></div>
+        <div><strong data-wo-scrap>%1,2</strong><small>FİRE ORANI</small></div>
       </div>
-      <span class="wo-tag">TEMSİLİ</span>
     </div>
   </div>
 </section>
@@ -133,10 +132,9 @@
 
 <div class="wrap">
   <div class="metrics" aria-label="Öne çıkanlar">
-    <div class="metric" data-reveal><strong><span data-count="4">4</span><sup>+</sup><small>yıl</small></strong><p>CANIAS ERP Üretim (PRD) geliştirme</p></div>
+    <div class="metric" data-reveal><strong><span data-count="4">4</span><sup>+</sup><small>yıl</small></strong><p>IAS'te CANIAS ERP Üretim (PRD) geliştirme</p></div>
     <div class="metric" data-reveal style="--d:.08s"><strong><span data-count="3">3</span><small>ay</small></strong><p>Hyundai projesi için Güney Kore'de sahada</p></div>
-    <div class="metric" data-reveal style="--d:.16s"><strong><span data-count="10">10</span><small>yıl</small></strong><p>2016'dan beri profesyonel yazılım geliştirme</p></div>
-    <div class="metric" data-reveal style="--d:.24s"><strong><span data-count="1">1</span><small>uygulama</small></strong><p>App Store'da yayında olan bağımsız ürün</p></div>
+    <div class="metric" data-reveal style="--d:.16s"><strong><span data-count="3">3</span><small>global üretici</small></strong><p>Hyundai, Mitsubishi Electric ve Philip Morris tesislerinde kullanılan yazılımlar</p></div>
   </div>
 </div>
 
@@ -145,10 +143,10 @@
   <div class="wrap">
     <div class="sec-head">
       <div data-reveal>
-        <span class="label accent">Öne çıkan proje · IAS × Hyundai</span>
+        <span class="label accent">Öne çıkan proje · IAS ekibiyle</span>
         <h2 class="h2" id="hyundai-title">Güney Kore'de, <em>üretim sahasında</em> üç ay.</h2>
       </div>
-      <span class="sec-index" data-reveal>01 / 04</span>
+      <span class="sec-index" data-reveal>01 / 05</span>
     </div>
 
     <div class="case-hero">
@@ -166,10 +164,10 @@
 
     <div class="case-body">
       <div data-reveal>
-        <p class="lead">Hyundai'nin otomotiv üretimi için CANIAS ERP'yi hayata geçiren IAS ekibinde; uçtan uca araç üretimini destekleyen Üretim Yönetimi uygulamaları ve üretim raporları geliştiriyorum. Güney Kore'de üç aylık yerinde görev için seçildim; yerel iş ve teknik ekiplerle birebir çalıştım. Türkiye'ye döndükten sonra geliştirme ve desteğe uzaktan devam ettim.</p>
+        <p class="lead">Hyundai'nin otomotiv üretimi için CANIAS ERP'yi hayata geçiren IAS ekibinin bir parçası olarak; uçtan uca araç üretimini destekleyen Üretim Yönetimi uygulamaları ve üretim raporları geliştiriyorum. Güney Kore'de üç aylık yerinde görev için seçildim; yerel iş ve teknik ekiplerle birebir çalıştım. Türkiye'ye döndükten sonra geliştirme ve desteğe uzaktan devam ettim.</p>
         <div class="award">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="15" r="10"/><path d="M14 23.5 11 36l9-4.5 9 4.5-3-12.5"/><path d="m16 15 3 3 5-6"/></svg>
-          <div><strong>IAS | Hyundai Projesi Başarı Belgesi</strong><span>Proje kutlamasında katkılarım için ödüllendirildim.</span></div>
+          <div><strong>IAS | Hyundai Projesi Başarı Belgesi</strong><span>Proje kutlamasında proje ekibine verilen başarı belgesi.</span></div>
         </div>
       </div>
       <div data-reveal style="--d:.1s">
@@ -209,7 +207,7 @@
         <h2 class="h2" id="expertise-title">Üretimin <em>dilinden</em> anlarım.</h2>
         <p class="lead">ERP'yi biraz bilen bir genelci değil; her gün üretim modülünün içinde, standart ürün ve müşteriye özel projelerde çalışan bir geliştiriciyim.</p>
       </div>
-      <span class="sec-index" data-reveal>02 / 04</span>
+      <span class="sec-index" data-reveal>02 / 05</span>
     </div>
 
     <div class="domain">
@@ -234,10 +232,10 @@
   <div class="wrap">
     <div class="sec-head">
       <div data-reveal>
-        <span class="label accent">Bağımsız ürün</span>
+        <span class="label accent">Kişisel proje</span>
         <h2 class="h2" id="work-title">Mesai sonrası geliştirildi, <em>gerçekten yayında.</em></h2>
       </div>
-      <span class="sec-index" data-reveal>03 / 04</span>
+      <span class="sec-index" data-reveal>03 / 05</span>
     </div>
 
     <article class="product">
@@ -268,8 +266,8 @@
 <section id="experience" aria-labelledby="experience-title">
   <div class="wrap exp">
     <div class="exp-side" data-reveal>
-      <span class="label accent">Deneyim</span>
-      <h2 class="h2" id="experience-title" style="margin-top:22px">On yıl, <em>tek bir ortak nokta:</em> üretim.</h2>
+      <span class="label accent">Deneyim · 04 / 05</span>
+      <h2 class="h2" id="experience-title" style="margin-top:22px">Hepsinde <em>ortak nokta:</em> üretim.</h2>
       <p class="lead" style="margin-top:22px">PLC'ye bağlı saha uygulamalarından ERP üretim modüllerine — hep üretimin yapıldığı yere yakın.</p>
     </div>
     <div>
@@ -312,14 +310,6 @@
           <div class="org">İzmir Üniversitesi · Bilge Adam .NET uzmanlık programı</div>
         </article>
       </div>
-
-      <div class="cv" id="cv" data-reveal>
-        <div><span class="label">Özgeçmiş · PDF</span><h3 style="margin-top:10px">Deneyimimin tamamı, tek belgede.</h3><p>Profesyonel çalışma düzeyinde İngilizce.</p></div>
-        <div class="actions">
-          <a class="btn" href="/assets/Mert_Kandemir_CV_TR.pdf" target="_blank" rel="noopener">Görüntüle <span class="arr" aria-hidden="true">↗</span></a>
-          <a class="btn primary" href="/assets/Mert_Kandemir_CV_TR.pdf" download>İndir <span class="arr down" aria-hidden="true">↓</span></a>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -327,8 +317,9 @@
 <!-- ===== İLETİŞİM ===== -->
 <section id="contact" class="contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <span class="label accent" data-reveal>İletişim · 04 / 04</span>
-    <h2 id="contact-title" data-reveal style="margin-top:22px">Bir projen mi var — <em>yoksa üretimde bir derdin mi?</em></h2>
+    <span class="label accent" data-reveal>İletişim · 05 / 05</span>
+    <h2 id="contact-title" data-reveal style="margin-top:22px">Bağlantıda <em>kalalım.</em></h2>
+    <p class="lead" data-reveal style="margin-top:22px">Üretim yazılımları, CANIAS ve ürün geliştirme üzerine konuşmaktan her zaman keyif alırım.</p>
     <div class="contact-row" data-reveal>
       <a class="mail" href="mailto:mertkandemir01@gmail.com"><span class="circle" aria-hidden="true">↗</span>mertkandemir01@gmail.com</a>
       <div class="socials">
@@ -347,6 +338,6 @@
     <span><a href="/" data-lang="en">English</a> · <a href="#main">Başa dön ↑</a></span>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=2" defer></script>
+<script src="/assets/js/site.js?v=3" defer></script>
 </body>
 </html>

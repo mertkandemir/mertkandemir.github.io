@@ -159,13 +159,13 @@ p{margin:0}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ---------- metrics ---------- */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
 .metric{padding:44px 28px 46px;border-left:1px solid var(--line)}
 .metric:first-child{border-left:0;padding-left:0}
 .metric strong{display:flex;align-items:baseline;gap:6px;font-size:clamp(46px,5.4vw,76px);font-weight:400;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
 .metric strong sup{font-size:.42em;color:var(--accent);vertical-align:top;letter-spacing:0}
 .metric strong small{font:500 13px var(--mono);letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
-.metric p{margin-top:14px;color:var(--muted);font-size:15px;line-height:1.55;max-width:230px}
+.metric p{margin-top:14px;color:var(--muted);font-size:15px;line-height:1.55;max-width:300px}
 
 /* ---------- sections ---------- */
 section{padding:clamp(88px,11vw,150px) 0}
@@ -286,9 +286,6 @@ footer a:hover{color:var(--text)}
    ========================================================== */
 @media (max-width:1080px){
   .nav a{padding:8px 9px}
-  .metrics{grid-template-columns:1fr 1fr}
-  .metric:nth-child(3){border-left:0;padding-left:0}
-  .metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .domain{grid-template-columns:1fr 1fr}
   .product{grid-template-columns:1fr}
   .product-copy{border-left:0;border-top:1px solid var(--line)}
@@ -314,9 +311,11 @@ footer a:hover{color:var(--text)}
   .hero-scroll{display:none}
   .wo{padding:18px;border-radius:18px}
   .op{grid-template-columns:40px 1fr 42px}
-  .metric{padding:28px 16px 30px}
-  .metric:nth-child(odd){padding-left:0}
-  .metric p{font-size:14px}
+  .metrics{grid-template-columns:1fr}
+  .metric,.metric:first-child{padding:24px 0;border-left:0;border-top:1px solid var(--line)}
+  .metric:first-child{border-top:0}
+  .metric strong{font-size:54px}
+  .metric p{margin-top:10px;max-width:none}
   .case-hero{aspect-ratio:4/5;border-radius:20px}
   .case-hero img{object-position:50% 50%}
   .js .case-hero{clip-path:inset(6% 5% 6% 5% round 20px)}
@@ -370,7 +369,18 @@ footer a:hover{color:var(--text)}
   .wo{padding:26px}
 }
 @media (max-width:640px){
-  .card{gap:16px}
+  .domain{grid-template-columns:1fr 1fr}
+  .card{gap:14px;padding:18px 16px 20px;justify-content:flex-start}
+  .card .num svg{width:20px;height:20px}
+  .card h3{font-size:18px;line-height:1.25}
+  .card p{font-size:14px;line-height:1.5;margin-top:8px}
+}
+@media (max-width:359px){.domain{grid-template-columns:1fr}}
+/* lighter effects on touch / small screens */
+@media (max-width:900px),(hover:none){
+  .grain{display:none}
+  .ambient i{animation:none;filter:blur(60px)}
+  .wo::before{animation-duration:10s}
 }
 /* button element reset */
 button.btn{font:inherit;font-size:15px;font-weight:500;background:transparent;cursor:pointer}

@@ -18,11 +18,29 @@
 
   // mobile menu
   const menuBtn = document.querySelector('.menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const behind = document.querySelectorAll('main, footer, .header .brand, .header .lang');
   const setMenu = open => {
+    if (!menuBtn || open === body.classList.contains('menu-open')) return;
     body.classList.toggle('menu-open', open);
-    menuBtn && menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? menuBtn.dataset.close || 'Close menu' : menuBtn.dataset.open || 'Open menu');
+    behind.forEach(el => open ? el.setAttribute('inert', '') : el.removeAttribute('inert'));
+    if (menu) {
+      open ? menu.removeAttribute('inert') : menu.setAttribute('inert', '');
+      if (open) { const first = menu.querySelector('a'); first && setTimeout(() => first.focus({ preventScroll: true }), 80); }
+      else menuBtn.focus({ preventScroll: true });
+    }
   };
+  menu && menu.setAttribute('inert', '');
   menuBtn && menuBtn.addEventListener('click', () => setMenu(!body.classList.contains('menu-open')));
+  menu && menu.addEventListener('keydown', e => { // keep focus inside the open menu
+    if (e.key !== 'Tab') return;
+    const items = [...menu.querySelectorAll('a'), menuBtn];
+    const i = items.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); menuBtn.focus(); }
+    else if (!e.shiftKey && i === items.length - 2) { e.preventDefault(); menuBtn.focus(); }
+  });
   document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
   addEventListener('resize', () => { if (innerWidth > 900) setMenu(false); }, { passive: true });
@@ -126,7 +144,8 @@
     const ops = [...wo.querySelectorAll('.op')];
     const chip = wo.querySelector('[data-wo-status]');
     const qty = wo.querySelector('[data-wo-qty]');
-    const oee = wo.querySelector('[data-wo-oee]');
+    const scrap = wo.querySelector('[data-wo-scrap]');
+    const tr = root.lang === 'tr';
     const labels = JSON.parse(wo.dataset.labels);
     const target = +qty.dataset.target;
     const setStatus = (i, cls) => { chip.className = 'chip ' + cls; chip.lastChild.textContent = labels[i]; };
@@ -138,7 +157,8 @@
         op.classList.toggle('done', v >= 1);
       });
       qty.textContent = Math.round(target * p / ops.length);
-      oee.textContent = (78 + Math.round(10 * (p / ops.length))) + '%';
+      const sv = (1.2 - 0.6 * (p / ops.length)).toFixed(1);
+      scrap.textContent = tr ? '%' + sv.replace('.', ',') : sv + '%';
     };
     if (reduce) { paint(ops.length); setStatus(3, 'ok'); }
     else {
