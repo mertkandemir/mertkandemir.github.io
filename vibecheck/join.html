@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#7555e8" />
+    <meta name="robots" content="noindex" />
+    <meta property="og:title" content="You’re invited to a VibeCheck quiz ✳" />
+    <meta property="og:description" content="Answer the same quiz and see how well you match." />
+    <title>Join a quiz | VibeCheck</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      .code {
+        font-size: 40px;
+        font-weight: 900;
+        letter-spacing: 6px;
+        color: #7555e8;
+        background: #fff;
+        border-radius: 18px;
+        padding: 14px 20px;
+        display: inline-block;
+        margin: 8px 0 4px;
+      }
+      .stores {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .steps li {
+        margin-bottom: 6px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header><a class="logo" href="./index.html">vibe<span>check</span> ✳</a></header>
+      <main>
+        <section class="hero">
+          <div class="tag">YOU’RE INVITED</div>
+          <h1>A friend wants to play VibeCheck with you</h1>
+          <p>Answer the same quiz on your own phone and see how well you match.</p>
+        </section>
+        <section class="card">
+          <p id="has-code" hidden>Your invite code:</p>
+          <div id="code" class="code" hidden></div>
+          <p>
+            <a id="open" class="button" href="vibecheck://">Open in VibeCheck</a>
+          </p>
+          <p>Don’t have the app yet?</p>
+          <ol class="steps">
+            <li>Download VibeCheck.</li>
+            <li>Open <strong>Friends</strong> and enter the code above.</li>
+          </ol>
+          <div class="stores">
+            <!-- Replace with the real store links once the app is published. -->
+            <a class="button" id="ios" href="https://apps.apple.com/app/idAPP_STORE_ID">App Store</a>
+            <a class="button" id="android" href="https://play.google.com/store/apps/details?id=com.vibecheck.app">Google Play</a>
+          </div>
+        </section>
+      </main>
+      <footer>
+        © VibeCheck · <a href="./index.html">Support</a> · <a href="./privacy.html">Privacy Policy</a>
+      </footer>
+    </div>
+    <script>
+      (function () {
+        var raw = new URLSearchParams(location.search).get('code') || '';
+        var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+        if (!code) return;
+        var link = 'vibecheck://join/' + code;
+        document.getElementById('code').textContent = code;
+        document.getElementById('code').hidden = false;
+        document.getElementById('has-code').hidden = false;
+        document.getElementById('open').href = link;
+        // Try the app once; if it is not installed the page simply stays open.
+        if (/iPhone|iPad|Android/i.test(navigator.userAgent)) location.href = link;
+      })();
+    </script>
+  </body>
+</html>
