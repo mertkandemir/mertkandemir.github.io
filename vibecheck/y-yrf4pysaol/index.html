@@ -220,6 +220,104 @@
         border-radius: 2px;
         vertical-align: middle;
       }
+      .stat.tap {
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        padding-right: 28px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .stat.tap:hover,
+      .stat.tap:focus-visible {
+        border-color: var(--accent);
+      }
+      .stat.tap:active {
+        background: var(--accent-soft);
+      }
+      .stat.tap i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-style: normal;
+        font-size: 22px;
+        color: var(--muted);
+      }
+      dialog.sheet {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--panel);
+        color: var(--ink);
+        width: min(560px, 94vw);
+        max-height: 85vh;
+        padding: 16px 18px 20px;
+        overflow-y: auto;
+      }
+      dialog.sheet::backdrop {
+        background: rgba(0, 0, 0, 0.45);
+      }
+      .sheet-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .sheet-num {
+        font-size: 28px;
+      }
+      .earn-chart.small {
+        height: 90px;
+      }
+      .chart-ends {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      ul.list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul.list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        border-top: 1px solid var(--line);
+      }
+      ul.list li > div {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      .field {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      @media (max-width: 700px) {
+        dialog.sheet {
+          width: 100vw;
+          max-width: 100vw;
+          margin: auto 0 0;
+          border-radius: 16px 16px 0 0;
+          max-height: 88vh;
+          padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+        .row > .field {
+          flex: 1 1 100%;
+        }
+      }
       @media (max-width: 700px) {
         table {
           display: block;
@@ -660,10 +758,11 @@
             { class: 'grid' },
             items.map(([k, label]) =>
               h(
-                'div',
-                { class: 'stat' },
+                'button',
+                { class: 'stat tap', type: 'button', onclick: () => openStat(k, label, s[k] ?? 0) },
                 h('b', {}, s[k] ?? 0),
                 h('span', { class: 'muted' }, label),
+                h('i', { 'aria-hidden': 'true' }, '›'),
               ),
             ),
           ),
@@ -761,6 +860,118 @@
               : h('p', { class: 'muted' }, 'Henüz izlenen ödüllü reklam yok.'),
           ),
         );
+      }
+
+      // ---------- overview details (tap a number) ----------
+      const STAT_TABS = {
+        open_reports: 'reports',
+        bans: 'users',
+        active_grants: 'users',
+        purchases: 'earnings',
+        ad_rewards: 'earnings',
+      };
+      async function openUser(id) {
+        await show('users');
+        const q = document.querySelector('main input[type=search]');
+        if (!q) return;
+        q.value = id;
+        q.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      }
+      async function openStat(key, label, value) {
+        if (STAT_TABS[key]) return show(STAT_TABS[key]);
+        const body = h('div', {}, h('p', { class: 'muted' }, 'Yükleniyor…'));
+        const close = () => dlg.close();
+        const dlg = h(
+          'dialog',
+          { class: 'sheet' },
+          h(
+            'div',
+            { class: 'sheet-head' },
+            h(
+              'div',
+              {},
+              h('b', { class: 'sheet-num' }, value),
+              h('div', { class: 'muted' }, label),
+            ),
+            h('button', { class: 'btn small', type: 'button', onclick: close }, 'Kapat'),
+          ),
+          body,
+        );
+        dlg.addEventListener('close', () => dlg.remove());
+        dlg.addEventListener('click', (e) => e.target === dlg && close());
+        document.body.append(dlg);
+        dlg.showModal();
+        try {
+          const d = await rpc('admin_stat_detail', { p_key: key });
+          const parts = [];
+          if (d.daily) {
+            const max = Math.max(1, ...d.daily.map((x) => x.n));
+            const total = d.daily.reduce((a, x) => a + x.n, 0);
+            parts.push(
+              h('h3', {}, `Son 14 gün · ${total}`),
+              h(
+                'div',
+                { class: 'earn-chart small' },
+                d.daily.map((x) => {
+                  const t = `${new Date(x.day + 'T12:00:00').toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}: ${x.n}`;
+                  return h(
+                    'div',
+                    { class: 'earn-col', title: t, onclick: () => toast(t) },
+                    h('div', { class: 'earn-bar sales', style: `height:${(x.n / max) * 100}%` }),
+                  );
+                }),
+              ),
+              h(
+                'div',
+                { class: 'chart-ends muted' },
+                h('span', {}, '14 gün önce'),
+                h('span', {}, 'Bugün'),
+              ),
+            );
+          }
+          parts.push(
+            h('h3', {}, 'Son kayıtlar'),
+            d.rows.length
+              ? h(
+                  'ul',
+                  { class: 'list' },
+                  d.rows.map((r) =>
+                    h(
+                      'li',
+                      {},
+                      h(
+                        'div',
+                        {},
+                        h('div', {}, r.title),
+                        h(
+                          'div',
+                          { class: 'muted' },
+                          [r.sub, fmtDate(r.at)].filter(Boolean).join(' · '),
+                        ),
+                      ),
+                      r.user_id
+                        ? h(
+                            'button',
+                            {
+                              class: 'btn small',
+                              type: 'button',
+                              onclick: () => {
+                                close();
+                                openUser(r.user_id);
+                              },
+                            },
+                            'Aç',
+                          )
+                        : null,
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Henüz kayıt yok.'),
+          );
+          body.replaceChildren(...parts);
+        } catch (e) {
+          body.replaceChildren(h('p', {}, errText(e)));
+        }
       }
 
       // ---------- earnings ----------
