@@ -186,6 +186,40 @@
         border-collapse: collapse;
       }
       /* Phones: wide tables scroll sideways instead of pushing buttons off screen. */
+      .earn-chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 160px;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .earn-col {
+        flex: 1;
+        min-width: 3px;
+        height: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        cursor: default;
+      }
+      .earn-col:hover {
+        background: var(--accent-soft);
+      }
+      .earn-bar.sales,
+      .earn-key.sales {
+        background: var(--accent);
+      }
+      .earn-bar.ads,
+      .earn-key.ads {
+        background: var(--ok);
+      }
+      .earn-key {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
       @media (max-width: 700px) {
         table {
           display: block;
@@ -501,6 +535,7 @@
       // ---------- shell ----------
       const TABS = [
         ['overview', 'Genel'],
+        ['earnings', 'Kazançlar'],
         ['users', 'Kullanıcılar ve haklar'],
         ['reports', 'Şikayetler'],
         ['content', 'Sorular ve quizler'],
@@ -724,6 +759,334 @@
                   ),
                 )
               : h('p', { class: 'muted' }, 'Henüz izlenen ödüllü reklam yok.'),
+          ),
+        );
+      }
+
+      // ---------- earnings ----------
+      // Store prices (USD) as set in App Store Connect; money here is an estimate.
+      const PRICES_USD = {
+        'vibecheck.messages.25': 0.99,
+        'vibecheck.messages.50': 1.49,
+        'vibecheck.messages.100': 2.49,
+        'vibecheck.couple.deep50': 1.99,
+        'vibecheck.matches.10': 3.99,
+        'vibecheck.matches.25': 6.99,
+        'vibecheck.matches.75': 14.99,
+      };
+      const EARN_LABELS = {
+        'vibecheck.messages.25': '25 mesaj paketi',
+        'vibecheck.messages.50': '50 mesaj paketi',
+        'vibecheck.messages.100': '100 mesaj paketi',
+        'vibecheck.couple.deep50': 'Derin test (+50 soru)',
+        'vibecheck.chat.unlimited': 'Sınırsız sohbet (eski)',
+        'vibecheck.matches.10': '10 eşleşme paketi',
+        'vibecheck.matches.25': '25 eşleşme paketi',
+        'vibecheck.matches.75': '75 eşleşme paketi',
+      };
+      const AD_KIND_LABELS = {
+        'rewarded:tier': 'Ödüllü · ek sorular (+12)',
+        'rewarded:messages': 'Ödüllü · mesaj (+3)',
+        'rewarded:match': 'Ödüllü · eşleşme (+1)',
+        'interstitial:': 'Geçiş reklamı (Kendini Keşfet)',
+      };
+      const EST_KEY = 'vc.admin.earnings.v1';
+      function loadEst() {
+        const d = { fee: 15, rewarded: 8, interstitial: 4, tests: false, days: '30' };
+        try {
+          return { ...d, ...JSON.parse(localStorage.getItem(EST_KEY) || '{}') };
+        } catch {
+          return d;
+        }
+      }
+      function saveEst(e) {
+        try {
+          localStorage.setItem(EST_KEY, JSON.stringify(e));
+        } catch {}
+      }
+      const usd = (n) =>
+        '$' +
+        (Math.round(n * 100) / 100).toLocaleString('tr-TR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+
+      async function viewEarnings() {
+        const est = loadEst();
+        const days = est.days === 'all' ? null : Number(est.days);
+        const d = await rpc('admin_earnings', { p_days: days });
+        const counts = (env) => env === 'production' || est.tests;
+        const net = (gross) => gross * (1 - est.fee / 100);
+        const adMoney = (kind, n) =>
+          (n / 1000) * (kind === 'interstitial' ? est.interstitial : est.rewarded);
+
+        // Sales per product (real only unless test purchases are switched on).
+        const byProduct = {};
+        let testCount = 0;
+        for (const p of d.purchases) {
+          if (p.environment !== 'production') testCount += p.count;
+          if (!counts(p.environment)) continue;
+          byProduct[p.product_id] = (byProduct[p.product_id] || 0) + p.count;
+        }
+        const productRows = Object.entries(byProduct)
+          .map(([id, n]) => ({ id, n, gross: n * (PRICES_USD[id] || 0) }))
+          .sort((a, b) => b.gross - a.gross);
+        const sales = productRows.reduce((s, r) => s + r.n, 0);
+        const gross = productRows.reduce((s, r) => s + r.gross, 0);
+
+        const adRows = d.ads.map((a) => ({
+          key: a.kind + ':' + (a.purpose || ''),
+          kind: a.kind,
+          n: a.count,
+          today: a.today,
+          money: adMoney(a.kind, a.count),
+        }));
+        const rewarded = adRows.filter((a) => a.kind === 'rewarded').reduce((s, a) => s + a.n, 0);
+        const inter = adRows.filter((a) => a.kind === 'interstitial').reduce((s, a) => s + a.n, 0);
+        const adsToday = adRows.reduce((s, a) => s + a.today, 0);
+        const adEst = adRows.reduce((s, a) => s + a.money, 0);
+
+        // Daily series: net sales + estimated ad money per Istanbul day.
+        const series = {};
+        const day = (k) => (series[k] ||= { sales: 0, ads: 0, n: 0, adN: 0 });
+        for (const r of d.daily) {
+          if (r.product_id) {
+            if (!counts(r.environment)) continue;
+            day(r.day).sales += net(r.count * (PRICES_USD[r.product_id] || 0));
+            day(r.day).n += r.count;
+          } else {
+            day(r.day).ads += adMoney(r.ad_kind, r.count);
+            day(r.day).adN += r.count;
+          }
+        }
+        const dayKeys = [];
+        if (days) {
+          for (let i = days - 1; i >= 0; i--) {
+            const t = new Date(Date.now() - i * 86400000);
+            dayKeys.push(t.toLocaleDateString('en-CA', { timeZone: 'Europe/Istanbul' }));
+          }
+        } else dayKeys.push(...Object.keys(series).sort());
+
+        const rangeSel = h(
+          'select',
+          {
+            onchange: (e) => {
+              est.days = e.target.value;
+              saveEst(est);
+              show('earnings');
+            },
+          },
+          [
+            ['1', 'Bugün'],
+            ['7', 'Son 7 gün'],
+            ['30', 'Son 30 gün'],
+            ['90', 'Son 90 gün'],
+            ['all', 'Tüm zamanlar'],
+          ].map(([v, l]) => h('option', { value: v, selected: est.days === v ? true : null }, l)),
+        );
+        const testToggle = h(
+          'label',
+          { style: 'display:flex;gap:6px;align-items:center' },
+          h('input', {
+            type: 'checkbox',
+            checked: est.tests,
+            onchange: (e) => {
+              est.tests = e.target.checked;
+              saveEst(est);
+              show('earnings');
+            },
+          }),
+          'Test (TestFlight/Sandbox) satın almalarını da say',
+        );
+
+        const tile = (value, label, sub) =>
+          h(
+            'div',
+            { class: 'stat' },
+            h('b', {}, value),
+            h('span', { class: 'muted' }, label),
+            sub ? h('div', { class: 'muted', style: 'font-size:12px' }, sub) : null,
+          );
+
+        const maxDay = Math.max(
+          0.01,
+          ...dayKeys.map((k) => (series[k]?.sales || 0) + (series[k]?.ads || 0)),
+        );
+        const chart = h(
+          'div',
+          { class: 'earn-chart' },
+          dayKeys.map((k) => {
+            const s = series[k] || { sales: 0, ads: 0, n: 0, adN: 0 };
+            const title = `${k}\nSatış (net): ${usd(s.sales)} · ${s.n} adet\nReklam (tahmini): ${usd(s.ads)} · ${s.adN} izlenme`;
+            return h(
+              'div',
+              { class: 'earn-col', title, onclick: () => toast(title.replace(/\n/g, ' · ')) },
+              h('div', { class: 'earn-bar ads', style: `height:${(s.ads / maxDay) * 100}%` }),
+              h('div', { class: 'earn-bar sales', style: `height:${(s.sales / maxDay) * 100}%` }),
+            );
+          }),
+        );
+
+        const num = (key, label, suffix) => {
+          const input = h('input', {
+            type: 'number',
+            step: '0.5',
+            min: '0',
+            value: String(est[key]),
+            style: 'width:90px',
+            onchange: (e) => {
+              const v = Number(e.target.value);
+              if (!(v >= 0) || (key === 'fee' && v > 100)) return toast('Geçersiz değer', true);
+              est[key] = v;
+              saveEst(est);
+              show('earnings');
+            },
+          });
+          return h(
+            'label',
+            { style: 'display:flex;gap:8px;align-items:center;flex-wrap:wrap' },
+            h('span', { style: 'flex:0 0 260px;max-width:100%' }, label),
+            input,
+            suffix,
+          );
+        };
+
+        setMain(
+          h('h2', {}, 'Kazançlar'),
+          h('div', { class: 'row', style: 'gap:16px;flex-wrap:wrap' }, rangeSel, testToggle),
+          testCount && !est.tests
+            ? h(
+                'p',
+                { class: 'muted' },
+                `${testCount} test satın alması (TestFlight/Sandbox) gizli; bunlar gerçek para değil.`,
+              )
+            : null,
+          h(
+            'div',
+            { class: 'grid' },
+            tile(usd(gross), 'Satış (brüt)', `${sales} satış`),
+            tile(usd(net(gross)), `Satış (net, Apple %${est.fee} sonrası)`),
+            tile(usd(adEst), 'Reklam geliri (tahmini)', "Kesin rakam AdMob'da"),
+            tile(usd(net(gross) + adEst), 'Toplam (tahmini)'),
+            tile(rewarded, 'Ödüllü reklam izlendi'),
+            tile(inter, 'Geçiş reklamı gösterildi'),
+            tile(adsToday, 'Bugün izlenen reklam'),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Günlük'),
+            dayKeys.length ? chart : h('p', { class: 'muted' }, 'Bu dönemde veri yok.'),
+            h(
+              'p',
+              { class: 'muted' },
+              h('span', { class: 'earn-key sales' }),
+              ' Satış (net)  ',
+              h('span', { class: 'earn-key ads' }),
+              ' Reklam (tahmini). Çubuğa dokununca/üstüne gelince o günün ayrıntısı görünür.',
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Satışlar'),
+            productRows.length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'thead',
+                    {},
+                    h(
+                      'tr',
+                      {},
+                      h('th', {}, 'Ürün'),
+                      h('th', {}, 'Adet'),
+                      h('th', {}, 'Fiyat'),
+                      h('th', {}, 'Brüt'),
+                      h('th', {}, 'Net'),
+                    ),
+                  ),
+                  h(
+                    'tbody',
+                    {},
+                    productRows.map((r) =>
+                      h(
+                        'tr',
+                        {},
+                        h('td', {}, EARN_LABELS[r.id] || r.id),
+                        h('td', {}, r.n),
+                        h('td', {}, PRICES_USD[r.id] != null ? usd(PRICES_USD[r.id]) : '—'),
+                        h('td', {}, usd(r.gross)),
+                        h('td', {}, usd(net(r.gross))),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Bu dönemde satış yok.'),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Reklamlar'),
+            adRows.length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'thead',
+                    {},
+                    h(
+                      'tr',
+                      {},
+                      h('th', {}, 'Tür'),
+                      h('th', {}, 'Bugün'),
+                      h('th', {}, 'Dönem'),
+                      h('th', {}, 'Tahmini gelir'),
+                    ),
+                  ),
+                  h(
+                    'tbody',
+                    {},
+                    adRows.map((a) =>
+                      h(
+                        'tr',
+                        {},
+                        h('td', {}, AD_KIND_LABELS[a.key] || a.key),
+                        h('td', {}, a.today),
+                        h('td', {}, a.n),
+                        h('td', {}, usd(a.money)),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Bu dönemde izlenen reklam yok.'),
+            h(
+              'p',
+              { class: 'muted' },
+              "Ödüllü reklamlar AdMob'un sunucu doğrulamasıyla sayılır. Geçiş reklamları uygulamanın bu güncellemesinden itibaren sayılır" +
+                (d.interstitial_logging_since
+                  ? ` (ilk kayıt ${fmtDate(d.interstitial_logging_since)}).`
+                  : '.'),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Tahmin ayarları'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Bu değerler yalnızca bu tarayıcıda saklanır ve sadece tahmini hesaplamayı değiştirir.',
+            ),
+            num('fee', 'Apple komisyonu', '%'),
+            num('rewarded', 'Ödüllü reklam: 1000 izlenme başına', '$ (eCPM)'),
+            num('interstitial', 'Geçiş reklamı: 1000 gösterim başına', '$ (eCPM)'),
+            h(
+              'p',
+              { class: 'muted' },
+              "Fiyatlar ABD mağaza fiyatlarıdır; Türkiye gibi başka ülkelerdeki fiyat ve vergiler farklıdır. Kesin satış geliri: App Store Connect → Payments and Financial Reports. Kesin reklam geliri: AdMob → Uygulamalar → VibeCheck. Apple Small Business Program'a kayıtlıysan komisyon %15, değilsen %30.",
+            ),
           ),
         );
       }
@@ -2291,6 +2654,7 @@
 
       const VIEWS = {
         overview: viewOverview,
+        earnings: viewEarnings,
         users: viewUsers,
         reports: viewReports,
         content: viewContent,
