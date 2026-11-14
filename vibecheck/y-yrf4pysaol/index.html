@@ -1,0 +1,2305 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>VibeCheck Yönetim</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="VC Yönetim" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <style>
+      :root {
+        --bg: #f6f5fb;
+        --panel: #fff;
+        --ink: #1d1b2e;
+        --muted: #6b6880;
+        --line: #e4e1ef;
+        --accent: #6c4cf5;
+        --accent-soft: #efeafe;
+        --danger: #d33c4a;
+        --ok: #1f9d6b;
+        --warn: #c98a12;
+        --radius: 10px;
+        font-size: 15px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14131c;
+          --panel: #1d1b29;
+          --ink: #ecebf5;
+          --muted: #a09db5;
+          --line: #312e44;
+          --accent: #9d86ff;
+          --accent-soft: #2a2442;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.45;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 20px;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        flex-wrap: wrap;
+      }
+      header h1 {
+        font-size: 17px;
+        margin: 0;
+      }
+      nav {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+      nav button {
+        background: none;
+        border: 0;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: var(--muted);
+        font: inherit;
+        cursor: pointer;
+      }
+      nav button.on {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      header .who {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 13px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      h2 {
+        font-size: 18px;
+        margin: 0 0 12px;
+      }
+      h3 {
+        font-size: 15px;
+        margin: 0 0 8px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 10px;
+      }
+      .stat {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+      }
+      .stat b {
+        display: block;
+        font-size: 24px;
+      }
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: var(--ink);
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px 9px;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+        min-height: 54px;
+      }
+      input[type='checkbox'] {
+        width: 17px;
+        height: 17px;
+        accent-color: var(--accent);
+      }
+      button.btn {
+        font: inherit;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--ink);
+        border-radius: 8px;
+        padding: 7px 12px;
+        cursor: pointer;
+      }
+      button.btn:hover {
+        border-color: var(--accent);
+      }
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      button.danger {
+        color: var(--danger);
+      }
+      button.small {
+        padding: 3px 8px;
+        font-size: 13px;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      /* Phones: wide tables scroll sideways instead of pushing buttons off screen. */
+      @media (max-width: 700px) {
+        table {
+          display: block;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        td .btn,
+        td button {
+          margin-bottom: 4px;
+        }
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 6px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+        font-size: 14px;
+      }
+      th {
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 13px;
+      }
+      .tag {
+        display: inline-block;
+        padding: 1px 8px;
+        border-radius: 99px;
+        font-size: 12px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        margin-right: 4px;
+      }
+      .tag.red {
+        background: #fde8ea;
+        color: var(--danger);
+      }
+      .tag.green {
+        background: #e2f6ee;
+        color: var(--ok);
+      }
+      .tag.gray {
+        background: var(--line);
+        color: var(--muted);
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: var(--bg);
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+        z-index: 20;
+        max-width: 90vw;
+      }
+      .toast.err {
+        background: var(--danger);
+        color: #fff;
+      }
+      .login {
+        max-width: 380px;
+        margin: 12vh auto;
+      }
+      .login input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .q {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 12px;
+        margin-bottom: 10px;
+        background: var(--panel);
+      }
+      .q.ad {
+        border-left: 4px solid var(--warn);
+      }
+      .q.premium {
+        border-left: 4px solid var(--accent);
+      }
+      .opt {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 6px;
+      }
+      .opt input[type='text'] {
+        flex: 1;
+      }
+      .ref {
+        color: var(--muted);
+        font-size: 12px;
+        margin: 2px 0 4px;
+      }
+      .sticky-save {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg);
+        padding: 10px 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-top: 1px solid var(--line);
+      }
+      .hidden {
+        display: none !important;
+      }
+      label.inline {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        margin-right: 14px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .field span {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      code {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+      // Public project values (the same ones the app ships with). Every admin action is
+      // checked on the server: only accounts listed in private.admins can do anything.
+      const SUPABASE_URL = 'https://mmljchdhmlcrrfctgvme.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_1NwUzGRqhedR_5_j4OVITw_RRr2D46n';
+      const sb = createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: { persistSession: true, storageKey: 'vibecheck-admin' },
+      });
+
+      const LOCALES = ['tr', 'en', 'de', 'es', 'it', 'fr', 'ru'];
+      const LOCALE_NAMES = {
+        tr: 'Türkçe',
+        en: 'English',
+        de: 'Deutsch',
+        es: 'Español',
+        it: 'Italiano',
+        fr: 'Français',
+        ru: 'Русский',
+      };
+      const CATEGORY_NAMES = {
+        personality: 'Kendini Keşfet (kişilik)',
+        solo: 'Kendini Keşfet',
+        friends: 'Friends',
+        couples: 'Couple Match',
+      };
+      // Question dimensions: shown as the "map" in the app's detailed analysis.
+      const DIMENSIONS = {
+        couples: {
+          communication: 'İletişim',
+          daily_life: 'Günlük Yaşam',
+          finance_career: 'Finans & Kariyer',
+          social_boundaries: 'Sosyal Çevre',
+          values_philosophy: 'Değerler',
+        },
+        friends: {
+          social_fun: 'Eğlence & Planlar',
+          loyalty_support: 'Sadakat',
+          habits_quirks: 'Alışkanlıklar',
+          communication_conflict: 'İletişim & Mizah',
+          values_boundaries: 'Değerler',
+        },
+      };
+      const TIER_NAMES = { base: 'Temel', ad: 'Reklamlı (+)', premium: 'Premium' };
+      const ERRORS = {
+        not_allowed: 'Bu hesabın yönetici yetkisi yok.',
+        user_not_found: 'Kullanıcı bulunamadı.',
+        invalid_config: 'Ayar değerleri geçersiz.',
+        invalid_action: 'Bu işlem yapılamaz.',
+        quiz_not_found: 'Quiz bulunamadı.',
+        report_not_found: 'Şikayet bulunamadı.',
+        invalid_pattern: 'Geçersiz kelime/kalıp.',
+      };
+
+      // ---------- tiny DOM helpers (text only: user content never becomes HTML) ----------
+      function h(tag, props = {}, ...children) {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(props || {})) {
+          if (v == null || v === false) continue;
+          if (k === 'class') el.className = v;
+          else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+          else if (k === 'value') el.value = v;
+          else if (k === 'checked') el.checked = !!v;
+          else el.setAttribute(k, v === true ? '' : v);
+        }
+        for (const c of children.flat())
+          if (c != null && c !== false) el.append(c instanceof Node ? c : String(c));
+        return el;
+      }
+      const $app = document.getElementById('app');
+      const setMain = (...nodes) =>
+        $main.replaceChildren(...nodes.flat().filter((n) => n != null && n !== false));
+      let refreshSide = () => {};
+      let toastTimer;
+      function toast(msg, isError = false) {
+        document.querySelector('.toast')?.remove();
+        const el = h('div', { class: 'toast' + (isError ? ' err' : '') }, msg);
+        document.body.append(el);
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.remove(), isError ? 6000 : 2500);
+      }
+      function errText(e) {
+        const m = (e && (e.message || e.error_description)) || String(e);
+        for (const [k, v] of Object.entries(ERRORS)) if (m.includes(k)) return v;
+        if (m.startsWith('invalid_quiz'))
+          return 'Quiz kaydedilemedi: ' + m.replace('invalid_quiz:', '').trim();
+        return m;
+      }
+      async function rpc(name, args) {
+        const { data, error } = await sb.rpc(name, args);
+        if (error) throw error;
+        return data;
+      }
+      const fmtDate = (d) =>
+        d ? new Date(d).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+      const uuid = () => crypto.randomUUID();
+
+      // ---------- auth ----------
+      let me = null;
+      async function start() {
+        const { data } = await sb.auth.getSession();
+        if (!data.session) return renderLogin();
+        me = data.session.user;
+        let isAdmin = false;
+        try {
+          isAdmin = await rpc('admin_is');
+        } catch {
+          /* fall through */
+        }
+        if (!isAdmin) return renderNotAdmin();
+        renderShell();
+      }
+
+      function renderLogin(note) {
+        const email = h('input', {
+          type: 'email',
+          placeholder: 'E-posta',
+          autocomplete: 'username',
+        });
+        const pass = h('input', {
+          type: 'password',
+          placeholder: 'Şifre',
+          autocomplete: 'current-password',
+        });
+        const go = async (signup) => {
+          if (!email.value || pass.value.length < 10)
+            return toast('E-posta ve en az 10 karakterlik şifre gir.', true);
+          const { error } = signup
+            ? await sb.auth.signUp({ email: email.value.trim(), password: pass.value })
+            : await sb.auth.signInWithPassword({ email: email.value.trim(), password: pass.value });
+          if (error) return toast(error.message, true);
+          if (signup)
+            return renderLogin(
+              "Hesap oluşturuldu. E-postana gelen onay bağlantısına tıkla (açılan sayfa hata verse de sorun değil), sonra buradan giriş yap ve Claude'a haber ver.",
+            );
+          start();
+        };
+        pass.addEventListener('keydown', (e) => e.key === 'Enter' && go(false));
+        $app.replaceChildren(
+          h(
+            'div',
+            { class: 'panel login' },
+            h('h2', {}, 'VibeCheck Yönetim'),
+            note ? h('p', { class: 'muted' }, note) : null,
+            email,
+            pass,
+            h(
+              'div',
+              { class: 'row' },
+              h('button', { class: 'btn primary', onclick: () => go(false) }, 'Giriş yap'),
+              h('button', { class: 'btn', onclick: () => go(true) }, 'İlk kez: hesap oluştur'),
+            ),
+          ),
+        );
+        email.focus();
+      }
+
+      function renderNotAdmin() {
+        $app.replaceChildren(
+          h(
+            'div',
+            { class: 'panel login' },
+            h('h2', {}, 'Yetki yok'),
+            h(
+              'p',
+              {},
+              "Bu hesap henüz yönetici değil. Claude'a bu hesabı yönetici yapmasını söyle:",
+            ),
+            h('p', {}, h('code', {}, me.email || me.id)),
+            h('button', { class: 'btn', onclick: logout }, 'Çıkış yap'),
+          ),
+        );
+      }
+      async function logout() {
+        await sb.auth.signOut();
+        me = null;
+        renderLogin();
+      }
+
+      // ---------- shell ----------
+      const TABS = [
+        ['overview', 'Genel'],
+        ['users', 'Kullanıcılar ve haklar'],
+        ['reports', 'Şikayetler'],
+        ['content', 'Sorular ve quizler'],
+        ['settings', 'Uygulama ayarları'],
+      ];
+      let $main;
+      function renderShell() {
+        const nav = h(
+          'nav',
+          {},
+          TABS.map(([id, label]) =>
+            h('button', { 'data-tab': id, onclick: () => show(id) }, label),
+          ),
+        );
+        $main = h('main');
+        $app.replaceChildren(
+          h(
+            'header',
+            {},
+            h('h1', {}, 'VibeCheck Yönetim'),
+            nav,
+            h(
+              'div',
+              { class: 'who' },
+              me.email || '',
+              h('button', { class: 'btn small', onclick: logout }, 'Çıkış'),
+            ),
+          ),
+          $main,
+        );
+        show(location.hash.slice(1) || 'overview');
+      }
+      async function show(tab) {
+        if (dirty && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
+        dirty = false;
+        location.hash = tab;
+        document
+          .querySelectorAll('nav button')
+          .forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
+        setMain(h('p', { class: 'muted' }, 'Yükleniyor…'));
+        try {
+          await VIEWS[tab]?.();
+        } catch (e) {
+          setMain(h('div', { class: 'panel' }, errText(e)));
+        }
+      }
+      let dirty = false;
+      window.addEventListener('beforeunload', (e) => {
+        if (dirty) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      // ---------- overview ----------
+      async function viewOverview() {
+        const [s, cfgAll] = await Promise.all([rpc('admin_stats'), rpc('admin_config')]);
+        const minScore = (cfgAll.match_chat || {}).min_score;
+        const items = [
+          ['users', 'Toplam hesap'],
+          ['registered', 'Apple/Google ile giriş'],
+          ['new_24h', 'Son 24 saatte yeni'],
+          ['couple_profiles', 'Couple Match profili'],
+          ['searching_now', 'Şu an eşleşme arayan'],
+          ['matches_24h', 'Eşleşme (24 saat)'],
+          ['friend_sessions_24h', 'Friends oyunu (24 saat)'],
+          ['solo_results_24h', 'Kendini Keşfet (24 saat)'],
+          ['messages_24h', 'Mesaj (24 saat)'],
+          ['open_reports', 'Açık şikayet'],
+          ['bans', 'Engelli kullanıcı'],
+          ['active_grants', 'Özel hak verilen'],
+          ['purchases', 'Satın alma (toplam)'],
+          ['ad_rewards', 'Ödüllü reklam (toplam)'],
+          ['message_credits', 'Kullanıcılardaki mesaj bakiyesi'],
+          ['match_credits', 'Kullanıcılardaki eşleşme hakkı'],
+        ];
+        const PRODUCT_LABELS = {
+          'vibecheck.messages.25': '25 mesaj paketi',
+          'vibecheck.messages.50': '50 mesaj paketi',
+          'vibecheck.messages.100': '100 mesaj paketi',
+          'vibecheck.couple.deep50': 'Derin test (+50 soru)',
+          'vibecheck.chat.unlimited': 'Sınırsız sohbet (eski)',
+          'vibecheck.matches.10': '10 eşleşme paketi',
+          'vibecheck.matches.25': '25 eşleşme paketi',
+          'vibecheck.matches.75': '75 eşleşme paketi',
+        };
+        const AD_LABELS = {
+          tier: 'Ek sorular (+12)',
+          messages: 'Mesaj (+3)',
+          match: 'Eşleşme (+1)',
+        };
+        const chip = (on, onText, offText, warn) =>
+          h(
+            'span',
+            { class: 'tag ' + (on ? (warn ? 'red' : 'green') : 'gray') },
+            on ? onText : offText,
+          );
+        const products = s.purchases_by_product || [];
+        const ads = s.ad_rewards_by_purpose || [];
+        setMain(
+          h('h2', {}, 'Genel durum'),
+          h(
+            'p',
+            {},
+            chip(s.review_demo, 'App Review modu AÇIK', 'App Review modu kapalı', true),
+            ' ',
+            chip(s.match_limit, 'Eşleşme sınırı açık', 'Eşleşme sınırı kapalı', false),
+            ' ',
+            h('span', { class: 'tag' }, `Mesajlaşma eşiği: %${minScore ?? '—'}`),
+            ' ',
+            h('a', { href: '#settings', onclick: () => show('settings') }, 'Ayarlar →'),
+          ),
+          s.review_demo
+            ? h(
+                'p',
+                { class: 'muted' },
+                'App Review modu açıkken arayan herkes ~20 saniye sonra demo partnerle eşleşir. Uygulama onaylanınca kapat.',
+              )
+            : null,
+          h(
+            'div',
+            { class: 'grid' },
+            items.map(([k, label]) =>
+              h(
+                'div',
+                { class: 'stat' },
+                h('b', {}, s[k] ?? 0),
+                h('span', { class: 'muted' }, label),
+              ),
+            ),
+          ),
+          s.open_reports > 0
+            ? h(
+                'p',
+                {},
+                h(
+                  'button',
+                  { class: 'btn', onclick: () => show('reports') },
+                  `${s.open_reports} açık şikayeti incele →`,
+                ),
+              )
+            : null,
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Satın almalar'),
+            products.length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'thead',
+                    {},
+                    h(
+                      'tr',
+                      {},
+                      h('th', {}, 'Ürün'),
+                      h('th', {}, 'Son 24 saat'),
+                      h('th', {}, 'Son 30 gün'),
+                      h('th', {}, 'Toplam'),
+                    ),
+                  ),
+                  h(
+                    'tbody',
+                    {},
+                    products.map((p) =>
+                      h(
+                        'tr',
+                        {},
+                        h(
+                          'td',
+                          {},
+                          PRODUCT_LABELS[p.product_id] || p.product_id,
+                          h('div', { class: 'muted' }, p.product_id),
+                        ),
+                        h('td', {}, p.last_24h),
+                        h('td', {}, p.last_30d),
+                        h('td', {}, p.total),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Henüz satın alma yok.'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Adetler sunucuda doğrulanan satın almalardır. Gelir ve iadeler için App Store Connect → Trends / Payments.',
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Ödüllü reklamlar'),
+            ads.length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'thead',
+                    {},
+                    h(
+                      'tr',
+                      {},
+                      h('th', {}, 'Ne için'),
+                      h('th', {}, 'Son 24 saat'),
+                      h('th', {}, 'Toplam'),
+                    ),
+                  ),
+                  h(
+                    'tbody',
+                    {},
+                    ads.map((a) =>
+                      h(
+                        'tr',
+                        {},
+                        h('td', {}, AD_LABELS[a.purpose] || a.purpose),
+                        h('td', {}, a.last_24h),
+                        h('td', {}, a.total),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Henüz izlenen ödüllü reklam yok.'),
+          ),
+        );
+      }
+
+      // ---------- users & grants ----------
+      async function viewUsers() {
+        const q = h('input', {
+          type: 'search',
+          placeholder: 'Takma ad, e-posta veya kullanıcı kimliği',
+          style: 'flex:1;min-width:260px',
+        });
+        const results = h('div');
+        const search = async () => {
+          results.replaceChildren(h('p', { class: 'muted' }, 'Aranıyor…'));
+          try {
+            renderUserTable(results, await rpc('admin_users', { p_query: q.value }));
+          } catch (e) {
+            toast(errText(e), true);
+          }
+        };
+        q.addEventListener('keydown', (e) => e.key === 'Enter' && search());
+        const grantsBox = h('div');
+        const bansBox = h('div');
+        setMain(
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Kullanıcı ara'),
+            h(
+              'div',
+              { class: 'row' },
+              q,
+              h('button', { class: 'btn primary', onclick: search }, 'Ara'),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              'Boş aramada son 50 hesap listelenir. Misafir (anonim) hesapların takma adı ve e-postası yoktur; kimlikle aranır.',
+            ),
+            results,
+          ),
+          h('div', { class: 'panel' }, h('h2', {}, 'Özel hak verilenler'), grantsBox),
+          h('div', { class: 'panel' }, h('h2', {}, 'Engellenenler'), bansBox),
+        );
+        refreshSide = async () => {
+          renderUserTable(grantsBox, await rpc('admin_grants'));
+          renderUserTable(bansBox, await rpc('admin_bans'));
+        };
+        await refreshSide();
+        search();
+      }
+
+      function renderUserTable(box, users) {
+        if (!users.length) return box.replaceChildren(h('p', { class: 'muted' }, 'Kayıt yok.'));
+        box.replaceChildren(
+          h(
+            'table',
+            {},
+            h(
+              'thead',
+              {},
+              h(
+                'tr',
+                {},
+                h('th', {}, 'Kullanıcı'),
+                h('th', {}, 'Giriş'),
+                h('th', {}, 'Durum'),
+                h('th', {}, ''),
+              ),
+            ),
+            h(
+              'tbody',
+              {},
+              users.map((u) => userRow(u)),
+            ),
+          ),
+        );
+      }
+
+      function userRow(u) {
+        const tr = h('tr');
+        const fill = (u) => {
+          const g = u.grants;
+          const expired = g && g.expires_at && new Date(g.expires_at) < new Date();
+          tr.replaceChildren(
+            h(
+              'td',
+              {},
+              h('div', {}, `${u.avatar || ''} ${u.nickname || (u.anonymous ? 'Misafir' : '—')}`),
+              h('div', { class: 'muted' }, u.email || ''),
+              h('div', { class: 'muted' }, h('code', {}, u.id)),
+            ),
+            h(
+              'td',
+              {},
+              h('div', {}, u.provider || '—'),
+              h('div', { class: 'muted' }, 'Kayıt: ' + fmtDate(u.created_at)),
+              h('div', { class: 'muted' }, 'Son giriş: ' + fmtDate(u.last_sign_in_at)),
+            ),
+            h(
+              'td',
+              {},
+              u.is_admin ? h('span', { class: 'tag' }, 'yönetici') : null,
+              u.banned
+                ? h('span', { class: 'tag red', title: u.ban_reason || '' }, 'engelli')
+                : null,
+              u.reports_against
+                ? h('span', { class: 'tag red' }, `${u.reports_against} şikayet`)
+                : null,
+              u.wallet_balance
+                ? h('span', { class: 'tag green' }, `${u.wallet_balance} mesaj bakiyesi`)
+                : null,
+              u.match_balance
+                ? h('span', { class: 'tag green' }, `${u.match_balance} eşleşme hakkı`)
+                : null,
+              g?.unlimited_chat ? h('span', { class: 'tag green' }, 'sınırsız mesaj') : null,
+              g?.free_premium ? h('span', { class: 'tag green' }, 'ücretsiz ek sorular') : null,
+              g?.ad_free ? h('span', { class: 'tag green' }, 'reklamsız') : null,
+              expired ? h('span', { class: 'tag gray' }, 'süresi doldu') : null,
+              g?.note ? h('div', { class: 'muted' }, 'Not: ' + g.note) : null,
+              g?.expires_at
+                ? h('div', { class: 'muted' }, 'Bitiş: ' + fmtDate(g.expires_at))
+                : null,
+            ),
+            h(
+              'td',
+              { style: 'white-space:nowrap' },
+              h('button', { class: 'btn small', onclick: () => openGrant(u, fill) }, 'Haklar'),
+              ' ',
+              h(
+                'button',
+                {
+                  class: 'btn small',
+                  onclick: () => {
+                    const raw = prompt(
+                      `${u.nickname || u.email || 'Bu kullanıcı'} için mesaj bakiyesine eklenecek sayı (düşmek için eksi yaz). Şu an: ${u.wallet_balance || 0}`,
+                      '25',
+                    );
+                    const n = Math.trunc(Number(raw));
+                    if (raw !== null && n)
+                      act(
+                        () => rpc('admin_wallet_add', { p_user: u.id, p_amount: n }),
+                        fill,
+                        'Mesaj bakiyesi güncellendi',
+                      );
+                  },
+                },
+                'Mesaj ekle',
+              ),
+              ' ',
+              h(
+                'button',
+                {
+                  class: 'btn small',
+                  onclick: () => {
+                    const raw = prompt(
+                      `${u.nickname || u.email || 'Bu kullanıcı'} için eklenecek eşleşme hakkı (düşmek için eksi yaz). Şu an: ${u.match_balance || 0}`,
+                      '5',
+                    );
+                    const n = Math.trunc(Number(raw));
+                    if (raw !== null && n)
+                      act(
+                        () => rpc('admin_match_wallet_add', { p_user: u.id, p_amount: n }),
+                        fill,
+                        'Eşleşme hakkı güncellendi',
+                      );
+                  },
+                },
+                'Eşleşme ekle',
+              ),
+              ' ',
+              u.banned
+                ? h(
+                    'button',
+                    {
+                      class: 'btn small',
+                      onclick: () =>
+                        act(
+                          () =>
+                            rpc('admin_unban', { p_user: u.id }).then(() => ({
+                              ...u,
+                              banned: false,
+                            })),
+                          fill,
+                          'Engel kaldırıldı',
+                        ),
+                    },
+                    'Engeli kaldır',
+                  )
+                : u.is_admin
+                  ? null
+                  : h(
+                      'button',
+                      {
+                        class: 'btn small danger',
+                        onclick: () => {
+                          const reason = prompt(
+                            `${u.nickname || u.email || 'Bu kullanıcı'} engellensin mi? Sebep (isteğe bağlı):`,
+                            'admin',
+                          );
+                          if (reason !== null)
+                            act(
+                              () => rpc('admin_ban', { p_user: u.id, p_reason: reason }),
+                              fill,
+                              'Engellendi',
+                            );
+                        },
+                      },
+                      'Engelle',
+                    ),
+            ),
+          );
+        };
+        fill(u);
+        return tr;
+      }
+      async function act(fn, fill, okMsg) {
+        try {
+          const u = await fn();
+          if (u) fill(u);
+          toast(okMsg);
+          refreshSide().catch(() => {});
+        } catch (e) {
+          toast(errText(e), true);
+        }
+      }
+
+      function openGrant(u, fill) {
+        const g = u.grants || {};
+        const chat = h('input', { type: 'checkbox', checked: g.unlimited_chat });
+        const prem = h('input', { type: 'checkbox', checked: g.free_premium });
+        const adf = h('input', { type: 'checkbox', checked: g.ad_free });
+        const exp = h('input', {
+          type: 'date',
+          value: g.expires_at ? g.expires_at.slice(0, 10) : '',
+        });
+        const note = h('input', {
+          type: 'text',
+          placeholder: 'Not (örn. arkadaşım, test kullanıcısı)',
+          value: g.note || '',
+          style: 'width:100%',
+        });
+        const dlg = h(
+          'dialog',
+          {
+            style:
+              'border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);max-width:460px;width:92vw',
+          },
+          h('h3', {}, `${u.nickname || u.email || 'Kullanıcı'} için özel haklar`),
+          h(
+            'p',
+            {},
+            h('label', { class: 'inline' }, chat, 'Sınırsız mesaj (Couple Match sohbetinde)'),
+          ),
+          h(
+            'p',
+            {},
+            h(
+              'label',
+              { class: 'inline' },
+              prem,
+              'Ücretsiz ek sorular (reklamlı + premium, satın almadan)',
+            ),
+          ),
+          h(
+            'p',
+            {},
+            h(
+              'label',
+              { class: 'inline' },
+              adf,
+              'Reklamsız (tam ekran reklam yok, reklamlı ek sorular reklamsız açılır)',
+            ),
+          ),
+          h(
+            'div',
+            { class: 'row', style: 'margin:10px 0' },
+            h('span', { class: 'muted' }, 'Bitiş tarihi (boş = süresiz):'),
+            exp,
+          ),
+          note,
+          h(
+            'p',
+            { class: 'muted' },
+            'Ek sorular, iki kişi aynı paketi seçtiğinde haklardan biri bu kullanıcıdaysa kendiliğinden açılır. Uygulama değişiklikleri birkaç dakika içinde görür.',
+          ),
+          h(
+            'div',
+            { class: 'row' },
+            h(
+              'button',
+              {
+                class: 'btn primary',
+                onclick: async () => {
+                  await act(
+                    () =>
+                      rpc('admin_grant_set', {
+                        p_user: u.id,
+                        p_unlimited_chat: chat.checked,
+                        p_free_premium: prem.checked,
+                        p_ad_free: adf.checked,
+                        p_expires_at: exp.value
+                          ? new Date(exp.value + 'T23:59:59').toISOString()
+                          : null,
+                        p_note: note.value || null,
+                      }),
+                    fill,
+                    'Haklar kaydedildi',
+                  );
+                  dlg.close();
+                  dlg.remove();
+                },
+              },
+              'Kaydet',
+            ),
+            h(
+              'button',
+              {
+                class: 'btn',
+                onclick: () => {
+                  chat.checked = prem.checked = adf.checked = true;
+                },
+              },
+              'Hepsini ver',
+            ),
+            h(
+              'button',
+              {
+                class: 'btn',
+                onclick: () => {
+                  dlg.close();
+                  dlg.remove();
+                },
+              },
+              'Vazgeç',
+            ),
+          ),
+        );
+        document.body.append(dlg);
+        dlg.showModal();
+      }
+
+      // ---------- reports & moderation ----------
+      async function viewReports() {
+        const status = h(
+          'select',
+          {},
+          h('option', { value: 'open' }, 'Açık'),
+          h('option', { value: 'actioned' }, 'İşlem yapılan'),
+          h('option', { value: 'dismissed' }, 'Reddedilen'),
+        );
+        const list = h('div');
+        const load = async () => {
+          const rows = await rpc('admin_reports', { p_status: status.value });
+          if (!rows.length) return list.replaceChildren(h('p', { class: 'muted' }, 'Şikayet yok.'));
+          list.replaceChildren(
+            h(
+              'table',
+              {},
+              h(
+                'thead',
+                {},
+                h(
+                  'tr',
+                  {},
+                  h('th', {}, 'Tarih'),
+                  h('th', {}, 'Şikayet edilen'),
+                  h('th', {}, 'Sebep / mesaj'),
+                  h('th', {}, ''),
+                ),
+              ),
+              h(
+                'tbody',
+                {},
+                rows.map((r) =>
+                  h(
+                    'tr',
+                    {},
+                    h(
+                      'td',
+                      {},
+                      fmtDate(r.created_at),
+                      h('div', { class: 'muted' }, 'Bildiren: ' + (r.reporter_nickname || '—')),
+                    ),
+                    h(
+                      'td',
+                      {},
+                      r.reported_nickname || '—',
+                      h('div', { class: 'muted' }, `${r.reports_against_user} şikayet toplam`),
+                      r.banned ? h('span', { class: 'tag red' }, 'engelli') : null,
+                    ),
+                    h(
+                      'td',
+                      {},
+                      h('span', { class: 'tag' }, REASONS[r.reason] || r.reason),
+                      h(
+                        'div',
+                        {},
+                        r.evidence
+                          ? `“${r.evidence}”`
+                          : h('span', { class: 'muted' }, 'mesaj metni yok'),
+                      ),
+                    ),
+                    h(
+                      'td',
+                      { style: 'white-space:nowrap' },
+                      r.status !== 'open'
+                        ? h('span', { class: 'muted' }, r.status)
+                        : [
+                            h(
+                              'button',
+                              { class: 'btn small danger', onclick: () => resolve(r.id, 'ban') },
+                              'Engelle',
+                            ),
+                            ' ',
+                            h(
+                              'button',
+                              { class: 'btn small', onclick: () => resolve(r.id, 'dismiss') },
+                              'Reddet',
+                            ),
+                          ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        };
+        const resolve = async (id, action) => {
+          if (
+            action === 'ban' &&
+            !confirm('Bu kullanıcı engellensin mi? Tüm sohbetleri kapanır ve eşleşme arayamaz.')
+          )
+            return;
+          try {
+            await rpc('admin_report_resolve', { p_report: id, p_action: action });
+            toast(action === 'ban' ? 'Engellendi' : 'Reddedildi');
+            load();
+          } catch (e) {
+            toast(errText(e), true);
+          }
+        };
+        status.addEventListener('change', load);
+
+        const patBox = h('div');
+        const patIn = h('input', {
+          type: 'text',
+          placeholder: 'kelime veya ifade (ör. siktir git)',
+          style: 'flex:1',
+        });
+        const patAction = h(
+          'select',
+          {},
+          Object.entries(ACTIONS).map(([k, v]) => h('option', { value: k }, v.label)),
+        );
+        const patFilter = h('input', {
+          type: 'search',
+          placeholder: 'Listede ara',
+          style: 'flex:1',
+        });
+        let allPats = [];
+        const renderPats = () => {
+          const q = patFilter.value.trim().toLowerCase();
+          const shown = allPats.filter(
+            (p) =>
+              !q ||
+              p.pattern.toLowerCase().includes(q) ||
+              (p.category || '').toLowerCase().includes(q),
+          );
+          const counts = Object.keys(ACTIONS).map(
+            (k) => `${ACTIONS[k].label}: ${allPats.filter((p) => p.action === k).length}`,
+          );
+          patBox.replaceChildren(
+            h('p', { class: 'muted' }, `${allPats.length} kayıt · ${counts.join(' · ')}`),
+            shown.length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'tr',
+                    {},
+                    h('th', {}, 'Tür'),
+                    h('th', {}, 'Kategori'),
+                    h('th', {}, 'Kalıp'),
+                    h('th', {}, ''),
+                  ),
+                  shown.slice(0, 150).map((p) =>
+                    h(
+                      'tr',
+                      {},
+                      h(
+                        'td',
+                        {},
+                        h(
+                          'span',
+                          { class: 'tag ' + ACTIONS[p.action].tag },
+                          ACTIONS[p.action].label,
+                        ),
+                      ),
+                      h('td', {}, p.category || ''),
+                      h('td', {}, h('code', {}, p.pattern)),
+                      h(
+                        'td',
+                        {},
+                        h(
+                          'button',
+                          {
+                            class: 'btn small',
+                            title: 'Sil',
+                            onclick: async () => {
+                              if (!confirm('Bu kayıt silinsin mi?')) return;
+                              await rpc('admin_pattern_remove', { p_pattern: p.pattern });
+                              loadPats();
+                            },
+                          },
+                          '×',
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, q ? 'Eşleşen kayıt yok.' : 'Liste boş.'),
+            shown.length > 150
+              ? h('p', { class: 'muted' }, `İlk 150 kayıt gösteriliyor; aramayı daraltın.`)
+              : null,
+          );
+        };
+        const loadPats = async () => {
+          allPats = await rpc('admin_patterns');
+          renderPats();
+        };
+        patFilter.addEventListener('input', renderPats);
+        const addPat = async () => {
+          const v = patIn.value.trim();
+          if (!v) return;
+          // Words and phrases become a whole-word match (same rules as scripts/build_moderation.py);
+          // anything with regex syntax like \m or [ ] is sent as written.
+          const pattern = /\\[mM]|\[|\(\?/.test(v) ? v : toPattern(v);
+          try {
+            await rpc('admin_pattern_add', { p_pattern: pattern, p_action: patAction.value });
+            patIn.value = '';
+            loadPats();
+          } catch (e) {
+            toast(errText(e), true);
+          }
+        };
+        patIn.addEventListener('keydown', (e) => e.key === 'Enter' && addPat());
+        setMain(
+          h(
+            'div',
+            { class: 'panel' },
+            h(
+              'div',
+              { class: 'row', style: 'justify-content:space-between' },
+              h('h2', {}, 'Şikayetler'),
+              status,
+            ),
+            list,
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Yasaklı kelimeler'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Engelle: mesaj ve takma ad gönderilemez, kişi düzenleyebilir. İncele: mesaj gider ama otomatik şikayet olarak yukarıya düşer. Destek: mesaj gider, gönderene yardım kartı gösterilir. Kelime ve ifadeler yalnızca tam kelime olarak eşleşir; ekli halleri ayrı ekle (orospu, orospular).',
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              patIn,
+              patAction,
+              h('button', { class: 'btn primary', onclick: addPat }, 'Ekle'),
+            ),
+            h('div', { class: 'row', style: 'margin-top:10px' }, patFilter),
+            patBox,
+          ),
+        );
+        await Promise.all([load(), loadPats()]);
+      }
+      const REASONS = {
+        harassment: 'Taciz',
+        spam: 'Spam',
+        sexual_content: 'Cinsel içerik',
+        hate: 'Nefret söylemi',
+        other: 'Diğer',
+        auto_review: 'Otomatik: incele',
+      };
+      const ACTIONS = {
+        block: { label: 'Engelle', tag: 'red' },
+        review: { label: 'İncele', tag: '' },
+        support: { label: 'Destek', tag: 'green' },
+      };
+      // Whole word or phrase, any case, Turkish i/ı/İ/I alike, any spacing, ' or ’.
+      // Keep in step with to_pattern() in scripts/build_moderation.py.
+      const toPattern = (entry) => {
+        const e = entry.trim();
+        let body = '';
+        for (const ch of e.toLocaleLowerCase('tr')) {
+          if (ch === 'i' || ch === 'ı') body += '[iıİI]';
+          else if (ch === "'" || ch === '’') body += "['’]";
+          else if (/\s/.test(ch)) body += body.endsWith('\\s+') ? '' : '\\s+';
+          else if ('\\.^$|?*+()[]{}'.includes(ch)) body += '\\' + ch;
+          else body += ch;
+        }
+        const word = (c) => /[\p{L}\p{N}]/u.test(c);
+        const start = word(e[0]) ? '\\m' : '(?<![[:alnum:]_])';
+        const end = word(e[e.length - 1]) ? '\\M' : '(?![[:alnum:]_])';
+        return start + body + end;
+      };
+
+      // ---------- settings ----------
+      async function viewSettings() {
+        const cfg = await rpc('admin_config');
+        const ads = { enabled: false, quiz_interstitial_interval: 4, ...(cfg.ads_settings || {}) };
+        const chat = {
+          free_limit: 0,
+          min_score: 70,
+          welcome_messages: 5,
+          ad_reward_messages: 3,
+          ad_daily_limit: 5,
+          ...(cfg.match_chat || {}),
+        };
+        const cm = { ad_tier_enabled: true, ...(cfg.couple_match || {}) };
+        const save = async (key, value) => {
+          try {
+            await rpc('admin_config_set', { p_key: key, p_value: value });
+            toast('Kaydedildi. Uygulama bir sonraki açılışta alır.');
+          } catch (e) {
+            toast(errText(e), true);
+          }
+        };
+        const field = (label, input) => h('label', { class: 'field' }, h('span', {}, label), input);
+        const adsOn = h('input', { type: 'checkbox', checked: ads.enabled });
+        const adsEvery = h('input', {
+          type: 'number',
+          min: 1,
+          max: 50,
+          value: ads.quiz_interstitial_interval,
+        });
+        const intIos = h('input', {
+          type: 'text',
+          value: ads.interstitial_unit_ios || '',
+          size: 44,
+        });
+        const intAnd = h('input', {
+          type: 'text',
+          value: ads.interstitial_unit_android || '',
+          size: 44,
+        });
+        const free = h('input', { type: 'number', min: 0, max: 1000, value: chat.free_limit });
+        const minScore = h('input', { type: 'number', min: 0, max: 100, value: chat.min_score });
+        const welcome = h('input', {
+          type: 'number',
+          min: 0,
+          max: 1000,
+          value: chat.welcome_messages,
+        });
+        const adReward = h('input', {
+          type: 'number',
+          min: 0,
+          max: 100,
+          value: chat.ad_reward_messages,
+        });
+        const adDaily = h('input', {
+          type: 'number',
+          min: 0,
+          max: 100,
+          value: chat.ad_daily_limit,
+        });
+        const adTier = h('input', { type: 'checkbox', checked: cm.ad_tier_enabled });
+        const prem = h('input', { type: 'text', value: cm.premium_product_id || '', size: 34 });
+        const chatProd = h('input', { type: 'text', value: cm.chat_product_id || '', size: 34 });
+        const packsTxt = h('input', {
+          type: 'text',
+          value: Object.entries(cm.message_packs || {})
+            .map(([id, n]) => `${id}=${n}`)
+            .join(', '),
+          size: 70,
+          placeholder: 'vibecheck.messages.25=25, vibecheck.messages.50=50',
+        });
+        const parsePacks = () => {
+          const out = {};
+          for (const part of packsTxt.value.split(',')) {
+            const [id, n] = part.split('=').map((x) => (x || '').trim());
+            if (id && Number(n) > 0) out[id] = Math.floor(Number(n));
+          }
+          return out;
+        };
+        const rwIos = h('input', { type: 'text', value: cm.rewarded_unit_ios || '', size: 44 });
+        const rwAnd = h('input', { type: 'text', value: cm.rewarded_unit_android || '', size: 44 });
+        const ml = {
+          enabled: false,
+          daily_free: 2,
+          ad_daily: 1,
+          packs: {},
+          ...(cfg.match_limit || {}),
+        };
+        const mlOn = h('input', { type: 'checkbox', checked: ml.enabled });
+        const mlFree = h('input', { type: 'number', min: 0, max: 100, value: ml.daily_free });
+        const mlAd = h('input', { type: 'number', min: 0, max: 100, value: ml.ad_daily });
+        const mlPacks = h('input', {
+          type: 'text',
+          value: Object.entries(ml.packs || {})
+            .map(([id, n]) => `${id}=${n}`)
+            .join(', '),
+          size: 70,
+        });
+        const demo = { enabled: false, wait_seconds: 20, ...(cfg.review_demo || {}) };
+        const demoOn = h('input', { type: 'checkbox', checked: demo.enabled });
+        const demoWait = h('input', { type: 'number', min: 0, max: 600, value: demo.wait_seconds });
+        setMain(
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Couple Match sohbeti'),
+            h(
+              'div',
+              { class: 'row' },
+              field('Mesajlaşmanın açılacağı en düşük uyum yüzdesi (%)', minScore),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              'Eşleşmenin temel uyum yüzdesi bu değere eşit ya da yüksekse ikisine de "Sohbet başlatılsın mı?" daveti çıkar; altındaysa sohbet açılmaz. Kaydettiğin an geçerli olur.',
+            ),
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:8px' },
+              field('Hoş geldin mesajı (hesap başına bir kez)', welcome),
+              field('Eşleşme başı ücretsiz mesaj', free),
+            ),
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:8px' },
+              field('Bir reklamla kazanılan mesaj', adReward),
+              field('24 saatte en fazla reklam', adDaily),
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'button',
+                {
+                  class: 'btn primary',
+                  onclick: () =>
+                    save('match_chat', {
+                      ...chat,
+                      free_limit: Number(free.value),
+                      min_score: Number(minScore.value),
+                      welcome_messages: Number(welcome.value),
+                      ad_reward_messages: Number(adReward.value),
+                      ad_daily_limit: Number(adDaily.value),
+                    }),
+                },
+                'Kaydet',
+              ),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'App Review modu (demo partner)'),
+            h(
+              'p',
+              {},
+              h(
+                'label',
+                { class: 'inline' },
+                demoOn,
+                'Açık: Couple Match\'te kimse bulunamazsa "VibeCheck Demo 🤖" ile eşleştir',
+              ),
+            ),
+            h('div', { class: 'row' }, field('Kaç saniye bekledikten sonra', demoWait)),
+            h(
+              'p',
+              { class: 'muted' },
+              'Apple incelemesi sırasında ve tek başına test ederken aç; onaydan sonra kapat. Demo partner kendini açıkça demo olarak tanıtır, testi cevaplar, paket seçimine ve sohbete katılır. Açıkken gerçek kullanıcılar da bekleme süresinden sonra bu demo partnerle eşleşebilir.',
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'button',
+                {
+                  class: 'btn primary',
+                  onclick: () =>
+                    save('review_demo', {
+                      enabled: demoOn.checked,
+                      wait_seconds: Number(demoWait.value),
+                    }),
+                },
+                'Kaydet',
+              ),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Reklamlar (Kendini Keşfet)'),
+            h('p', {}, h('label', { class: 'inline' }, adsOn, 'Tam ekran reklamlar açık')),
+            h(
+              'div',
+              { class: 'row' },
+              field('Kaç quizde bir reklam', adsEvery),
+              field('iOS reklam birimi', intIos),
+              field('Android reklam birimi', intAnd),
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'button',
+                {
+                  class: 'btn primary',
+                  onclick: () =>
+                    save('ads_settings', {
+                      ...ads,
+                      enabled: adsOn.checked,
+                      quiz_interstitial_interval: Number(adsEvery.value),
+                      interstitial_unit_ios: intIos.value.trim(),
+                      interstitial_unit_android: intAnd.value.trim(),
+                    }),
+                },
+                'Kaydet',
+              ),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Eşleşme sınırı (Couple Match)'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Kapalıyken herkes sınırsız eşleşir. Açınca: 24 saatte ücretsiz eşleşme, sonra reklamla +1 ya da eşleşme paketi. Eşi testi bitirmeden ayrılırsa eşleşme geri verilir; demo partner sayılmaz.',
+            ),
+            h('p', {}, h('label', { class: 'inline' }, mlOn, 'Eşleşme sınırı açık')),
+            h(
+              'div',
+              { class: 'row' },
+              field('24 saatte ücretsiz eşleşme', mlFree),
+              field('24 saatte reklamla eşleşme (+1)', mlAd),
+            ),
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:8px' },
+              field('Eşleşme paketleri (ürün kimliği=eşleşme sayısı)', mlPacks),
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'button',
+                {
+                  class: 'btn primary',
+                  onclick: () => {
+                    const packs = {};
+                    for (const part of mlPacks.value.split(',')) {
+                      const [id, n] = part.split('=').map((x) => (x || '').trim());
+                      if (id && Number(n) > 0) packs[id] = Math.floor(Number(n));
+                    }
+                    save('match_limit', {
+                      ...ml,
+                      enabled: mlOn.checked,
+                      daily_free: Number(mlFree.value),
+                      ad_daily: Number(mlAd.value),
+                      packs,
+                    });
+                  },
+                },
+                'Kaydet',
+              ),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Couple Match ek soruları ve satın almalar'),
+            h(
+              'p',
+              {},
+              h('label', { class: 'inline' }, adTier, 'Reklam izleyerek +12 soru seçeneği açık'),
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              field('Premium ürün kimliği', prem),
+              field('Sınırsız sohbet ürün kimliği (eski, satışta değil)', chatProd),
+            ),
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:8px' },
+              field('Mesaj paketleri (ürün kimliği=mesaj sayısı)', packsTxt),
+            ),
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:8px' },
+              field('iOS ödüllü reklam birimi', rwIos),
+              field('Android ödüllü reklam birimi', rwAnd),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              "Ürün kimlikleri App Store Connect'teki ürünlerle birebir aynı olmalı. Fiyatı App Store Connect'ten değiştirirsin.",
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'button',
+                {
+                  class: 'btn primary',
+                  onclick: () =>
+                    save('couple_match', {
+                      ...cm,
+                      ad_tier_enabled: adTier.checked,
+                      premium_product_id: prem.value.trim(),
+                      chat_product_id: chatProd.value.trim(),
+                      message_packs: parsePacks(),
+                      rewarded_unit_ios: rwIos.value.trim(),
+                      rewarded_unit_android: rwAnd.value.trim(),
+                    }),
+                },
+                'Kaydet',
+              ),
+            ),
+          ),
+        );
+      }
+
+      // ---------- content ----------
+      async function viewContent() {
+        const quizzes = await rpc('admin_quizzes');
+        const byCat = {};
+        for (const q of quizzes) (byCat[q.category] ||= []).push(q);
+        const statusTag = (s) =>
+          h(
+            'span',
+            { class: 'tag ' + (s === 'published' ? 'green' : s === 'draft' ? '' : 'gray') },
+            { published: 'yayında', draft: 'taslak', archived: 'arşiv' }[s],
+          );
+        setMain(
+          h(
+            'div',
+            { class: 'row', style: 'justify-content:space-between;margin-bottom:12px' },
+            h('h2', { style: 'margin:0' }, 'Sorular ve quizler'),
+            h('button', { class: 'btn primary', onclick: () => openEditor(null) }, '+ Yeni quiz'),
+          ),
+          ...Object.keys(CATEGORY_NAMES)
+            .filter((c) => byCat[c])
+            .map((c) =>
+              h(
+                'div',
+                { class: 'panel' },
+                h('h3', {}, CATEGORY_NAMES[c]),
+                h(
+                  'table',
+                  {},
+                  h(
+                    'tbody',
+                    {},
+                    byCat[c].map((q) =>
+                      h(
+                        'tr',
+                        {},
+                        h(
+                          'td',
+                          {},
+                          h('b', {}, q.titles.tr || q.titles.en || q.slug),
+                          h('div', { class: 'muted' }, q.slug),
+                        ),
+                        h(
+                          'td',
+                          {},
+                          Object.entries(q.counts).map(([t, n]) =>
+                            h('span', { class: 'tag gray' }, `${TIER_NAMES[t]}: ${n}`),
+                          ),
+                          q.play_mode === 'prediction'
+                            ? h('span', { class: 'tag' }, 'tahmin modu')
+                            : null,
+                        ),
+                        h(
+                          'td',
+                          {},
+                          statusTag(q.status),
+                          h(
+                            'span',
+                            { class: 'muted' },
+                            `${LOCALES.filter((l) => q.titles[l]).length}/7 dil`,
+                          ),
+                        ),
+                        h(
+                          'td',
+                          { style: 'white-space:nowrap;text-align:right' },
+                          h(
+                            'button',
+                            { class: 'btn small', onclick: () => openEditor(q.id) },
+                            'Düzenle',
+                          ),
+                          ' ',
+                          q.status !== 'published'
+                            ? h(
+                                'button',
+                                { class: 'btn small', onclick: () => setStatus(q.id, 'published') },
+                                'Yayınla',
+                              )
+                            : h(
+                                'button',
+                                { class: 'btn small', onclick: () => setStatus(q.id, 'draft') },
+                                'Yayından al',
+                              ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        );
+      }
+      async function setStatus(id, status) {
+        try {
+          await rpc('admin_quiz_set_status', { p_quiz: id, p_status: status });
+          toast(status === 'published' ? 'Yayınlandı' : 'Yayından alındı');
+          show('content');
+        } catch (e) {
+          toast(errText(e), true);
+        }
+      }
+
+      let editLocale = 'tr';
+      async function openEditor(id) {
+        const quiz = id
+          ? await rpc('admin_quiz_get', { p_quiz: id })
+          : {
+              id: uuid(),
+              slug: '',
+              category: 'friends',
+              status: 'draft',
+              sort_order: 0,
+              play_mode: 'prediction',
+              translations: {},
+              outcomes: [],
+              questions: [],
+            };
+        dirty = false;
+        renderEditor(quiz, !id);
+      }
+
+      function renderEditor(quiz, isNew) {
+        const markDirty = () => {
+          dirty = true;
+        };
+        const scored = () => quiz.category === 'personality' || quiz.category === 'solo';
+        const tiered = () => quiz.category === 'couples';
+        const tr = (obj, key = editLocale) => (obj || {})[key] || '';
+
+        const localeSel = h(
+          'select',
+          {
+            onchange: (e) => {
+              editLocale = e.target.value;
+              renderEditor(quiz, isNew);
+            },
+          },
+          LOCALES.map((l) =>
+            h('option', { value: l, selected: l === editLocale ? true : null }, LOCALE_NAMES[l]),
+          ),
+        );
+        const refNote = (obj) =>
+          editLocale !== 'en' && obj?.en
+            ? h(
+                'div',
+                { class: 'ref' },
+                'EN: ' + (typeof obj.en === 'string' ? obj.en : obj.en.title),
+              )
+            : null;
+
+        // --- meta ---
+        const slug = h('input', {
+          type: 'text',
+          value: quiz.slug,
+          placeholder: 'ornek-quiz-adi',
+          oninput: (e) => {
+            quiz.slug = e.target.value;
+            markDirty();
+          },
+        });
+        const cat = h(
+          'select',
+          {
+            onchange: (e) => {
+              quiz.category = e.target.value;
+              markDirty();
+              renderEditor(quiz, isNew);
+            },
+          },
+          Object.entries(CATEGORY_NAMES).map(([k, v]) =>
+            h('option', { value: k, selected: k === quiz.category ? true : null }, v),
+          ),
+        );
+        const mode = h(
+          'select',
+          {
+            onchange: (e) => {
+              quiz.play_mode = e.target.value;
+              markDirty();
+            },
+          },
+          h(
+            'option',
+            { value: 'match', selected: quiz.play_mode === 'match' ? true : null },
+            'Eşleşme (aynı cevap = uyum)',
+          ),
+          h(
+            'option',
+            { value: 'prediction', selected: quiz.play_mode === 'prediction' ? true : null },
+            'Tahmin (önce kendin, sonra arkadaşını tahmin et)',
+          ),
+        );
+        const sort = h('input', {
+          type: 'number',
+          value: quiz.sort_order,
+          style: 'width:80px',
+          oninput: (e) => {
+            quiz.sort_order = Number(e.target.value) || 0;
+            markDirty();
+          },
+        });
+        const status = h(
+          'select',
+          {
+            onchange: (e) => {
+              quiz.status = e.target.value;
+              markDirty();
+            },
+          },
+          ['draft', 'published', 'archived'].map((s) =>
+            h(
+              'option',
+              { value: s, selected: s === quiz.status ? true : null },
+              { draft: 'Taslak', published: 'Yayında', archived: 'Arşiv' }[s],
+            ),
+          ),
+        );
+        const title = h('input', {
+          type: 'text',
+          value: tr(quiz.translations)?.title || '',
+          style: 'width:100%',
+          oninput: (e) => {
+            quiz.translations[editLocale] = {
+              ...(quiz.translations[editLocale] || {}),
+              title: e.target.value,
+            };
+            markDirty();
+          },
+        });
+        const desc = h(
+          'textarea',
+          {
+            oninput: (e) => {
+              quiz.translations[editLocale] = {
+                ...(quiz.translations[editLocale] || {}),
+                description: e.target.value,
+              };
+              markDirty();
+            },
+          },
+          tr(quiz.translations)?.description || '',
+        );
+
+        // --- outcomes (scored quizzes) ---
+        const outcomesPanel = !scored()
+          ? null
+          : h(
+              'div',
+              { class: 'panel' },
+              h('h3', {}, 'Sonuçlar'),
+              h(
+                'p',
+                { class: 'muted' },
+                'Her şık bir sonuca bağlanır; en çok seçilen sonuç kişinin sonucu olur.',
+              ),
+              quiz.outcomes.map((o, i) =>
+                h(
+                  'div',
+                  { class: 'q' },
+                  h(
+                    'div',
+                    { class: 'row' },
+                    h('b', {}, `Sonuç ${i + 1}`),
+                    h(
+                      'button',
+                      {
+                        class: 'btn small danger',
+                        onclick: () => {
+                          if (confirm('Bu sonuç silinsin mi? Ona bağlı şıklar boşa düşer.')) {
+                            quiz.outcomes.splice(i, 1);
+                            markDirty();
+                            renderEditor(quiz, isNew);
+                          }
+                        },
+                      },
+                      'Sil',
+                    ),
+                  ),
+                  h('input', {
+                    type: 'text',
+                    placeholder: 'Sonuç adı',
+                    value: tr(o.translations)?.title || '',
+                    style: 'width:100%;margin-top:6px',
+                    oninput: (e) => {
+                      o.translations[editLocale] = {
+                        ...(o.translations[editLocale] || {}),
+                        title: e.target.value,
+                      };
+                      markDirty();
+                    },
+                  }),
+                  refNote(o.translations),
+                  h(
+                    'textarea',
+                    {
+                      placeholder: 'Açıklama',
+                      oninput: (e) => {
+                        o.translations[editLocale] = {
+                          ...(o.translations[editLocale] || {}),
+                          description: e.target.value,
+                        };
+                        markDirty();
+                      },
+                    },
+                    tr(o.translations)?.description || '',
+                  ),
+                ),
+              ),
+              h(
+                'button',
+                {
+                  class: 'btn',
+                  onclick: () => {
+                    quiz.outcomes.push({ id: uuid(), translations: {} });
+                    markDirty();
+                    renderEditor(quiz, isNew);
+                  },
+                },
+                '+ Sonuç ekle',
+              ),
+            );
+
+        // --- questions ---
+        const outcomeName = (o, i) =>
+          tr(o.translations)?.title ||
+          o.translations?.en?.title ||
+          o.translations?.tr?.title ||
+          `Sonuç ${i + 1}`;
+        const moveQ = (i, d) => {
+          const j = i + d;
+          if (j < 0 || j >= quiz.questions.length) return;
+          [quiz.questions[i], quiz.questions[j]] = [quiz.questions[j], quiz.questions[i]];
+          markDirty();
+          renderEditor(quiz, isNew);
+        };
+        const questionCards = quiz.questions.map((qn, i) => {
+          const filled = LOCALES.filter((l) => qn.translations?.[l]).length;
+          return h(
+            'div',
+            { class: 'q ' + (qn.tier || 'base') },
+            h(
+              'div',
+              { class: 'row', style: 'justify-content:space-between' },
+              h(
+                'div',
+                { class: 'row' },
+                h('b', {}, `Soru ${i + 1}`),
+                tiered()
+                  ? h(
+                      'select',
+                      {
+                        onchange: (e) => {
+                          qn.tier = e.target.value;
+                          markDirty();
+                          renderEditor(quiz, isNew);
+                        },
+                      },
+                      Object.entries(TIER_NAMES).map(([k, v]) =>
+                        h(
+                          'option',
+                          { value: k, selected: k === (qn.tier || 'base') ? true : null },
+                          v,
+                        ),
+                      ),
+                    )
+                  : null,
+                DIMENSIONS[quiz.category]
+                  ? h(
+                      'select',
+                      {
+                        title: 'Analiz boyutu',
+                        onchange: (e) => {
+                          qn.dimension = e.target.value || null;
+                          markDirty();
+                        },
+                      },
+                      [
+                        h('option', { value: '' }, 'Boyut yok'),
+                        ...Object.entries(DIMENSIONS[quiz.category]).map(([k, v]) =>
+                          h('option', { value: k, selected: k === qn.dimension ? true : null }, v),
+                        ),
+                      ],
+                    )
+                  : null,
+                h('span', { class: 'tag ' + (filled === 7 ? 'green' : 'gray') }, `${filled}/7 dil`),
+              ),
+              h(
+                'div',
+                { class: 'row' },
+                h(
+                  'button',
+                  { class: 'btn small', title: 'Yukarı', onclick: () => moveQ(i, -1) },
+                  '↑',
+                ),
+                h(
+                  'button',
+                  { class: 'btn small', title: 'Aşağı', onclick: () => moveQ(i, 1) },
+                  '↓',
+                ),
+                h(
+                  'button',
+                  {
+                    class: 'btn small danger',
+                    onclick: () => {
+                      if (confirm('Soru silinsin mi?')) {
+                        quiz.questions.splice(i, 1);
+                        markDirty();
+                        renderEditor(quiz, isNew);
+                      }
+                    },
+                  },
+                  'Sil',
+                ),
+              ),
+            ),
+            h(
+              'textarea',
+              {
+                placeholder: `Soru metni (${LOCALE_NAMES[editLocale]})`,
+                style: 'margin-top:6px',
+                oninput: (e) => {
+                  qn.translations[editLocale] = e.target.value;
+                  markDirty();
+                },
+              },
+              tr(qn.translations),
+            ),
+            refNote(qn.translations),
+            qn.options.map((op, k) =>
+              h(
+                'div',
+                { class: 'opt' },
+                h('span', { class: 'muted' }, String.fromCharCode(65 + k)),
+                h('input', {
+                  type: 'text',
+                  placeholder: 'Şık',
+                  value: tr(op.translations),
+                  oninput: (e) => {
+                    op.translations[editLocale] = e.target.value;
+                    markDirty();
+                  },
+                }),
+                scored()
+                  ? h(
+                      'select',
+                      {
+                        onchange: (e) => {
+                          op.outcome_id = e.target.value || null;
+                          markDirty();
+                        },
+                      },
+                      h('option', { value: '' }, '— sonuç seç —'),
+                      quiz.outcomes.map((o, oi) =>
+                        h(
+                          'option',
+                          { value: o.id, selected: o.id === op.outcome_id ? true : null },
+                          outcomeName(o, oi),
+                        ),
+                      ),
+                    )
+                  : null,
+                h(
+                  'button',
+                  {
+                    class: 'btn small',
+                    title: 'Şıkkı sil',
+                    disabled: qn.options.length <= 2 ? true : null,
+                    onclick: () => {
+                      qn.options.splice(k, 1);
+                      markDirty();
+                      renderEditor(quiz, isNew);
+                    },
+                  },
+                  '×',
+                ),
+              ),
+            ),
+            h(
+              'button',
+              {
+                class: 'btn small',
+                style: 'margin-top:8px',
+                onclick: () => {
+                  qn.options.push({ id: uuid(), outcome_id: null, translations: {} });
+                  markDirty();
+                  renderEditor(quiz, isNew);
+                },
+              },
+              '+ Şık',
+            ),
+          );
+        });
+        const addQuestion = () => {
+          // New questions start with the same answer choices as the first question (e.g. Always / Depends / Never).
+          const tpl = quiz.questions[0]?.options;
+          const options = tpl
+            ? tpl.map((o) => ({
+                id: uuid(),
+                outcome_id: scored() ? o.outcome_id : null,
+                translations: { ...o.translations },
+              }))
+            : [
+                { id: uuid(), outcome_id: null, translations: {} },
+                { id: uuid(), outcome_id: null, translations: {} },
+              ];
+          const tier = tiered() ? quiz.questions.at(-1)?.tier || 'base' : 'base';
+          const dimension = quiz.questions.at(-1)?.dimension || null;
+          quiz.questions.push({ id: uuid(), tier, dimension, translations: {}, options });
+          markDirty();
+          renderEditor(quiz, isNew);
+          setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 0);
+        };
+
+        const missing = LOCALES.map((l) => [
+          l,
+          quiz.questions.filter((q) => !q.translations?.[l]).length,
+        ]).filter(([, n]) => n);
+        const counts = ['base', 'ad', 'premium']
+          .map((t) => [t, quiz.questions.filter((q) => (q.tier || 'base') === t).length])
+          .filter(([, n]) => n);
+
+        const saveBtn = h(
+          'button',
+          {
+            class: 'btn primary',
+            onclick: async () => {
+              // Questions are saved grouped by tier (base, then ad, then premium) in this order.
+              const order = { base: 0, ad: 1, premium: 2 };
+              const payload = {
+                ...quiz,
+                questions: [...quiz.questions].sort(
+                  (a, b) => order[a.tier || 'base'] - order[b.tier || 'base'],
+                ),
+              };
+              saveBtn.disabled = true;
+              try {
+                const saved = await rpc('admin_quiz_save', { p: payload });
+                dirty = false;
+                toast('Kaydedildi');
+                renderEditor(saved, false);
+              } catch (e) {
+                toast(errText(e), true);
+                saveBtn.disabled = false;
+              }
+            },
+          },
+          'Kaydet',
+        );
+
+        setMain(
+          h(
+            'div',
+            { class: 'row', style: 'justify-content:space-between;margin-bottom:12px' },
+            h('button', { class: 'btn', onclick: () => show('content') }, '← Quiz listesi'),
+            h('div', { class: 'row' }, h('span', { class: 'muted' }, 'Düzenlenen dil:'), localeSel),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h(
+              'h2',
+              {},
+              isNew
+                ? 'Yeni quiz'
+                : quiz.translations.tr?.title || quiz.translations.en?.title || quiz.slug,
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              h('label', { class: 'field' }, h('span', {}, 'Bölüm'), cat),
+              h(
+                'label',
+                { class: 'field' },
+                h('span', {}, 'Kısa ad (URL, küçük harf ve tire)'),
+                slug,
+              ),
+              quiz.category === 'friends' || quiz.category === 'couples'
+                ? h('label', { class: 'field' }, h('span', {}, 'Oyun türü'), mode)
+                : null,
+              h('label', { class: 'field' }, h('span', {}, 'Sıra'), sort),
+              h('label', { class: 'field' }, h('span', {}, 'Durum'), status),
+            ),
+            h(
+              'label',
+              { class: 'field', style: 'margin-top:12px' },
+              h('span', {}, `Başlık (${LOCALE_NAMES[editLocale]})`),
+              title,
+            ),
+            refNote(quiz.translations),
+            h(
+              'label',
+              { class: 'field', style: 'margin-top:8px' },
+              h('span', {}, `Açıklama (${LOCALE_NAMES[editLocale]})`),
+              desc,
+            ),
+            tiered()
+              ? h(
+                  'p',
+                  { class: 'muted' },
+                  'Couple Match: Temel sorular herkese açık; Reklamlı ve Premium sorular ek paketlerdir. Sıralama paket içinde geçerlidir.',
+                )
+              : null,
+          ),
+          outcomesPanel,
+          h(
+            'div',
+            {},
+            h('h3', {}, `Sorular (${quiz.questions.length})`),
+            questionCards,
+            h('button', { class: 'btn', onclick: addQuestion }, '+ Soru ekle'),
+          ),
+          h(
+            'div',
+            { class: 'sticky-save' },
+            saveBtn,
+            h(
+              'span',
+              { class: 'muted' },
+              counts.map(([t, n]) => `${TIER_NAMES[t]}: ${n}`).join(' · '),
+            ),
+            missing.length
+              ? h(
+                  'span',
+                  { class: 'muted' },
+                  ' · Eksik çeviri: ' +
+                    missing.map(([l, n]) => `${l.toUpperCase()} ${n}`).join(', '),
+                )
+              : null,
+            quiz.status === 'published'
+              ? h('span', { class: 'tag green' }, 'Kaydedince hemen yayına girer')
+              : null,
+          ),
+        );
+      }
+
+      const VIEWS = {
+        overview: viewOverview,
+        users: viewUsers,
+        reports: viewReports,
+        content: viewContent,
+        settings: viewSettings,
+      };
+      sb.auth.onAuthStateChange((event) => {
+        if (event === 'SIGNED_OUT') renderLogin();
+      });
+      start();
+    </script>
+  </body>
+</html>
