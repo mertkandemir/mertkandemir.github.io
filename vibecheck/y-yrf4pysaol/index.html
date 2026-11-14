@@ -26,6 +26,7 @@
       }
       @media (prefers-color-scheme: dark) {
         :root {
+          color-scheme: dark;
           --bg: #14131c;
           --panel: #1d1b29;
           --ink: #ecebf5;
@@ -45,60 +46,241 @@
         color: var(--ink);
         line-height: 1.45;
       }
-      header {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 12px 20px;
-        background: var(--panel);
-        border-bottom: 1px solid var(--line);
+      /* ---------- shell: sidebar on computers, tab bar on phones ---------- */
+      .app {
+        min-height: 100vh;
+      }
+      .side {
+        display: none;
+      }
+      .topbar {
         position: sticky;
         top: 0;
         z-index: 5;
-        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+        background: color-mix(in srgb, var(--bg) 85%, transparent);
+        backdrop-filter: saturate(1.4) blur(14px);
+        -webkit-backdrop-filter: saturate(1.4) blur(14px);
+        border-bottom: 1px solid var(--line);
       }
-      header h1 {
+      .topbar h1 {
         font-size: 17px;
         margin: 0;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      nav {
-        display: flex;
-        gap: 4px;
-        flex-wrap: wrap;
-      }
-      nav button {
-        background: none;
-        border: 0;
-        padding: 8px 12px;
+      .topbar .brand-mini {
+        width: 28px;
+        height: 28px;
         border-radius: 8px;
-        color: var(--muted);
-        font: inherit;
+      }
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--ink);
         cursor: pointer;
       }
-      nav button.on {
-        background: var(--accent-soft);
-        color: var(--accent);
-        font-weight: 600;
+      .ico {
+        display: inline-flex;
+        width: 22px;
+        height: 22px;
+        flex: none;
       }
-      header .who {
-        margin-left: auto;
-        color: var(--muted);
-        font-size: 13px;
+      .ico svg {
+        width: 100%;
+        height: 100%;
+      }
+      .navbtn {
+        position: relative;
         display: flex;
-        gap: 10px;
         align-items: center;
+        gap: 12px;
+        width: 100%;
+        border: 0;
+        background: none;
+        color: var(--muted);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .navbtn.on {
+        color: var(--accent);
+      }
+      .badge {
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 99px;
+        background: var(--danger);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 18px;
+        text-align: center;
+      }
+      .badge:empty {
+        display: none;
+      }
+      .tabbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 6;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+        background: color-mix(in srgb, var(--panel) 88%, transparent);
+        backdrop-filter: saturate(1.4) blur(16px);
+        -webkit-backdrop-filter: saturate(1.4) blur(16px);
+        border-top: 1px solid var(--line);
+      }
+      .tabbar .navbtn {
+        flex-direction: column;
+        gap: 2px;
+        padding: 4px 0;
+        font-size: 11px;
+        font-weight: 600;
+        text-align: center;
+        justify-content: center;
+        min-height: 48px;
+      }
+      .tabbar .badge {
+        position: absolute;
+        top: 0;
+        left: calc(50% + 6px);
       }
       main {
         max-width: 1100px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 16px 16px calc(96px + env(safe-area-inset-bottom));
+      }
+      .page-title {
+        display: none;
+      }
+      main > h2.page-title-h {
+        display: none;
+      }
+      .more-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 12px;
+      }
+      .more-item {
+        padding: 14px 10px;
+        border-radius: 12px;
+        color: var(--ink) !important;
+        font-size: 16px;
+      }
+      .more-item:active {
+        background: var(--accent-soft);
+      }
+      .more-item.danger {
+        color: var(--danger) !important;
+      }
+      @media (prefers-color-scheme: dark) {
+        .tag.red {
+          background: rgba(211, 60, 74, 0.18);
+        }
+        .tag.green {
+          background: rgba(31, 157, 107, 0.18);
+        }
+      }
+      @media (min-width: 900px) {
+        .app {
+          display: grid;
+          grid-template-columns: 248px 1fr;
+        }
+        .side {
+          display: flex;
+          flex-direction: column;
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          padding: 20px 14px;
+          background: var(--panel);
+          border-right: 1px solid var(--line);
+        }
+        .side .brand {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 0 8px 18px;
+          font-weight: 700;
+          font-size: 16px;
+        }
+        .side .brand img {
+          width: 32px;
+          height: 32px;
+          border-radius: 9px;
+        }
+        .side nav {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .side .navbtn {
+          padding: 10px 12px;
+          border-radius: 10px;
+          font-weight: 500;
+        }
+        .side .navbtn:hover {
+          background: var(--bg);
+          color: var(--ink);
+        }
+        .side .navbtn.on {
+          background: var(--accent-soft);
+          color: var(--accent);
+          font-weight: 600;
+        }
+        .side .navbtn .badge {
+          margin-left: auto;
+        }
+        .side .foot {
+          margin-top: auto;
+          padding: 12px 8px 0;
+          border-top: 1px solid var(--line);
+          font-size: 13px;
+          color: var(--muted);
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          overflow-wrap: anywhere;
+        }
+        .topbar,
+        .tabbar {
+          display: none;
+        }
+        main {
+          padding: 28px 32px 48px;
+        }
+        main > h2.page-title-h {
+          display: block;
+          font-size: 24px;
+          margin: 0 0 18px;
+        }
       }
       .panel {
         background: var(--panel);
         border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 16px;
+        border-radius: 14px;
+        padding: 18px;
         margin-bottom: 16px;
+        box-shadow: 0 1px 2px rgba(20, 16, 40, 0.04);
       }
       h2 {
         font-size: 18px;
@@ -126,12 +308,14 @@
       .stat {
         background: var(--panel);
         border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 12px 14px;
+        border-radius: 14px;
+        padding: 14px 16px;
+        box-shadow: 0 1px 2px rgba(20, 16, 40, 0.04);
       }
       .stat b {
         display: block;
-        font-size: 24px;
+        font-size: 26px;
+        letter-spacing: -0.02em;
       }
       input,
       select,
@@ -318,15 +502,66 @@
           flex: 1 1 100%;
         }
       }
+      /* Phones: every table row becomes a card; each cell shows its column name. */
       @media (max-width: 700px) {
-        table {
+        table.auto thead {
+          display: none;
+        }
+        table.auto,
+        table.auto tbody,
+        table.auto tr,
+        table.auto td {
           display: block;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
+          width: 100%;
+        }
+        table.auto tr {
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          padding: 10px 12px;
+          margin-bottom: 10px;
+          background: var(--panel);
+        }
+        .panel table.auto tr {
+          background: var(--bg);
+        }
+        table.auto td {
+          border: 0 !important;
+          padding: 3px 0 !important;
+          white-space: normal !important;
+        }
+        table.auto td[data-label]::before {
+          content: attr(data-label);
+          display: block;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--muted);
         }
         td .btn,
         td button {
-          margin-bottom: 4px;
+          margin: 4px 4px 0 0;
+        }
+        input,
+        select,
+        textarea {
+          font-size: 16px; /* below 16px iOS zooms into the field */
+        }
+        button.btn {
+          min-height: 40px;
+          padding: 8px 14px;
+        }
+        button.small {
+          min-height: 34px;
+        }
+        .sticky-save {
+          bottom: calc(64px + env(safe-area-inset-bottom));
+        }
+        .toast {
+          bottom: calc(80px + env(safe-area-inset-bottom));
+        }
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
       th,
@@ -358,6 +593,36 @@
       .tag.green {
         background: #e2f6ee;
         color: var(--ok);
+      }
+      .vip-box {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(246, 196, 83, 0.18), rgba(240, 138, 192, 0.18));
+        border: 1px solid rgba(240, 138, 192, 0.35);
+      }
+      .vip-box p {
+        margin: 4px 0 10px;
+      }
+      .grant-line {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 10px 0;
+        border-top: 1px solid var(--line);
+        cursor: pointer;
+      }
+      .grant-line input {
+        margin-top: 3px;
+      }
+      .grant-line > span {
+        display: flex;
+        flex-direction: column;
+      }
+      .tag.vip {
+        background: linear-gradient(90deg, #f6c453, #f08ac0);
+        color: #3b1d00;
+        font-weight: 700;
       }
       .tag.gray {
         background: var(--line);
@@ -521,8 +786,12 @@
         return el;
       }
       const $app = document.getElementById('app');
-      const setMain = (...nodes) =>
-        $main.replaceChildren(...nodes.flat().filter((n) => n != null && n !== false));
+      const setMain = (...nodes) => {
+        const list = nodes.flat().filter((n) => n != null && n !== false);
+        // Views open with their own <h2> title; on computers it becomes the page heading.
+        if (list[0]?.tagName === 'H2') list[0].classList.add('page-title-h');
+        $main.replaceChildren(...list);
+      };
       let refreshSide = () => {};
       let toastTimer;
       function toast(msg, isError = false) {
@@ -631,54 +900,219 @@
       }
 
       // ---------- shell ----------
+      const ICONS = {
+        overview: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+        earnings:
+          '<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/>',
+        users:
+          '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.8c2 .8 3.2 2.6 3.5 5.2"/>',
+        reports: '<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+        content:
+          '<rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+        settings:
+          '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+        more: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
+        refresh: '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
+        logout:
+          '<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/>',
+      };
+      function icon(name) {
+        const span = document.createElement('span');
+        span.className = 'ico';
+        span.setAttribute('aria-hidden', 'true');
+        span.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ''}</svg>`;
+        return span;
+      }
       const TABS = [
-        ['overview', 'Genel'],
-        ['earnings', 'Kazançlar'],
-        ['users', 'Kullanıcılar ve haklar'],
-        ['reports', 'Şikayetler'],
-        ['content', 'Sorular ve quizler'],
-        ['settings', 'Uygulama ayarları'],
+        ['overview', 'Genel', 'Genel'],
+        ['earnings', 'Kazançlar', 'Kazanç'],
+        ['users', 'Kullanıcılar ve haklar', 'Kullanıcı'],
+        ['reports', 'Şikayetler', 'Şikayet'],
+        ['content', 'Sorular ve quizler', 'İçerik'],
+        ['settings', 'Uygulama ayarları', 'Ayarlar'],
       ];
-      let $main;
-      function renderShell() {
-        const nav = h(
-          'nav',
-          {},
-          TABS.map(([id, label]) =>
-            h('button', { 'data-tab': id, onclick: () => show(id) }, label),
-          ),
-        );
-        $main = h('main');
-        $app.replaceChildren(
+      const PHONE_TABS = ['overview', 'earnings', 'users', 'reports'];
+      let $main, $title, currentTab;
+      const badgeFor = (id) =>
+        id === 'reports' ? h('span', { class: 'badge', 'data-badge': id }) : null;
+      async function refreshBadges() {
+        try {
+          const s = await rpc('admin_stats');
+          document
+            .querySelectorAll('[data-badge="reports"]')
+            .forEach((b) => (b.textContent = s.open_reports ? String(s.open_reports) : ''));
+        } catch {}
+      }
+      function openMore() {
+        const close = () => dlg.close();
+        const item = (iconName, label, onclick, cls = '') =>
           h(
-            'header',
-            {},
-            h('h1', {}, 'VibeCheck Yönetim'),
-            nav,
-            h(
-              'div',
-              { class: 'who' },
-              me.email || '',
-              h('button', { class: 'btn small', onclick: logout }, 'Çıkış'),
+            'button',
+            { class: 'navbtn more-item ' + cls, type: 'button', onclick },
+            icon(iconName),
+            h('span', {}, label),
+          );
+        const dlg = h(
+          'dialog',
+          { class: 'sheet' },
+          h(
+            'div',
+            { class: 'sheet-head' },
+            h('div', {}, h('b', {}, 'Diğer'), h('div', { class: 'muted' }, me.email || '')),
+            h('button', { class: 'btn small', type: 'button', onclick: close }, 'Kapat'),
+          ),
+          h(
+            'div',
+            { class: 'more-list' },
+            TABS.filter(([id]) => !PHONE_TABS.includes(id)).map(([id, label]) =>
+              item(id, label, () => {
+                close();
+                show(id);
+              }),
+            ),
+            item(
+              'logout',
+              'Çıkış yap',
+              () => {
+                close();
+                logout();
+              },
+              'danger',
             ),
           ),
-          $main,
         );
+        dlg.addEventListener('close', () => dlg.remove());
+        dlg.addEventListener('click', (e) => e.target === dlg && close());
+        document.body.append(dlg);
+        dlg.showModal();
+      }
+      function renderShell() {
+        const navButtons = (ids, short) =>
+          TABS.filter(([id]) => ids.includes(id)).map(([id, label, shortLabel]) =>
+            h(
+              'button',
+              { class: 'navbtn', type: 'button', 'data-tab': id, onclick: () => show(id) },
+              icon(id),
+              h('span', {}, short ? shortLabel : label),
+              badgeFor(id),
+            ),
+          );
+        $main = h('main');
+        $title = h('h1', {}, 'VibeCheck Yönetim');
+        $app.replaceChildren(
+          h(
+            'div',
+            { class: 'app' },
+            h(
+              'aside',
+              { class: 'side' },
+              h(
+                'div',
+                { class: 'brand' },
+                h('img', { src: 'apple-touch-icon.png', alt: '' }),
+                'VibeCheck Yönetim',
+              ),
+              h(
+                'nav',
+                {},
+                navButtons(
+                  TABS.map(([id]) => id),
+                  false,
+                ),
+              ),
+              h(
+                'div',
+                { class: 'foot' },
+                h('span', {}, me.email || ''),
+                h('button', { class: 'btn small', type: 'button', onclick: logout }, 'Çıkış yap'),
+              ),
+            ),
+            h(
+              'div',
+              { class: 'content' },
+              h(
+                'header',
+                { class: 'topbar' },
+                h('img', { class: 'brand-mini', src: 'apple-touch-icon.png', alt: '' }),
+                $title,
+                h(
+                  'button',
+                  {
+                    class: 'icon-btn',
+                    type: 'button',
+                    'aria-label': 'Yenile',
+                    onclick: () => show(currentTab),
+                  },
+                  icon('refresh'),
+                ),
+              ),
+              $main,
+            ),
+            h(
+              'nav',
+              { class: 'tabbar' },
+              navButtons(PHONE_TABS, true),
+              h(
+                'button',
+                { class: 'navbtn', type: 'button', 'data-more': '1', onclick: openMore },
+                icon('more'),
+                h('span', {}, 'Diğer'),
+              ),
+            ),
+          ),
+        );
+        // Phones: every table turns into cards; give each cell its column name.
+        new MutationObserver(() => labelTables($main)).observe($main, {
+          childList: true,
+          subtree: true,
+        });
         show(location.hash.slice(1) || 'overview');
+        refreshBadges();
+      }
+      let labelling = false;
+      function labelTables(root) {
+        if (labelling) return;
+        labelling = true;
+        try {
+          root.querySelectorAll('table').forEach((t) => {
+            t.classList.add('auto');
+            const heads = [...t.querySelectorAll('thead th')].map((th) => th.textContent.trim());
+            if (!heads.length) return;
+            t.querySelectorAll('tbody tr').forEach((tr) =>
+              [...tr.children].forEach((td, i) => {
+                const label = heads[i] || '';
+                if (label && td.getAttribute('data-label') !== label)
+                  td.setAttribute('data-label', label);
+              }),
+            );
+          });
+        } finally {
+          labelling = false;
+        }
       }
       async function show(tab) {
         if (dirty && !confirm('Kaydedilmemiş değişiklikler var. Yine de çıkılsın mı?')) return;
         dirty = false;
+        if (!VIEWS[tab]) tab = 'overview';
+        currentTab = tab;
         location.hash = tab;
+        const label = TABS.find(([id]) => id === tab)?.[1] || '';
+        $title.textContent = label;
+        document.title = `${label} · VibeCheck Yönetim`;
         document
-          .querySelectorAll('nav button')
+          .querySelectorAll('.navbtn[data-tab]')
           .forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
+        document
+          .querySelector('.tabbar [data-more]')
+          ?.classList.toggle('on', !PHONE_TABS.includes(tab));
         setMain(h('p', { class: 'muted' }, 'Yükleniyor…'));
         try {
           await VIEWS[tab]?.();
         } catch (e) {
           setMain(h('div', { class: 'panel' }, errText(e)));
         }
+        window.scrollTo(0, 0);
+        if (tab === 'reports' || tab === 'overview') refreshBadges();
       }
       let dirty = false;
       window.addEventListener('beforeunload', (e) => {
@@ -1416,9 +1850,17 @@
               u.match_balance
                 ? h('span', { class: 'tag green' }, `${u.match_balance} eşleşme hakkı`)
                 : null,
-              g?.unlimited_chat ? h('span', { class: 'tag green' }, 'sınırsız mesaj') : null,
-              g?.free_premium ? h('span', { class: 'tag green' }, 'ücretsiz ek sorular') : null,
-              g?.ad_free ? h('span', { class: 'tag green' }, 'reklamsız') : null,
+              isVip(g) && !expired ? h('span', { class: 'tag vip' }, '⭐ VIP') : null,
+              !isVip(g) && g?.unlimited_chat
+                ? h('span', { class: 'tag green' }, 'sınırsız mesaj')
+                : null,
+              !isVip(g) && g?.free_premium
+                ? h('span', { class: 'tag green' }, 'ücretsiz ek sorular')
+                : null,
+              !isVip(g) && g?.ad_free ? h('span', { class: 'tag green' }, 'reklamsız') : null,
+              !isVip(g) && g?.unlimited_matches
+                ? h('span', { class: 'tag green' }, 'sınırsız eşleşme')
+                : null,
               expired ? h('span', { class: 'tag gray' }, 'süresi doldu') : null,
               g?.note ? h('div', { class: 'muted' }, 'Not: ' + g.note) : null,
               g?.expires_at
@@ -1428,7 +1870,11 @@
             h(
               'td',
               { style: 'white-space:nowrap' },
-              h('button', { class: 'btn small', onclick: () => openGrant(u, fill) }, 'Haklar'),
+              h(
+                'button',
+                { class: 'btn small', onclick: () => openGrant(u, fill) },
+                '⭐ Haklar / VIP',
+              ),
               ' ',
               h(
                 'button',
@@ -1528,11 +1974,16 @@
         }
       }
 
+      const isVip = (g) =>
+        !!g && g.unlimited_chat && g.free_premium && g.ad_free && g.unlimited_matches;
       function openGrant(u, fill) {
         const g = u.grants || {};
-        const chat = h('input', { type: 'checkbox', checked: g.unlimited_chat });
-        const prem = h('input', { type: 'checkbox', checked: g.free_premium });
-        const adf = h('input', { type: 'checkbox', checked: g.ad_free });
+        const name = u.nickname || u.email || 'Kullanıcı';
+        const box = (checked) => h('input', { type: 'checkbox', checked: !!checked });
+        const chat = box(g.unlimited_chat);
+        const prem = box(g.free_premium);
+        const adf = box(g.ad_free);
+        const mat = box(g.unlimited_matches);
         const exp = h('input', {
           type: 'date',
           value: g.expires_at ? g.expires_at.slice(0, 10) : '',
@@ -1543,41 +1994,85 @@
           value: g.note || '',
           style: 'width:100%',
         });
+        const close = () => dlg.close();
+        const save = async (msg) => {
+          await act(
+            () =>
+              rpc('admin_grant_set', {
+                p_user: u.id,
+                p_unlimited_chat: chat.checked,
+                p_free_premium: prem.checked,
+                p_ad_free: adf.checked,
+                p_unlimited_matches: mat.checked,
+                p_expires_at: exp.value ? new Date(exp.value + 'T23:59:59').toISOString() : null,
+                p_note: note.value || null,
+              }),
+            fill,
+            msg,
+          );
+          close();
+        };
+        const vipFor = (days) => {
+          chat.checked = prem.checked = adf.checked = mat.checked = true;
+          exp.value = days
+            ? new Date(Date.now() + days * 86400000).toLocaleDateString('en-CA')
+            : '';
+          save(days ? `VIP verildi (${days} gün)` : 'VIP verildi (süresiz)');
+        };
+        const line = (input, title, sub) =>
+          h(
+            'label',
+            { class: 'grant-line' },
+            input,
+            h('span', {}, h('b', {}, title), h('span', { class: 'muted' }, sub)),
+          );
         const dlg = h(
           'dialog',
-          {
-            style:
-              'border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);max-width:460px;width:92vw',
-          },
-          h('h3', {}, `${u.nickname || u.email || 'Kullanıcı'} için özel haklar`),
+          { class: 'sheet' },
           h(
-            'p',
-            {},
-            h('label', { class: 'inline' }, chat, 'Sınırsız mesaj (Couple Match sohbetinde)'),
-          ),
-          h(
-            'p',
-            {},
-            h(
-              'label',
-              { class: 'inline' },
-              prem,
-              'Ücretsiz ek sorular (reklamlı + premium, satın almadan)',
-            ),
-          ),
-          h(
-            'p',
-            {},
-            h(
-              'label',
-              { class: 'inline' },
-              adf,
-              'Reklamsız (tam ekran reklam yok, reklamlı ek sorular reklamsız açılır)',
-            ),
+            'div',
+            { class: 'sheet-head' },
+            h('div', {}, h('b', {}, name), h('div', { class: 'muted' }, 'Özel haklar')),
+            h('button', { class: 'btn small', type: 'button', onclick: close }, 'Kapat'),
           ),
           h(
             'div',
-            { class: 'row', style: 'margin:10px 0' },
+            { class: 'vip-box' },
+            h('b', {}, '⭐ VIP: her şey bedava'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Sınırsız mesaj, ücretsiz ek sorular (+12 ve +50), reklamsız kullanım ve sınırsız eşleşme. Tek dokunuşla verilir.',
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              [
+                [7, '7 gün'],
+                [30, '30 gün'],
+                [365, '1 yıl'],
+                [0, 'Süresiz'],
+              ].map(([d, l]) =>
+                h(
+                  'button',
+                  { class: 'btn primary small', type: 'button', onclick: () => vipFor(d) },
+                  l,
+                ),
+              ),
+            ),
+          ),
+          h('h3', { style: 'margin-top:16px' }, 'Ya da tek tek seç'),
+          line(chat, 'Sınırsız mesaj', 'Couple Match sohbetinde bakiye düşmez.'),
+          line(
+            prem,
+            'Ücretsiz ek sorular',
+            'Reklamlı +12 ve premium +50 paketleri satın almadan açılır.',
+          ),
+          line(adf, 'Reklamsız', 'Tam ekran ve banner reklam görmez.'),
+          line(mat, 'Sınırsız eşleşme', 'Eşleşme sınırı açıkken bile günlük sınıra takılmaz.'),
+          h(
+            'div',
+            { class: 'row', style: 'margin:12px 0' },
             h('span', { class: 'muted' }, 'Bitiş tarihi (boş = süresiz):'),
             exp,
           ),
@@ -1585,60 +2080,34 @@
           h(
             'p',
             { class: 'muted' },
-            'Ek sorular, iki kişi aynı paketi seçtiğinde haklardan biri bu kullanıcıdaysa kendiliğinden açılır. Uygulama değişiklikleri birkaç dakika içinde görür.',
+            'Uygulama değişikliği birkaç dakika içinde görür. Ek sorular, iki kişi aynı paketi seçtiğinde haklardan biri bu kullanıcıdaysa kendiliğinden açılır.',
           ),
           h(
             'div',
             { class: 'row' },
             h(
               'button',
-              {
-                class: 'btn primary',
-                onclick: async () => {
-                  await act(
-                    () =>
-                      rpc('admin_grant_set', {
-                        p_user: u.id,
-                        p_unlimited_chat: chat.checked,
-                        p_free_premium: prem.checked,
-                        p_ad_free: adf.checked,
-                        p_expires_at: exp.value
-                          ? new Date(exp.value + 'T23:59:59').toISOString()
-                          : null,
-                        p_note: note.value || null,
-                      }),
-                    fill,
-                    'Haklar kaydedildi',
-                  );
-                  dlg.close();
-                  dlg.remove();
-                },
-              },
+              { class: 'btn primary', type: 'button', onclick: () => save('Haklar kaydedildi') },
               'Kaydet',
             ),
-            h(
-              'button',
-              {
-                class: 'btn',
-                onclick: () => {
-                  chat.checked = prem.checked = adf.checked = true;
-                },
-              },
-              'Hepsini ver',
-            ),
-            h(
-              'button',
-              {
-                class: 'btn',
-                onclick: () => {
-                  dlg.close();
-                  dlg.remove();
-                },
-              },
-              'Vazgeç',
-            ),
+            Object.keys(u.grants || {}).length
+              ? h(
+                  'button',
+                  {
+                    class: 'btn danger',
+                    type: 'button',
+                    onclick: () => {
+                      chat.checked = prem.checked = adf.checked = mat.checked = false;
+                      save('Tüm haklar kaldırıldı');
+                    },
+                  },
+                  'Tüm hakları kaldır',
+                )
+              : null,
           ),
         );
+        dlg.addEventListener('close', () => dlg.remove());
+        dlg.addEventListener('click', (e) => e.target === dlg && close());
         document.body.append(dlg);
         dlg.showModal();
       }
