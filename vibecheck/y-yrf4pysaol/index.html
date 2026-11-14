@@ -999,7 +999,7 @@
         'rewarded:tier': 'Ödüllü · ek sorular (+12)',
         'rewarded:messages': 'Ödüllü · mesaj (+3)',
         'rewarded:match': 'Ödüllü · eşleşme (+1)',
-        'interstitial:': 'Geçiş reklamı (Kendini Keşfet)',
+        'interstitial:': 'Tam ekran (geçiş) reklamı',
         'banner:': 'Banner (sonuç ekranı)',
       };
       const EST_KEY = 'vc.admin.earnings.v1';
@@ -1952,6 +1952,14 @@
           value: ads.interstitial_unit_android || '',
           size: 44,
         });
+        const shareAd = h('input', { type: 'checkbox', checked: ads.share_interstitial === true });
+        const nextAd = h('input', { type: 'checkbox', checked: ads.next_interstitial === true });
+        const cooldown = h('input', {
+          type: 'number',
+          min: 0,
+          max: 3600,
+          value: ads.interstitial_cooldown_seconds ?? 90,
+        });
         const bannerOn = h('input', { type: 'checkbox', checked: ads.result_banner === true });
         const banIos = h('input', { type: 'text', value: ads.banner_unit_ios || '', size: 44 });
         const banAnd = h('input', { type: 'text', value: ads.banner_unit_android || '', size: 44 });
@@ -2118,6 +2126,37 @@
               field('iOS reklam birimi', intIos),
               field('Android reklam birimi', intAnd),
             ),
+            h('h3', {}, 'Sonuç ekranı düğmelerinde tam ekran reklam'),
+            h(
+              'p',
+              {},
+              h(
+                'label',
+                { class: 'inline' },
+                shareAd,
+                '"Sonucumu paylaş"a basınca (Kendini Keşfet)',
+              ),
+            ),
+            h(
+              'p',
+              {},
+              h(
+                'label',
+                { class: 'inline' },
+                nextAd,
+                '"Yeni test çöz" / "Başka test oyna"ya basınca (Kendini Keşfet ve Friends)',
+              ),
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              field('İki tam ekran reklam arası en az (saniye)', cooldown),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              'Yukarıdaki iOS/Android reklam birimini kullanır. Reklam önceden yüklenir; hazır değilse düğme beklemeden çalışır. Bekleme süresi tüm tam ekran reklamlar için ortaktır, böylece kimse arka arkaya iki reklam görmez. Couple Match ve reklamsız hakkı olanlar etkilenmez.',
+            ),
             h('h3', {}, 'Sonuç ekranı banner reklamı'),
             h(
               'p',
@@ -2149,6 +2188,9 @@
                       quiz_interstitial_interval: Number(adsEvery.value),
                       interstitial_unit_ios: intIos.value.trim(),
                       interstitial_unit_android: intAnd.value.trim(),
+                      share_interstitial: shareAd.checked,
+                      next_interstitial: nextAd.checked,
+                      interstitial_cooldown_seconds: Math.max(0, Number(cooldown.value) || 0),
                       result_banner: bannerOn.checked,
                       banner_unit_ios: banIos.value.trim(),
                       banner_unit_android: banAnd.value.trim(),
