@@ -1123,8 +1123,114 @@
       });
 
       // ---------- overview ----------
+      const SHARE_SOURCES = {
+        solo: 'Kendini Keşfet sonucu',
+        friends_result: 'Friends sonucu',
+        invite: 'Friends daveti',
+      };
+      const SHARE_APPS = [
+        [/whatsapp/i, 'WhatsApp'],
+        [/instagram/i, 'Instagram'],
+        [/activity\.Message$|MobileSMS/i, 'Mesajlar'],
+        [/telegra/i, 'Telegram'],
+        [/twitter|com\.x\b|atebits/i, 'X (Twitter)'],
+        [/facebook|Messenger/i, 'Facebook / Messenger'],
+        [/snapchat/i, 'Snapchat'],
+        [/tiktok|musically/i, 'TikTok'],
+        [/SaveToCameraRoll/i, 'Fotoğraflara kaydet'],
+        [/CopyToPasteboard/i, 'Kopyala'],
+        [/AirDrop/i, 'AirDrop'],
+        [/mail/i, 'Mail'],
+      ];
+      const shareAppName = (t) =>
+        t ? SHARE_APPS.find(([re]) => re.test(t))?.[1] || t : 'Bilinmiyor';
+      function sharesPanel(sh) {
+        const apps = {};
+        for (const r of sh.by_target) {
+          const n = shareAppName(r.target);
+          apps[n] = (apps[n] || 0) + r.count;
+        }
+        return h(
+          'div',
+          { class: 'panel' },
+          h('h2', {}, 'Paylaşımlar (son 30 gün)'),
+          h(
+            'div',
+            { class: 'grid' },
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, sh.taps),
+              h('span', { class: 'muted' }, 'Paylaş düğmesine basıldı'),
+            ),
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, sh.shared),
+              h('span', { class: 'muted' }, 'Paylaşım gönderildi'),
+            ),
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, sh.people),
+              h('span', { class: 'muted' }, 'Paylaşan kişi'),
+            ),
+          ),
+          Object.keys(sh.by_source).length
+            ? h(
+                'table',
+                { style: 'margin-top:12px' },
+                h(
+                  'thead',
+                  {},
+                  h(
+                    'tr',
+                    {},
+                    h('th', {}, 'Nereden'),
+                    h('th', {}, 'Basıldı'),
+                    h('th', {}, 'Gönderildi'),
+                  ),
+                ),
+                h(
+                  'tbody',
+                  {},
+                  Object.entries(sh.by_source).map(([k, v]) =>
+                    h(
+                      'tr',
+                      {},
+                      h('td', {}, SHARE_SOURCES[k] || k),
+                      h('td', {}, v.taps),
+                      h('td', {}, v.shared),
+                    ),
+                  ),
+                ),
+              )
+            : h('p', { class: 'muted' }, 'Henüz paylaşım yok.'),
+          Object.keys(apps).length
+            ? h(
+                'p',
+                { class: 'muted' },
+                'Nereye: ' +
+                  Object.entries(apps)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([n, c]) => `${n} ${c}`)
+                    .join(' · '),
+              )
+            : null,
+          h(
+            'p',
+            { class: 'muted' },
+            'Paylaşımlardan gelen indirmeler: App Store Connect → Analytics → Acquisition → Campaigns ("paylasim"). Paylaşım bağlantısını Ayarlar → Paylaşım bölümünden değiştirebilirsin.',
+          ),
+        );
+      }
+
       async function viewOverview() {
-        const [s, cfgAll] = await Promise.all([rpc('admin_stats'), rpc('admin_config')]);
+        const [s, cfgAll, sh] = await Promise.all([
+          rpc('admin_stats'),
+          rpc('admin_config'),
+          rpc('admin_shares', { p_days: 30 }).catch(() => null),
+        ]);
         const minScore = (cfgAll.match_chat || {}).min_score;
         const items = [
           ['users', 'Toplam hesap'],
@@ -1211,6 +1317,7 @@
                 ),
               )
             : null,
+          sh ? sharesPanel(sh) : null,
           h(
             'div',
             { class: 'panel' },
@@ -2395,6 +2502,12 @@
           ...(cfg.match_chat || {}),
         };
         const cm = { ad_tier_enabled: true, ...(cfg.couple_match || {}) };
+        const shareUrl = h('input', {
+          type: 'url',
+          value:
+            (cfg.share_settings || {}).app_store_url || 'https://apps.apple.com/app/id6834372787',
+          size: 60,
+        });
         const save = async (key, value) => {
           try {
             await rpc('admin_config_set', { p_key: key, p_value: value });
@@ -2539,6 +2652,26 @@
                 },
                 'Kaydet',
               ),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Paylaşım'),
+            h(
+              'p',
+              { class: 'muted' },
+              "Sonuç paylaşılırken mesaja eklenen App Store bağlantısı. App Store Connect'te oluşturduğun kampanya bağlantısını (ct=paylasim) buraya yapıştır; uygulama güncellemesi gerekmez.",
+            ),
+            field('App Store bağlantısı', shareUrl),
+            h(
+              'button',
+              {
+                class: 'btn primary',
+                style: 'margin-top:10px',
+                onclick: () => save('share_settings', { app_store_url: shareUrl.value.trim() }),
+              },
+              'Kaydet',
             ),
           ),
           h(
