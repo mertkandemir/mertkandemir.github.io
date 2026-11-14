@@ -1000,10 +1000,11 @@
         'rewarded:messages': 'Ödüllü · mesaj (+3)',
         'rewarded:match': 'Ödüllü · eşleşme (+1)',
         'interstitial:': 'Geçiş reklamı (Kendini Keşfet)',
+        'banner:': 'Banner (sonuç ekranı)',
       };
       const EST_KEY = 'vc.admin.earnings.v1';
       function loadEst() {
-        const d = { fee: 15, rewarded: 8, interstitial: 4, tests: false, days: '30' };
+        const d = { fee: 15, rewarded: 8, interstitial: 4, banner: 0.5, tests: false, days: '30' };
         try {
           return { ...d, ...JSON.parse(localStorage.getItem(EST_KEY) || '{}') };
         } catch {
@@ -1028,8 +1029,7 @@
         const d = await rpc('admin_earnings', { p_days: days });
         const counts = (env) => env === 'production' || est.tests;
         const net = (gross) => gross * (1 - est.fee / 100);
-        const adMoney = (kind, n) =>
-          (n / 1000) * (kind === 'interstitial' ? est.interstitial : est.rewarded);
+        const adMoney = (kind, n) => (n / 1000) * (est[kind] ?? est.rewarded);
 
         // Sales per product (real only unless test purchases are switched on).
         const byProduct = {};
@@ -1054,6 +1054,7 @@
         }));
         const rewarded = adRows.filter((a) => a.kind === 'rewarded').reduce((s, a) => s + a.n, 0);
         const inter = adRows.filter((a) => a.kind === 'interstitial').reduce((s, a) => s + a.n, 0);
+        const banners = adRows.filter((a) => a.kind === 'banner').reduce((s, a) => s + a.n, 0);
         const adsToday = adRows.reduce((s, a) => s + a.today, 0);
         const adEst = adRows.reduce((s, a) => s + a.money, 0);
 
@@ -1181,6 +1182,7 @@
             tile(usd(net(gross) + adEst), 'Toplam (tahmini)'),
             tile(rewarded, 'Ödüllü reklam izlendi'),
             tile(inter, 'Geçiş reklamı gösterildi'),
+            tile(banners, 'Banner gösterildi'),
             tile(adsToday, 'Bugün izlenen reklam'),
           ),
           h(
@@ -1293,6 +1295,7 @@
             num('fee', 'Apple komisyonu', '%'),
             num('rewarded', 'Ödüllü reklam: 1000 izlenme başına', '$ (eCPM)'),
             num('interstitial', 'Geçiş reklamı: 1000 gösterim başına', '$ (eCPM)'),
+            num('banner', 'Banner: 1000 gösterim başına', '$ (eCPM)'),
             h(
               'p',
               { class: 'muted' },
@@ -1949,6 +1952,9 @@
           value: ads.interstitial_unit_android || '',
           size: 44,
         });
+        const bannerOn = h('input', { type: 'checkbox', checked: ads.result_banner === true });
+        const banIos = h('input', { type: 'text', value: ads.banner_unit_ios || '', size: 44 });
+        const banAnd = h('input', { type: 'text', value: ads.banner_unit_android || '', size: 44 });
         const free = h('input', { type: 'number', min: 0, max: 1000, value: chat.free_limit });
         const minScore = h('input', { type: 'number', min: 0, max: 100, value: chat.min_score });
         const welcome = h('input', {
@@ -2098,14 +2104,36 @@
           h(
             'div',
             { class: 'panel' },
-            h('h2', {}, 'Reklamlar (Kendini Keşfet)'),
-            h('p', {}, h('label', { class: 'inline' }, adsOn, 'Tam ekran reklamlar açık')),
+            h('h2', {}, 'Reklamlar (Kendini Keşfet ve Friends)'),
+            h('h3', {}, 'Tam ekran (geçiş) reklamı'),
+            h(
+              'p',
+              {},
+              h('label', { class: 'inline' }, adsOn, 'Tam ekran reklamlar açık (Kendini Keşfet)'),
+            ),
             h(
               'div',
               { class: 'row' },
               field('Kaç quizde bir reklam', adsEvery),
               field('iOS reklam birimi', intIos),
               field('Android reklam birimi', intAnd),
+            ),
+            h('h3', {}, 'Sonuç ekranı banner reklamı'),
+            h(
+              'p',
+              {},
+              h('label', { class: 'inline' }, bannerOn, 'Sonuç ekranında banner reklam göster'),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              'Kendini Keşfet ve Friends sonuçlarında, "Sonucumu paylaş" ve "Yeni test çöz" düğmelerinin altında görünür. Couple Match sonuçlarında ve reklamsız hakkı olanlarda görünmez. Reklam birimi boşsa hiç gösterilmez.',
+            ),
+            h(
+              'div',
+              { class: 'row' },
+              field('iOS banner reklam birimi', banIos),
+              field('Android banner reklam birimi', banAnd),
             ),
             h(
               'p',
@@ -2121,6 +2149,9 @@
                       quiz_interstitial_interval: Number(adsEvery.value),
                       interstitial_unit_ios: intIos.value.trim(),
                       interstitial_unit_android: intAnd.value.trim(),
+                      result_banner: bannerOn.checked,
+                      banner_unit_ios: banIos.value.trim(),
+                      banner_unit_android: banAnd.value.trim(),
                     }),
                 },
                 'Kaydet',
