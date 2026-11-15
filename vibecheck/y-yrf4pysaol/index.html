@@ -456,6 +456,11 @@
       .earn-chart.small {
         height: 90px;
       }
+      .chart-max {
+        font-size: 12px;
+        text-align: right;
+        margin-bottom: 4px;
+      }
       .chart-ends {
         display: flex;
         justify-content: space-between;
@@ -500,6 +505,242 @@
         }
         .row > .field {
           flex: 1 1 100%;
+        }
+      }
+      /* ---------- round 2: KPIs, alerts, segments, detail sheet ---------- */
+      .grid + .panel,
+      .kpis + .panel {
+        margin-top: 16px;
+      }
+      .section-title {
+        margin: 22px 0 10px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 12px;
+      }
+      .kpi {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 16px 12px;
+        box-shadow: 0 1px 2px rgba(20, 16, 40, 0.04);
+      }
+      .kpi.tap {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .kpi.tap:hover {
+        border-color: var(--accent);
+      }
+      .kpi.tap:active {
+        background: var(--accent-soft);
+      }
+      .kpi-label {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .kpi-num {
+        font-size: 30px;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+      .kpi-delta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .kpi-delta.up {
+        color: var(--ok);
+      }
+      .kpi-delta.down {
+        color: var(--danger);
+      }
+      .kpi-foot {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .spark {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 30px;
+        margin: 8px 0 4px;
+      }
+      .spark i {
+        flex: 1;
+        background: var(--accent-soft);
+        border-radius: 2px;
+      }
+      .spark i.now {
+        background: var(--accent);
+      }
+      .alerts {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .alert {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        font-size: 14px;
+      }
+      .alert.ok {
+        border-color: rgba(31, 157, 107, 0.35);
+        background: rgba(31, 157, 107, 0.08);
+      }
+      .alert.warn {
+        border-color: rgba(230, 160, 40, 0.45);
+        background: rgba(230, 160, 40, 0.1);
+      }
+      .alert.bad {
+        border-color: rgba(211, 60, 74, 0.45);
+        background: rgba(211, 60, 74, 0.1);
+      }
+      .alert.info {
+        border-color: rgba(108, 92, 231, 0.35);
+        background: var(--accent-soft);
+        margin-bottom: 12px;
+      }
+      .alert .btn {
+        flex: none;
+      }
+      .seg {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 12px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        margin-bottom: 14px;
+      }
+      .seg button {
+        border: 0;
+        background: none;
+        color: var(--muted);
+        font: inherit;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        cursor: pointer;
+      }
+      .seg button.on {
+        background: var(--accent);
+        color: #fff;
+      }
+      details.help {
+        margin: 6px 0 10px;
+      }
+      details.help summary {
+        cursor: pointer;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      details.help p {
+        margin: 6px 0 0;
+      }
+      dialog.sheet.wide {
+        width: min(760px, 96vw);
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 14px 0 6px;
+      }
+      dl.facts {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 6px 16px;
+        margin: 0;
+        font-size: 14px;
+      }
+      dl.facts dt {
+        color: var(--muted);
+      }
+      dl.facts dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px;
+      }
+      .mini-grid > div {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+      }
+      .mini-grid b {
+        font-size: 20px;
+      }
+      .mini-grid span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+      dialog.sheet h3 {
+        margin: 18px 0 8px;
+        font-size: 15px;
+      }
+      @media (max-width: 700px) {
+        .kpis {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+        .kpi {
+          padding: 12px;
+        }
+        .kpi-num {
+          font-size: 26px;
+        }
+        .seg {
+          display: flex;
+          overflow-x: auto;
+          flex-wrap: nowrap;
+        }
+        .seg button {
+          white-space: nowrap;
+        }
+        .alert {
+          flex-direction: column;
+          align-items: flex-start;
         }
       }
       /* Phones: every table row becomes a card; each cell shows its column name. */
@@ -899,6 +1140,71 @@
         renderLogin();
       }
 
+      // ---------- sheets, questions, confirmations ----------
+      function openSheet(headNode, ...body) {
+        const close = () => dlg.close();
+        const dlg = h(
+          'dialog',
+          { class: 'sheet' },
+          h(
+            'div',
+            { class: 'sheet-head' },
+            headNode,
+            h('button', { class: 'btn small', type: 'button', onclick: close }, 'Kapat'),
+          ),
+          ...body,
+        );
+        dlg.addEventListener('close', () => dlg.remove());
+        dlg.addEventListener('click', (e) => e.target === dlg && close());
+        document.body.append(dlg);
+        dlg.showModal();
+        return { dlg, close };
+      }
+      // A friendly replacement for prompt(): resolves to the text, or null when cancelled.
+      function ask({
+        title,
+        message,
+        type = 'text',
+        value = '',
+        okText = 'Tamam',
+        danger = false,
+      }) {
+        return new Promise((resolve) => {
+          let done = false;
+          const input = h('input', { type, value: String(value ?? ''), style: 'width:100%' });
+          const finish = (v) => {
+            if (done) return;
+            done = true;
+            resolve(v);
+            sheet.close();
+          };
+          const sheet = openSheet(
+            h('div', {}, h('b', {}, title)),
+            message ? h('p', { class: 'muted' }, message) : null,
+            type === 'none' ? null : input,
+            h(
+              'div',
+              { class: 'row', style: 'margin-top:14px' },
+              h(
+                'button',
+                {
+                  class: 'btn ' + (danger ? 'danger' : 'primary'),
+                  type: 'button',
+                  onclick: () => finish(type === 'none' ? '' : input.value),
+                },
+                okText,
+              ),
+              h('button', { class: 'btn', type: 'button', onclick: () => finish(null) }, 'Vazgeç'),
+            ),
+          );
+          sheet.dlg.addEventListener('close', () => finish(null));
+          input.addEventListener('keydown', (e) => e.key === 'Enter' && finish(input.value));
+          if (type !== 'none') setTimeout(() => input.focus(), 50);
+        });
+      }
+      const confirmAsk = async (title, message, okText = 'Evet', danger = true) =>
+        (await ask({ title, message, type: 'none', okText, danger })) !== null;
+
       // ---------- shell ----------
       const ICONS = {
         overview: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
@@ -911,6 +1217,8 @@
           '<rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>',
         settings:
           '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+        health: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+        audit: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
         more: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
         refresh: '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
         logout:
@@ -930,6 +1238,8 @@
         ['reports', 'Şikayetler', 'Şikayet'],
         ['content', 'Sorular ve quizler', 'İçerik'],
         ['settings', 'Uygulama ayarları', 'Ayarlar'],
+        ['health', 'Reklam sağlığı', 'Reklam'],
+        ['audit', 'İşlem geçmişi', 'Geçmiş'],
       ];
       const PHONE_TABS = ['overview', 'earnings', 'users', 'reports'];
       let $main, $title, currentTab;
@@ -1226,10 +1536,12 @@
       }
 
       async function viewOverview() {
-        const [s, cfgAll, sh] = await Promise.all([
+        const [s, cfgAll, sh, kpi, health] = await Promise.all([
           rpc('admin_stats'),
           rpc('admin_config'),
           rpc('admin_shares', { p_days: 30 }).catch(() => null),
+          rpc('admin_kpis').catch(() => null),
+          rpc('admin_ad_health', { p_days: 1 }).catch(() => null),
         ]);
         const minScore = (cfgAll.match_chat || {}).min_score;
         const items = [
@@ -1275,6 +1587,20 @@
         const ads = s.ad_rewards_by_purpose || [];
         setMain(
           h('h2', {}, 'Genel durum'),
+          alertsFor(s, health),
+          kpi
+            ? h(
+                'section',
+                {},
+                h('h3', { class: 'section-title' }, 'Bugün'),
+                h(
+                  'div',
+                  { class: 'kpis' },
+                  KPI_DEFS.map((def) => kpiCard(def, kpi[def[0]])),
+                ),
+              )
+            : null,
+          h('h3', { class: 'section-title' }, 'Durum'),
           h(
             'p',
             {},
@@ -1286,13 +1612,7 @@
             ' ',
             h('a', { href: '#settings', onclick: () => show('settings') }, 'Ayarlar →'),
           ),
-          s.review_demo
-            ? h(
-                'p',
-                { class: 'muted' },
-                'App Review modu açıkken arayan herkes ~20 saniye sonra demo partnerle eşleşir. Uygulama onaylanınca kapat.',
-              )
-            : null,
+          h('h3', { class: 'section-title' }, 'Tüm sayılar'),
           h(
             'div',
             { class: 'grid' },
@@ -1306,17 +1626,6 @@
               ),
             ),
           ),
-          s.open_reports > 0
-            ? h(
-                'p',
-                {},
-                h(
-                  'button',
-                  { class: 'btn', onclick: () => show('reports') },
-                  `${s.open_reports} açık şikayeti incele →`,
-                ),
-              )
-            : null,
           sh ? sharesPanel(sh) : null,
           h(
             'div',
@@ -1515,6 +1824,736 @@
         }
       }
 
+      // ---------- headline numbers (overview) ----------
+      const KPI_DEFS = [
+        ['active', 'Aktif kullanıcı', null, null],
+        ['new_users', 'Yeni kullanıcı', 'new_24h', null],
+        ['solo', 'Kendini Keşfet', 'solo_results_24h', null],
+        ['friends', 'Friends oyunu', 'friend_sessions_24h', null],
+        ['matches', 'Eşleşme', 'matches_24h', null],
+        ['messages', 'Mesaj', 'messages_24h', null],
+        ['ads', 'Reklam gösterimi', null, 'health'],
+        ['purchases', 'Satış', null, 'earnings'],
+        ['shares', 'Paylaşım', null, null],
+        ['reports', 'Yeni şikayet', null, 'reports'],
+      ];
+      function spark(values, cls = '') {
+        const max = Math.max(1, ...values);
+        return h(
+          'div',
+          { class: 'spark ' + cls, 'aria-hidden': 'true' },
+          values.map((v, i) =>
+            h('i', {
+              class: i === values.length - 1 ? 'now' : '',
+              style: `height:${Math.max(6, (v / max) * 100)}%`,
+            }),
+          ),
+        );
+      }
+      function kpiCard([key, label, statKey, tab], series) {
+        const v = series || [];
+        const today = v[v.length - 1] || 0;
+        const yesterday = v[v.length - 2] || 0;
+        const week = v.slice(-7).reduce((a, b) => a + b, 0);
+        const diff = today - yesterday;
+        const tap = tab
+          ? () => show(tab)
+          : statKey
+            ? () => openStat(statKey, label + ' (24 saat)', today)
+            : null;
+        return h(
+          tap ? 'button' : 'div',
+          { class: 'kpi' + (tap ? ' tap' : ''), type: tap ? 'button' : null, onclick: tap },
+          h('span', { class: 'kpi-label' }, label),
+          h('b', { class: 'kpi-num' }, today.toLocaleString('tr-TR')),
+          h(
+            'span',
+            { class: 'kpi-delta ' + (diff > 0 ? 'up' : diff < 0 ? 'down' : '') },
+            diff === 0 ? 'dünle aynı' : `${diff > 0 ? '▲ +' : '▼ '}${diff} düne göre`,
+          ),
+          spark(v),
+          h('span', { class: 'kpi-foot' }, `7 gün: ${week.toLocaleString('tr-TR')}`),
+        );
+      }
+      function alertsFor(s, health) {
+        const out = [];
+        const alert = (level, text, label, onclick) =>
+          out.push(
+            h(
+              'div',
+              { class: 'alert ' + level },
+              h('span', {}, text),
+              label ? h('button', { class: 'btn small', type: 'button', onclick }, label) : null,
+            ),
+          );
+        if (s.open_reports > 0)
+          alert('warn', `${s.open_reports} açık şikayet seni bekliyor.`, 'İncele', () =>
+            show('reports'),
+          );
+        if (s.review_demo)
+          alert(
+            'warn',
+            'App Review modu açık: gerçek kullanıcılar ~20 sn sonra demo partnerle eşleşebilir.',
+            'Ayarlar',
+            () => show('settings'),
+          );
+        if (health) {
+          const ev = health.events || {};
+          const shown =
+            Object.values(health.shown || {}).reduce((a, b) => a + b, 0) + (health.rewarded || 0);
+          const consent = (ev['consent:error'] || 0) + (ev['consent:cannot_request'] || 0);
+          const blocked =
+            (ev['banner:no_consent'] || 0) +
+            (ev['action:no_consent'] || 0) +
+            (ev['interstitial:no_consent'] || 0);
+          if (consent || (blocked && !shown))
+            alert(
+              'bad',
+              'Son 24 saatte reklamlar onay (consent) sorunu yüzünden istenemedi.',
+              'Reklam sağlığı',
+              () => show('health'),
+            );
+          else if (!shown && (ev['banner:request'] || ev['action:request']))
+            alert(
+              'warn',
+              'Son 24 saatte reklam istendi ama hiç gösterilemedi.',
+              'Reklam sağlığı',
+              () => show('health'),
+            );
+        }
+        if (!out.length) alert('ok', 'Her şey yolunda: dikkat isteyen bir durum yok.');
+        return h('div', { class: 'alerts' }, out);
+      }
+
+      // ---------- ad health ----------
+      const AD_EVENT_LABELS = {
+        request: 'İstendi',
+        loaded: 'Yüklendi',
+        failed: 'Yüklenemedi',
+        timeout: 'Zaman aşımı',
+        no_consent: 'Onay yok',
+        no_unit: 'Reklam birimi yok',
+        ad_free: 'Reklamsız kullanıcı',
+        off: 'Ayar kapalı',
+        tap_not_ready_share: 'Paylaş: reklam hazır değildi',
+        tap_not_ready_next: 'Yeni test: reklam hazır değildi',
+        error: 'Hata',
+        cannot_request: 'İstenemez',
+        crash: 'Beklenmeyen hata',
+        no_sdk: 'Reklam kütüphanesi yok',
+      };
+      const AD_KIND_NAMES = {
+        banner: 'Banner (sonuç ekranı)',
+        action: 'Düğme reklamları (paylaş / yeni test)',
+        interstitial: 'Sonuç öncesi tam ekran',
+        rewarded: 'Ödüllü',
+        consent: 'Onay (consent)',
+      };
+      function explainAdError(detail = '') {
+        if (/no form\(s\) configured/i.test(detail))
+          return "AdMob → Gizlilik ve mesajlaşma'da bu uygulama için onay mesajı yok.";
+        if (/Frequency cap/i.test(detail))
+          return 'Reklam biriminde sıklık sınırı var ya da kullanıcı sınıra ulaştı.';
+        if (/no-fill|No ad to show/i.test(detail))
+          return 'AdMob bu istek için reklam bulamadı (yeni uygulamalarda ve test sırasında normal).';
+        if (/canRequestAds":false/.test(detail)) return 'Onay alınamadığı için reklam istenmedi.';
+        return '';
+      }
+      async function viewHealth() {
+        const days = Number(sessionStorage.getItem('vc.health.days') || 1);
+        const d = await rpc('admin_ad_health', { p_days: days });
+        const ev = d.events || {};
+        const n = (k) => ev[k] || 0;
+        const shown = d.shown || {};
+        const rows = [
+          [
+            'banner',
+            n('banner:request'),
+            shown.banner || 0,
+            n('banner:failed'),
+            n('banner:no_consent'),
+          ],
+          [
+            'action',
+            n('action:request'),
+            n('action:loaded'),
+            n('action:failed'),
+            n('action:no_consent'),
+          ],
+          [
+            'interstitial',
+            null,
+            shown.interstitial || 0,
+            n('interstitial:failed') + n('interstitial:timeout'),
+            n('interstitial:no_consent'),
+          ],
+        ];
+        const pct = (a, b) => (b ? Math.round((a / b) * 100) + '%' : '—');
+        const rangeSel = h(
+          'div',
+          { class: 'seg' },
+          [
+            [1, '24 saat'],
+            [7, '7 gün'],
+            [30, '30 gün'],
+          ].map(([v, l]) =>
+            h(
+              'button',
+              {
+                type: 'button',
+                class: v === days ? 'on' : '',
+                onclick: () => {
+                  sessionStorage.setItem('vc.health.days', String(v));
+                  show('health');
+                },
+              },
+              l,
+            ),
+          ),
+        );
+        setMain(
+          h('h2', {}, 'Reklam sağlığı'),
+          rangeSel,
+          h(
+            'div',
+            { class: 'grid', style: 'margin-top:12px' },
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, (shown.banner || 0) + (shown.interstitial || 0) + d.rewarded),
+              h('span', { class: 'muted' }, 'Gösterilen reklam'),
+            ),
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, d.devices),
+              h('span', { class: 'muted' }, 'Reklam isteyen cihaz'),
+            ),
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, n('consent:error') + n('consent:cannot_request')),
+              h('span', { class: 'muted' }, 'Onay hatası'),
+            ),
+            h(
+              'div',
+              { class: 'stat' },
+              h('b', {}, d.rewarded),
+              h('span', { class: 'muted' }, 'Ödüllü reklam izlendi'),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Reklam türüne göre'),
+            h(
+              'table',
+              {},
+              h(
+                'thead',
+                {},
+                h(
+                  'tr',
+                  {},
+                  h('th', {}, 'Tür'),
+                  h('th', {}, 'İstendi'),
+                  h('th', {}, 'Gösterildi / yüklendi'),
+                  h('th', {}, 'Yüklenemedi'),
+                  h('th', {}, 'Onay yok'),
+                  h('th', {}, 'Doluluk'),
+                ),
+              ),
+              h(
+                'tbody',
+                {},
+                rows.map(([k, req, ok, fail, nc]) =>
+                  h(
+                    'tr',
+                    {},
+                    h('td', {}, AD_KIND_NAMES[k]),
+                    h('td', {}, req ?? '—'),
+                    h('td', {}, ok),
+                    h('td', {}, fail),
+                    h('td', {}, nc),
+                    h('td', {}, pct(ok, ok + fail)),
+                  ),
+                ),
+              ),
+            ),
+            h(
+              'p',
+              { class: 'muted' },
+              'Doluluk: istenen reklamların kaçının gerçekten geldiği. Yeni uygulamalarda ve AdMob onayı beklerken düşük olması normaldir.',
+            ),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Sorunlar'),
+            d.errors.length
+              ? h(
+                  'ul',
+                  { class: 'list' },
+                  d.errors.map((e) =>
+                    h(
+                      'li',
+                      {},
+                      h(
+                        'div',
+                        {},
+                        h(
+                          'div',
+                          {},
+                          h(
+                            'b',
+                            {},
+                            `${AD_KIND_NAMES[e.kind] || e.kind}: ${AD_EVENT_LABELS[e.event] || e.event}`,
+                          ),
+                          ` · ${e.count} kez`,
+                        ),
+                        explainAdError(e.detail) ? h('div', {}, explainAdError(e.detail)) : null,
+                        h('div', { class: 'muted mono' }, e.detail || ''),
+                        h('div', { class: 'muted' }, 'Son: ' + fmtDate(e.last)),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Bu dönemde sorun kaydı yok. 👍'),
+          ),
+          h(
+            'div',
+            { class: 'panel' },
+            h('h2', {}, 'Tüm olaylar'),
+            Object.keys(ev).length
+              ? h(
+                  'table',
+                  {},
+                  h(
+                    'thead',
+                    {},
+                    h('tr', {}, h('th', {}, 'Tür'), h('th', {}, 'Olay'), h('th', {}, 'Sayı')),
+                  ),
+                  h(
+                    'tbody',
+                    {},
+                    Object.entries(ev)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([k, c]) => {
+                        const [kind, event] = k.split(':');
+                        return h(
+                          'tr',
+                          {},
+                          h('td', {}, AD_KIND_NAMES[kind] || kind),
+                          h('td', {}, AD_EVENT_LABELS[event] || event),
+                          h('td', {}, c),
+                        );
+                      }),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Kayıt yok.'),
+            h(
+              'p',
+              { class: 'muted' },
+              'Son kayıt: ' +
+                (d.last_event_at ? fmtDate(d.last_event_at) : '—') +
+                '. Kayıtlar uygulamanın reklam istediği her durumda (açılış, sonuç ekranı, düğmeler) düşer.',
+            ),
+          ),
+        );
+      }
+
+      // ---------- audit log ----------
+      const AUDIT_LABELS = {
+        'app_config.update': 'Ayar değiştirildi',
+        'app_config.insert': 'Ayar eklendi',
+        'user_grants.insert': 'Özel hak verildi',
+        'user_grants.update': 'Özel haklar değiştirildi',
+        'user_grants.delete': 'Özel haklar kaldırıldı',
+        'chat_bans.insert': 'Kullanıcı engellendi',
+        'chat_bans.delete': 'Engel kaldırıldı',
+        'moderation_patterns.insert': 'Yasaklı kelime eklendi',
+        'moderation_patterns.delete': 'Yasaklı kelime silindi',
+        'match_reports.update': 'Şikayet sonuçlandırıldı',
+        'quizzes.insert': 'Quiz eklendi',
+        'quizzes.update': 'Quiz değiştirildi',
+        'quizzes.delete': 'Quiz silindi',
+        'message_wallets.insert': 'Mesaj bakiyesi verildi',
+        'message_wallets.update': 'Mesaj bakiyesi değişti',
+        'match_wallets.insert': 'Eşleşme hakkı verildi',
+        'match_wallets.update': 'Eşleşme hakkı değişti',
+        'admins.insert': 'Yönetici eklendi',
+        'admins.delete': 'Yönetici kaldırıldı',
+      };
+      const CONFIG_NAMES = {
+        ads_settings: 'Reklamlar',
+        match_chat: 'Couple Match sohbeti',
+        couple_match: 'Couple Match',
+        review_demo: 'App Review modu',
+        match_limit: 'Eşleşme sınırı',
+        share_settings: 'Paylaşım',
+      };
+      function auditSummary(e) {
+        const o = e.detail?.old || {};
+        const n = e.detail?.new || {};
+        if (e.action.startsWith('app_config')) {
+          const a = o.config_value || {};
+          const b = n.config_value || {};
+          const keys = [...new Set([...Object.keys(a), ...Object.keys(b)])].filter(
+            (k) => JSON.stringify(a[k]) !== JSON.stringify(b[k]),
+          );
+          return keys
+            .map((k) => `${k}: ${JSON.stringify(a[k]) ?? '—'} → ${JSON.stringify(b[k]) ?? '—'}`)
+            .join(' · ');
+        }
+        if (e.action.includes('wallets')) return `${o.balance ?? 0} → ${n.balance ?? 0}`;
+        if (e.action.startsWith('user_grants') && n.user_id)
+          return (
+            [
+              n.unlimited_chat && 'sınırsız mesaj',
+              n.free_premium && 'ek sorular',
+              n.ad_free && 'reklamsız',
+              n.unlimited_matches && 'sınırsız eşleşme',
+            ]
+              .filter(Boolean)
+              .join(', ') + (n.expires_at ? ` · bitiş ${fmtDate(n.expires_at)}` : ' · süresiz')
+          );
+        if (e.action.startsWith('match_reports')) return `${o.status} → ${n.status}`;
+        if (e.action.startsWith('chat_bans')) return n.reason || o.reason || '';
+        if (e.action.startsWith('quizzes'))
+          return `${n.slug || o.slug || ''} ${n.status ? '(' + n.status + ')' : ''}`;
+        return '';
+      }
+      function auditList(entries) {
+        if (!entries.length) return h('p', { class: 'muted' }, 'Henüz kayıt yok.');
+        return h(
+          'ul',
+          { class: 'list' },
+          entries.map((e) =>
+            h(
+              'li',
+              {},
+              h(
+                'div',
+                {},
+                h(
+                  'div',
+                  {},
+                  h('b', {}, AUDIT_LABELS[e.action] || e.action),
+                  ' · ',
+                  CONFIG_NAMES[e.target] || e.target_name || e.target || '',
+                ),
+                auditSummary(e) ? h('div', { class: 'muted mono' }, auditSummary(e)) : null,
+                h('div', { class: 'muted' }, `${fmtDate(e.at)} · ${e.admin || '—'}`),
+              ),
+            ),
+          ),
+        );
+      }
+      async function viewAudit() {
+        const list = await rpc('admin_audit_log', { p_limit: 200 });
+        setMain(
+          h('h2', {}, 'İşlem geçmişi'),
+          h(
+            'div',
+            { class: 'panel' },
+            h(
+              'p',
+              { class: 'muted', style: 'margin-top:0' },
+              'Admin panelinden yapılan her değişiklik (ayarlar, haklar, engeller, şikayetler, kelimeler, quizler, bakiyeler) burada kim ve ne zaman bilgisiyle listelenir. Son 200 kayıt.',
+            ),
+            auditList(list),
+          ),
+        );
+      }
+
+      // ---------- user detail ----------
+      const STATUS_TR = {
+        completed: 'Test tamamlandı',
+        ended: 'Yarıda bitti',
+        active: 'Devam ediyor',
+      };
+      const REASON_TR = {
+        harassment: 'Taciz',
+        spam: 'Spam',
+        sexual_content: 'Cinsel içerik',
+        hate: 'Nefret',
+        other: 'Diğer',
+      };
+      async function openUserDetail(id, onChange) {
+        const body = h('div', {}, h('p', { class: 'muted' }, 'Yükleniyor…'));
+        const head = h('div', {}, h('b', {}, 'Kullanıcı'));
+        const sheet = openSheet(head, body);
+        sheet.dlg.classList.add('wide');
+        const load = async () => {
+          const d = await rpc('admin_user_detail', { p_user: id });
+          const u = d.row;
+          const c = d.counts;
+          const g = u.grants;
+          const name =
+            `${u.avatar || d.profile?.avatar || ''} ${u.nickname || u.email || (u.anonymous ? 'Misafir' : 'Kullanıcı')}`.trim();
+          head.replaceChildren(h('b', {}, name), h('div', { class: 'muted mono' }, id));
+          const refresh = async (msg) => {
+            if (msg) toast(msg);
+            await load();
+            onChange?.();
+          };
+          const run = async (fn, msg) => {
+            try {
+              await fn();
+              await refresh(msg);
+            } catch (e) {
+              toast(errText(e), true);
+            }
+          };
+          const facts = [
+            ['Giriş', u.provider || (d.account.is_anonymous ? 'Misafir' : '—')],
+            ['Kayıt', fmtDate(d.account.created_at)],
+            ['Son giriş', fmtDate(d.account.last_sign_in_at)],
+            ['E-posta', d.account.email || '—'],
+            d.profile
+              ? [
+                  'Couple profili',
+                  `${d.profile.nickname} · ${d.profile.gender === 'woman' ? 'Kadın' : d.profile.gender === 'man' ? 'Erkek' : 'Non-binary'} · ${d.profile.age} yaş`,
+                ]
+              : null,
+            ['Mesaj bakiyesi', String(u.wallet_balance ?? 0)],
+            ['Eşleşme hakkı', String(u.match_balance ?? 0)],
+          ].filter(Boolean);
+          const counts = [
+            ['Kendini Keşfet', c.solo_results],
+            ['Friends oyunu', c.friend_games],
+            ['Eşleşme', c.matches],
+            ['Gönderilen mesaj', c.messages_sent],
+            ['Ödüllü reklam', c.rewarded_ads],
+            ['Gösterilen reklam', c.ads_shown],
+            ['Paylaşım', c.shares],
+            ['Şikayet ettiği', c.reports_made],
+            ['Hakkındaki şikayet', c.reports_against],
+          ];
+          body.replaceChildren(
+            h(
+              'div',
+              { class: 'tags' },
+              u.is_admin ? h('span', { class: 'tag' }, 'yönetici') : null,
+              u.banned
+                ? h(
+                    'span',
+                    { class: 'tag red' },
+                    'engelli' + (u.ban_reason ? ': ' + u.ban_reason : ''),
+                  )
+                : null,
+              isVip(g)
+                ? h(
+                    'span',
+                    { class: 'tag vip' },
+                    '⭐ VIP' +
+                      (g.expires_at ? ' · ' + fmtDate(g.expires_at) + "'e kadar" : ' · süresiz'),
+                  )
+                : null,
+              !isVip(g) && g ? h('span', { class: 'tag green' }, 'özel hak var') : null,
+            ),
+            h(
+              'div',
+              { class: 'actions' },
+              h(
+                'button',
+                {
+                  class: 'btn primary small',
+                  type: 'button',
+                  onclick: () => openGrant(u, () => refresh()),
+                },
+                '⭐ Haklar / VIP',
+              ),
+              h(
+                'button',
+                {
+                  class: 'btn small',
+                  type: 'button',
+                  onclick: async () => {
+                    const raw = await ask({
+                      title: 'Mesaj bakiyesi ekle',
+                      message: `Şu an: ${u.wallet_balance || 0}. Düşmek için eksi sayı yaz.`,
+                      type: 'number',
+                      value: 25,
+                      okText: 'Ekle',
+                    });
+                    const n = Math.trunc(Number(raw));
+                    if (raw !== null && n)
+                      run(
+                        () => rpc('admin_wallet_add', { p_user: id, p_amount: n }),
+                        'Mesaj bakiyesi güncellendi',
+                      );
+                  },
+                },
+                'Mesaj ekle',
+              ),
+              h(
+                'button',
+                {
+                  class: 'btn small',
+                  type: 'button',
+                  onclick: async () => {
+                    const raw = await ask({
+                      title: 'Eşleşme hakkı ekle',
+                      message: `Şu an: ${u.match_balance || 0}. Düşmek için eksi sayı yaz.`,
+                      type: 'number',
+                      value: 5,
+                      okText: 'Ekle',
+                    });
+                    const n = Math.trunc(Number(raw));
+                    if (raw !== null && n)
+                      run(
+                        () => rpc('admin_match_wallet_add', { p_user: id, p_amount: n }),
+                        'Eşleşme hakkı güncellendi',
+                      );
+                  },
+                },
+                'Eşleşme ekle',
+              ),
+              u.banned
+                ? h(
+                    'button',
+                    {
+                      class: 'btn small',
+                      type: 'button',
+                      onclick: () =>
+                        run(() => rpc('admin_unban', { p_user: id }), 'Engel kaldırıldı'),
+                    },
+                    'Engeli kaldır',
+                  )
+                : u.is_admin
+                  ? null
+                  : h(
+                      'button',
+                      {
+                        class: 'btn small danger',
+                        type: 'button',
+                        onclick: async () => {
+                          const reason = await ask({
+                            title: 'Kullanıcı engellensin mi?',
+                            message:
+                              'Tüm sohbetleri kapanır ve eşleşme arayamaz. Sebep (isteğe bağlı):',
+                            value: 'admin',
+                            okText: 'Engelle',
+                            danger: true,
+                          });
+                          if (reason !== null)
+                            run(
+                              () => rpc('admin_ban', { p_user: id, p_reason: reason }),
+                              'Engellendi',
+                            );
+                        },
+                      },
+                      'Engelle',
+                    ),
+            ),
+            h('h3', {}, 'Hesap'),
+            h(
+              'dl',
+              { class: 'facts' },
+              facts.flatMap(([k, v]) => [h('dt', {}, k), h('dd', {}, v)]),
+            ),
+            h('h3', {}, 'Kullanım'),
+            h(
+              'div',
+              { class: 'mini-grid' },
+              counts.map(([k, v]) => h('div', {}, h('b', {}, v), h('span', {}, k))),
+            ),
+            h('h3', {}, `Satın almalar (${d.purchases.length})`),
+            d.purchases.length
+              ? h(
+                  'ul',
+                  { class: 'list' },
+                  d.purchases.map((p) =>
+                    h(
+                      'li',
+                      {},
+                      h(
+                        'div',
+                        {},
+                        h('div', {}, EARN_LABELS[p.product_id] || p.product_id),
+                        h(
+                          'div',
+                          { class: 'muted' },
+                          `${fmtDate(p.at)} · ${p.environment === 'production' ? 'gerçek' : 'test'}`,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Satın alma yok.'),
+            h('h3', {}, `Eşleşmeler (${c.matches})`),
+            d.matches.length
+              ? h(
+                  'ul',
+                  { class: 'list' },
+                  d.matches.map((m) =>
+                    h(
+                      'li',
+                      {},
+                      h(
+                        'div',
+                        {},
+                        h('div', {}, m.partner),
+                        h(
+                          'div',
+                          { class: 'muted' },
+                          `${fmtDate(m.at)} · ${STATUS_TR[m.status]} · ${m.messages} mesaj`,
+                        ),
+                      ),
+                      m.partner_id
+                        ? h(
+                            'button',
+                            {
+                              class: 'btn small',
+                              type: 'button',
+                              onclick: () => {
+                                sheet.close();
+                                openUserDetail(m.partner_id, onChange);
+                              },
+                            },
+                            'Aç',
+                          )
+                        : null,
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Eşleşme yok.'),
+            h('h3', {}, `Hakkındaki şikayetler (${c.reports_against})`),
+            d.reports.length
+              ? h(
+                  'ul',
+                  { class: 'list' },
+                  d.reports.map((r) =>
+                    h(
+                      'li',
+                      {},
+                      h(
+                        'div',
+                        {},
+                        h(
+                          'div',
+                          {},
+                          `${REASON_TR[r.reason] || r.reason} · ${r.status === 'open' ? 'açık' : r.status === 'actioned' ? 'işlem yapıldı' : 'reddedildi'}`,
+                        ),
+                        r.body ? h('div', { class: 'muted' }, `“${r.body}”`) : null,
+                        h('div', { class: 'muted' }, fmtDate(r.at)),
+                      ),
+                    ),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Şikayet yok.'),
+            h('h3', {}, 'Bu kullanıcıyla ilgili işlemler'),
+            auditList(d.audit),
+          );
+        };
+        try {
+          await load();
+        } catch (e) {
+          body.replaceChildren(h('p', {}, errText(e)));
+        }
+      }
+
       // ---------- earnings ----------
       // Store prices (USD) as set in App Store Connect; money here is an estimate.
       const PRICES_USD = {
@@ -1564,6 +2603,8 @@
           maximumFractionDigits: 2,
         });
 
+      const fmtDay = (k) =>
+        new Date(k + 'T12:00:00').toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
       async function viewEarnings() {
         const est = loadEst();
         const days = est.days === 'all' ? null : Number(est.days);
@@ -1730,7 +2771,20 @@
             'div',
             { class: 'panel' },
             h('h2', {}, 'Günlük'),
-            dayKeys.length ? chart : h('p', { class: 'muted' }, 'Bu dönemde veri yok.'),
+            dayKeys.length
+              ? h(
+                  'div',
+                  {},
+                  h('div', { class: 'chart-max muted' }, 'En yüksek gün: ' + usd(maxDay)),
+                  chart,
+                  h(
+                    'div',
+                    { class: 'chart-ends muted' },
+                    h('span', {}, fmtDay(dayKeys[0])),
+                    h('span', {}, fmtDay(dayKeys[dayKeys.length - 1])),
+                  ),
+                )
+              : h('p', { class: 'muted' }, 'Bu dönemde veri yok.'),
             h(
               'p',
               { class: 'muted' },
@@ -1979,91 +3033,25 @@
               { style: 'white-space:nowrap' },
               h(
                 'button',
+                {
+                  class: 'btn small primary',
+                  onclick: () =>
+                    openUserDetail(u.id, async () => {
+                      try {
+                        const fresh = await rpc('admin_users', { p_query: u.id });
+                        if (fresh[0]) fill(fresh[0]);
+                      } catch {}
+                      refreshSide().catch(() => {});
+                    }),
+                },
+                'Detay',
+              ),
+              ' ',
+              h(
+                'button',
                 { class: 'btn small', onclick: () => openGrant(u, fill) },
                 '⭐ Haklar / VIP',
               ),
-              ' ',
-              h(
-                'button',
-                {
-                  class: 'btn small',
-                  onclick: () => {
-                    const raw = prompt(
-                      `${u.nickname || u.email || 'Bu kullanıcı'} için mesaj bakiyesine eklenecek sayı (düşmek için eksi yaz). Şu an: ${u.wallet_balance || 0}`,
-                      '25',
-                    );
-                    const n = Math.trunc(Number(raw));
-                    if (raw !== null && n)
-                      act(
-                        () => rpc('admin_wallet_add', { p_user: u.id, p_amount: n }),
-                        fill,
-                        'Mesaj bakiyesi güncellendi',
-                      );
-                  },
-                },
-                'Mesaj ekle',
-              ),
-              ' ',
-              h(
-                'button',
-                {
-                  class: 'btn small',
-                  onclick: () => {
-                    const raw = prompt(
-                      `${u.nickname || u.email || 'Bu kullanıcı'} için eklenecek eşleşme hakkı (düşmek için eksi yaz). Şu an: ${u.match_balance || 0}`,
-                      '5',
-                    );
-                    const n = Math.trunc(Number(raw));
-                    if (raw !== null && n)
-                      act(
-                        () => rpc('admin_match_wallet_add', { p_user: u.id, p_amount: n }),
-                        fill,
-                        'Eşleşme hakkı güncellendi',
-                      );
-                  },
-                },
-                'Eşleşme ekle',
-              ),
-              ' ',
-              u.banned
-                ? h(
-                    'button',
-                    {
-                      class: 'btn small',
-                      onclick: () =>
-                        act(
-                          () =>
-                            rpc('admin_unban', { p_user: u.id }).then(() => ({
-                              ...u,
-                              banned: false,
-                            })),
-                          fill,
-                          'Engel kaldırıldı',
-                        ),
-                    },
-                    'Engeli kaldır',
-                  )
-                : u.is_admin
-                  ? null
-                  : h(
-                      'button',
-                      {
-                        class: 'btn small danger',
-                        onclick: () => {
-                          const reason = prompt(
-                            `${u.nickname || u.email || 'Bu kullanıcı'} engellensin mi? Sebep (isteğe bağlı):`,
-                            'admin',
-                          );
-                          if (reason !== null)
-                            act(
-                              () => rpc('admin_ban', { p_user: u.id, p_reason: reason }),
-                              fill,
-                              'Engellendi',
-                            );
-                        },
-                      },
-                      'Engelle',
-                    ),
             ),
           );
         };
@@ -2308,7 +3296,11 @@
         const resolve = async (id, action) => {
           if (
             action === 'ban' &&
-            !confirm('Bu kullanıcı engellensin mi? Tüm sohbetleri kapanır ve eşleşme arayamaz.')
+            !(await confirmAsk(
+              'Kullanıcı engellensin mi?',
+              'Tüm sohbetleri kapanır ve eşleşme arayamaz.',
+              'Engelle',
+            ))
           )
             return;
           try {
@@ -2387,7 +3379,7 @@
                             class: 'btn small',
                             title: 'Sil',
                             onclick: async () => {
-                              if (!confirm('Bu kayıt silinsin mi?')) return;
+                              if (!(await confirmAsk('Bu kayıt silinsin mi?', '', 'Sil'))) return;
                               await rpc('admin_pattern_remove', { p_pattern: p.pattern });
                               loadPats();
                             },
@@ -2490,6 +3482,69 @@
       };
 
       // ---------- settings ----------
+      // Settings: one sub-tab per area, a 'changes are live' note, long help folded away.
+      const SETTINGS_GROUPS = [
+        ['ads', 'Reklamlar', /^Reklamlar/],
+        ['couple', 'Couple Match', /^(Couple Match|Eşleşme sınırı)/],
+        ['share', 'Paylaşım', /^Paylaşım/],
+        ['review', 'App Review', /^App Review/],
+      ];
+      function groupSettings() {
+        const panels = [...$main.querySelectorAll(':scope > .panel')];
+        const groupOf = (p) => {
+          const t = p.querySelector('h2')?.textContent || '';
+          return SETTINGS_GROUPS.find(([, , re]) => re.test(t))?.[0] || 'couple';
+        };
+        panels.forEach((p) => {
+          p.dataset.group = groupOf(p);
+          p.querySelectorAll('p.muted').forEach((m) => {
+            if (m.textContent.length < 140 || m.closest('details')) return;
+            const d = h('details', { class: 'help' }, h('summary', {}, 'Nasıl çalışır?'));
+            m.replaceWith(d);
+            d.append(m);
+          });
+        });
+        let current = sessionStorage.getItem('vc.settings.tab') || 'ads';
+        const seg = h('div', { class: 'seg sticky-seg' });
+        const apply = () => {
+          panels.forEach((p) => (p.hidden = p.dataset.group !== current));
+          seg
+            .querySelectorAll('button')
+            .forEach((b) => b.classList.toggle('on', b.dataset.g === current));
+        };
+        SETTINGS_GROUPS.forEach(([g, label]) =>
+          seg.append(
+            h(
+              'button',
+              {
+                type: 'button',
+                'data-g': g,
+                onclick: () => {
+                  current = g;
+                  sessionStorage.setItem('vc.settings.tab', g);
+                  apply();
+                  window.scrollTo(0, 0);
+                },
+              },
+              label,
+            ),
+          ),
+        );
+        const note = h(
+          'div',
+          { class: 'alert info' },
+          h(
+            'span',
+            {},
+            "Buradaki her değişiklik kaydettiğin an tüm kullanıcılara yansır (uygulama bir sonraki açılışta alır). Değişiklikler İşlem geçmişi'ne yazılır.",
+          ),
+        );
+        const first = $main.querySelector(':scope > .panel');
+        $main.insertBefore(seg, first);
+        $main.insertBefore(note, seg);
+        apply();
+      }
+
       async function viewSettings() {
         const cfg = await rpc('admin_config');
         const ads = { enabled: false, quiz_interstitial_interval: 4, ...(cfg.ads_settings || {}) };
@@ -2903,6 +3958,7 @@
             ),
           ),
         );
+        groupSettings();
       }
 
       // ---------- content ----------
@@ -3170,8 +4226,14 @@
                       'button',
                       {
                         class: 'btn small danger',
-                        onclick: () => {
-                          if (confirm('Bu sonuç silinsin mi? Ona bağlı şıklar boşa düşer.')) {
+                        onclick: async () => {
+                          if (
+                            await confirmAsk(
+                              'Bu sonuç silinsin mi?',
+                              'Ona bağlı şıklar boşa düşer.',
+                              'Sil',
+                            )
+                          ) {
                             quiz.outcomes.splice(i, 1);
                             markDirty();
                             renderEditor(quiz, isNew);
@@ -3306,8 +4368,8 @@
                   'button',
                   {
                     class: 'btn small danger',
-                    onclick: () => {
-                      if (confirm('Soru silinsin mi?')) {
+                    onclick: async () => {
+                      if (await confirmAsk('Soru silinsin mi?', '', 'Sil')) {
                         quiz.questions.splice(i, 1);
                         markDirty();
                         renderEditor(quiz, isNew);
@@ -3540,6 +4602,8 @@
 
       const VIEWS = {
         overview: viewOverview,
+        health: viewHealth,
+        audit: viewAudit,
         earnings: viewEarnings,
         users: viewUsers,
         reports: viewReports,
