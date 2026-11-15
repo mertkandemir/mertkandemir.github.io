@@ -520,6 +520,25 @@
         overflow-y: auto;
         margin-top: 10px;
       }
+      .bulk-opts {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .bulk-opt {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .bulk-opt select {
+        max-width: 60%;
+      }
+      select.missing {
+        border-color: var(--danger, #d33) !important;
+      }
       .bulk-preview ul {
         margin: 4px 0 0;
         padding-left: 18px;
@@ -4217,14 +4236,10 @@
             const raw = l.replace(/^([-*•]|[A-Fa-f][).]|\d+[).])\s*/, '');
             const [body, target] = raw.split(/\s*(?:=>|→)\s*/);
             let outcome_id = null;
-            if (scored) {
-              outcome_id = target
-                ? outcomeByName.get(target.trim().toLocaleLowerCase('tr')) || null
-                : null;
+            if (scored && target) {
+              outcome_id = outcomeByName.get(target.trim().toLocaleLowerCase('tr')) || null;
               if (!outcome_id)
-                errors.push(
-                  `${n}. soru, "${body}": sonuç bulunamadı${target ? ` ("${target}")` : ' (=> Sonuç adı ekle)'}`,
-                );
+                errors.push(`${n}. soru, "${body}": "${target}" adında bir sonuç yok`);
             }
             return { id: uuid(), outcome_id, translations: { [locale]: body } };
           });
@@ -4265,18 +4280,78 @@
           : null;
         const preview = h('div', { class: 'bulk-preview' });
         let parsed = { questions: [], errors: [] };
+        // Result choices made in the preview survive further typing (key: question:choice).
+        const picks = new Map();
+        const assignInOrder = (onlyEmpty) => {
+          parsed.questions.forEach((q, qi) =>
+            q.options.forEach((o, oi) => {
+              const key = `${qi}:${oi}`;
+              if (onlyEmpty && (o.outcome_id || picks.get(key))) return;
+              const target = quiz.outcomes[oi % quiz.outcomes.length];
+              if (target) picks.set(key, target.id);
+            }),
+          );
+          refresh();
+        };
+        const outcomeSelect = (o, qi, oi) =>
+          h(
+            'select',
+            {
+              class: o.outcome_id ? '' : 'missing',
+              'aria-label': 'Sonuç',
+              onchange: (e) => {
+                picks.set(`${qi}:${oi}`, e.target.value || null);
+                refresh();
+              },
+            },
+            h('option', { value: '' }, '— sonuç seç —'),
+            quiz.outcomes.map((oc, ci) =>
+              h(
+                'option',
+                { value: oc.id, selected: oc.id === o.outcome_id ? true : null },
+                `${ci + 1}. ${outcomeLabel(quiz, oc.id)}`,
+              ),
+            ),
+          );
         const refresh = () => {
           parsed = parseBulk(area.value, quiz, lang.value);
+          let unassigned = 0;
+          parsed.questions.forEach((q, qi) =>
+            q.options.forEach((o, oi) => {
+              const pick = picks.get(`${qi}:${oi}`);
+              if (pick) o.outcome_id = pick;
+              if (scored && !o.outcome_id) unassigned++;
+            }),
+          );
+          const ready = parsed.questions.length > 0 && !parsed.errors.length && !unassigned;
           preview.replaceChildren(
             ...[
               parsed.questions.length || parsed.errors.length
                 ? h(
                     'p',
-                    { class: parsed.errors.length ? 'bad-text' : 'muted' },
+                    { class: ready ? 'muted' : 'bad-text' },
                     `${parsed.questions.length} soru okundu` +
-                      (parsed.errors.length ? `, ${parsed.errors.length} sorun var:` : '. Hazır.'),
+                      (parsed.errors.length ? `, ${parsed.errors.length} sorun var` : '') +
+                      (unassigned ? ` · ${unassigned} şıkkın sonucu seçilmedi` : '') +
+                      (ready ? '. Hazır.' : ''),
                   )
                 : h('p', { class: 'muted' }, 'Yazdıkça burada önizleme görünür.'),
+              scored && parsed.questions.length && quiz.outcomes.length
+                ? h(
+                    'div',
+                    { class: 'row', style: 'margin-bottom:8px;gap:8px;flex-wrap:wrap' },
+                    h(
+                      'button',
+                      { class: 'btn small', type: 'button', onclick: () => assignInOrder(true) },
+                      'Boşları sırayla doldur',
+                    ),
+                    h(
+                      'button',
+                      { class: 'btn small', type: 'button', onclick: () => assignInOrder(false) },
+                      'Hepsini sırayla bağla (A→1, B→2…)',
+                    ),
+                  )
+                : null,
               parsed.errors.length
                 ? h(
                     'ul',
@@ -4284,20 +4359,24 @@
                     parsed.errors.slice(0, 8).map((e) => h('li', {}, e)),
                   )
                 : null,
-              ...parsed.questions.slice(0, 30).map((q, i) =>
+              ...parsed.questions.slice(0, 50).map((q, qi) =>
                 h(
                   'div',
                   { class: 'q' },
-                  h('b', {}, `${i + 1}. ${q.translations[lang.value]}`),
+                  h('b', {}, `${qi + 1}. ${q.translations[lang.value]}`),
                   h(
-                    'ul',
-                    {},
-                    q.options.map((o) =>
+                    'div',
+                    { class: 'bulk-opts' },
+                    q.options.map((o, oi) =>
                       h(
-                        'li',
-                        {},
-                        o.translations[lang.value] +
-                          (scored ? ` → ${outcomeLabel(quiz, o.outcome_id)}` : ''),
+                        'div',
+                        { class: 'bulk-opt' },
+                        h(
+                          'span',
+                          {},
+                          `${String.fromCharCode(65 + oi)}) ${o.translations[lang.value]}`,
+                        ),
+                        scored ? outcomeSelect(o, qi, oi) : null,
                       ),
                     ),
                   ),
@@ -4305,7 +4384,7 @@
               ),
             ].filter(Boolean),
           );
-          addBtn.disabled = !parsed.questions.length || parsed.errors.length > 0;
+          addBtn.disabled = !ready;
           addBtn.textContent = parsed.questions.length
             ? `${parsed.questions.length} soruyu ekle`
             : 'Ekle';
@@ -4340,7 +4419,7 @@
             { class: 'muted' },
             'Her soruyu boş bir satırla ayır. Şıkları "-" ile başlat.' +
               (scored
-                ? ' Şıkkın sonunda "=> Sonuç adı" (ya da sonuç numarası) hangi sonuca puan verdiğini söyler.'
+                ? ' Sonucu önizlemede her şıkkın yanından seçebilir ya da "sırayla doldur" ile otomatik bağlayabilirsin. İstersen metinde şıkkın sonuna "=> Sonuç adı" (veya numarası) da yazabilirsin.'
                 : ''),
           ),
           h(
