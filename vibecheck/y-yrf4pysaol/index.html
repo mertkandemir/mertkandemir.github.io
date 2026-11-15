@@ -507,6 +507,23 @@
           flex: 1 1 100%;
         }
       }
+      textarea.missing,
+      input.missing {
+        border-color: var(--danger) !important;
+        background: rgba(211, 60, 74, 0.06);
+      }
+      .bad-text {
+        color: var(--danger);
+      }
+      .bulk-preview {
+        max-height: 40vh;
+        overflow-y: auto;
+        margin-top: 10px;
+      }
+      .bulk-preview ul {
+        margin: 4px 0 0;
+        padding-left: 18px;
+      }
       /* ---------- round 2: KPIs, alerts, segments, detail sheet ---------- */
       .grid + .panel,
       .kpis + .panel {
@@ -3963,7 +3980,24 @@
 
       // ---------- content ----------
       async function viewContent() {
-        const quizzes = await rpc('admin_quizzes');
+        const [quizzes, gaps] = await Promise.all([
+          rpc('admin_quizzes'),
+          rpc('admin_translation_gaps').catch(() => ({})),
+        ]);
+        const gapTag = (id) => {
+          const g = Object.entries(gaps[id] || {});
+          return g.length
+            ? h(
+                'span',
+                { class: 'tag red', title: 'Eksik çeviri (soru, şık, sonuç ve başlık sayısı)' },
+                'Eksik: ' + g.map(([l, n]) => `${l.toUpperCase()} ${n}`).join(', '),
+              )
+            : h('span', { class: 'tag green' }, '7 dil tam');
+        };
+        const totalGaps = Object.values(gaps).reduce(
+          (a, g) => a + Object.values(g).reduce((x, y) => x + y, 0),
+          0,
+        );
         const byCat = {};
         for (const q of quizzes) (byCat[q.category] ||= []).push(q);
         const statusTag = (s) =>
@@ -3979,6 +4013,21 @@
             h('h2', { style: 'margin:0' }, 'Sorular ve quizler'),
             h('button', { class: 'btn primary', onclick: () => openEditor(null) }, '+ Yeni quiz'),
           ),
+          totalGaps
+            ? h(
+                'div',
+                { class: 'alert warn', style: 'margin-bottom:12px' },
+                h(
+                  'span',
+                  {},
+                  `Toplam ${totalGaps} eksik çeviri var. Eksik dilde o metin kullanıcıya İngilizce görünür.`,
+                ),
+              )
+            : h(
+                'div',
+                { class: 'alert ok', style: 'margin-bottom:12px' },
+                h('span', {}, 'Tüm quizler 7 dilde tam. 👍'),
+              ),
           ...Object.keys(CATEGORY_NAMES)
             .filter((c) => byCat[c])
             .map((c) =>
@@ -4012,16 +4061,7 @@
                             ? h('span', { class: 'tag' }, 'tahmin modu')
                             : null,
                         ),
-                        h(
-                          'td',
-                          {},
-                          statusTag(q.status),
-                          h(
-                            'span',
-                            { class: 'muted' },
-                            `${LOCALES.filter((l) => q.titles[l]).length}/7 dil`,
-                          ),
-                        ),
+                        h('td', {}, statusTag(q.status), ' ', gapTag(q.id)),
                         h(
                           'td',
                           { style: 'white-space:nowrap;text-align:right' },
@@ -4061,6 +4101,279 @@
         }
       }
 
+      // ---------- quiz editor: play settings and bulk add ----------
+      function playPanel(quiz, markDirty) {
+        const st = (quiz._settings ||= {
+          shuffle_questions: false,
+          shuffle_options: false,
+          pool_size: null,
+        });
+        const base = quiz.questions.filter((q) => (q.tier || 'base') === 'base').length;
+        const box = (key) =>
+          h('input', {
+            type: 'checkbox',
+            checked: !!st[key],
+            onchange: (e) => {
+              st[key] = e.target.checked;
+              markDirty();
+            },
+          });
+        const pool = h('input', {
+          type: 'number',
+          min: 2,
+          max: 500,
+          placeholder: 'Hepsi',
+          value: st.pool_size ?? '',
+          style: 'width:110px',
+          oninput: (e) => {
+            const n = Math.trunc(Number(e.target.value));
+            st.pool_size = n >= 2 ? n : null;
+            note.textContent = poolNote();
+            markDirty();
+          },
+        });
+        const poolNote = () =>
+          st.pool_size && st.pool_size < base
+            ? `Her oyunda ${base} sorudan ${st.pool_size} tanesi seçilir.`
+            : `Her oyunda ${base} sorunun hepsi sorulur.`;
+        const note = h('span', { class: 'muted' }, poolNote());
+        return h(
+          'div',
+          { class: 'panel' },
+          h('h3', { style: 'margin-top:0' }, 'Karıştırma ve soru havuzu'),
+          h(
+            'label',
+            { class: 'grant-line' },
+            box('shuffle_questions'),
+            h(
+              'span',
+              {},
+              h('b', {}, 'Soruları karıştır'),
+              h('span', { class: 'muted' }, 'Her oyunda sorular farklı sırada gelir.'),
+            ),
+          ),
+          h(
+            'label',
+            { class: 'grant-line' },
+            box('shuffle_options'),
+            h(
+              'span',
+              {},
+              h('b', {}, 'Şıkları karıştır'),
+              h('span', { class: 'muted' }, 'Cevap seçeneklerinin sırası her oyunda değişir.'),
+            ),
+          ),
+          h(
+            'div',
+            { class: 'grant-line', style: 'align-items:center;flex-wrap:wrap' },
+            h('span', {}, h('b', {}, 'Her oyunda sorulacak soru sayısı'), note),
+            pool,
+          ),
+          h(
+            'details',
+            { class: 'help' },
+            h('summary', {}, 'Nasıl çalışır?'),
+            h(
+              'p',
+              { class: 'muted' },
+              "Kendini Keşfet'te seçim telefonda yapılır. Friends ve Couple Match'te sunucu oyun başına seçer; iki kişi her zaman aynı soruları aynı sırada görür. Couple Match'te havuz yalnızca temel sorulara uygulanır, reklamlı ve premium ek sorular değişmez. Havuz, soru sayısından büyükse hepsi sorulur.",
+            ),
+          ),
+        );
+      }
+
+      // Text format: a question per block; choices start with '-', '*' or 'A)';
+      // '=> result title' after a choice links it to a result (Discover Yourself).
+      function parseBulk(text, quiz, locale) {
+        const scored = quiz.category === 'personality' || quiz.category === 'solo';
+        const outcomeByName = new Map();
+        quiz.outcomes.forEach((o, i) => {
+          for (const l of LOCALES) {
+            const t = o.translations?.[l]?.title;
+            if (t) outcomeByName.set(t.trim().toLocaleLowerCase('tr'), o.id);
+          }
+          outcomeByName.set(String(i + 1), o.id);
+        });
+        const blocks = text
+          .replace(/\r/g, '')
+          .split(/\n\s*\n/)
+          .map((b) =>
+            b
+              .split('\n')
+              .map((l) => l.trim())
+              .filter(Boolean),
+          )
+          .filter((b) => b.length);
+        const out = [];
+        const errors = [];
+        blocks.forEach((lines, bi) => {
+          const n = bi + 1;
+          const isOpt = (l) => /^([-*•]|[A-Fa-f][).]|\d+[).])\s*/.test(l);
+          const qLines = lines.filter((l) => !isOpt(l));
+          const optLines = lines.filter(isOpt);
+          if (!qLines.length) return errors.push(`${n}. soru: soru metni yok`);
+          if (optLines.length < 2) return errors.push(`${n}. soru: en az 2 şık gerekli`);
+          const options = optLines.map((l) => {
+            const raw = l.replace(/^([-*•]|[A-Fa-f][).]|\d+[).])\s*/, '');
+            const [body, target] = raw.split(/\s*(?:=>|→)\s*/);
+            let outcome_id = null;
+            if (scored) {
+              outcome_id = target
+                ? outcomeByName.get(target.trim().toLocaleLowerCase('tr')) || null
+                : null;
+              if (!outcome_id)
+                errors.push(
+                  `${n}. soru, "${body}": sonuç bulunamadı${target ? ` ("${target}")` : ' (=> Sonuç adı ekle)'}`,
+                );
+            }
+            return { id: uuid(), outcome_id, translations: { [locale]: body } };
+          });
+          out.push({
+            id: uuid(),
+            tier: 'base',
+            dimension: null,
+            translations: { [locale]: qLines.join(' ') },
+            options,
+          });
+        });
+        return { questions: out, errors };
+      }
+      function openBulkAdd(quiz, done) {
+        const scored = quiz.category === 'personality' || quiz.category === 'solo';
+        const tiered = quiz.category === 'couples';
+        const example = scored
+          ? `Hafta sonu ilk ne yaparsın?\n- Yeni bir şey denerim => ${quiz.outcomes[0]?.translations?.tr?.title || 'Sonuç 1'}\n- Evde dinlenirim => ${quiz.outcomes[1]?.translations?.tr?.title || 'Sonuç 2'}\n\nEn sevdiğin mevsim?\n- Yaz => 1\n- Kış => 2`
+          : 'Tatilde plan mı, sürpriz mi?\n- Her şey planlı\n- Biraz plan, biraz sürpriz\n- Tamamen sürpriz\n\nSabah insanı mısın?\n- Evet\n- Hayır';
+        const area = h('textarea', {
+          rows: 12,
+          placeholder: example,
+          style: 'width:100%;font-family:inherit',
+        });
+        const lang = h(
+          'select',
+          {},
+          LOCALES.map((l) =>
+            h('option', { value: l, selected: l === editLocale ? true : null }, LOCALE_NAMES[l]),
+          ),
+        );
+        const tier = tiered
+          ? h(
+              'select',
+              {},
+              Object.entries(TIER_NAMES).map(([k, v]) => h('option', { value: k }, v)),
+            )
+          : null;
+        const preview = h('div', { class: 'bulk-preview' });
+        let parsed = { questions: [], errors: [] };
+        const refresh = () => {
+          parsed = parseBulk(area.value, quiz, lang.value);
+          preview.replaceChildren(
+            ...[
+              parsed.questions.length || parsed.errors.length
+                ? h(
+                    'p',
+                    { class: parsed.errors.length ? 'bad-text' : 'muted' },
+                    `${parsed.questions.length} soru okundu` +
+                      (parsed.errors.length ? `, ${parsed.errors.length} sorun var:` : '. Hazır.'),
+                  )
+                : h('p', { class: 'muted' }, 'Yazdıkça burada önizleme görünür.'),
+              parsed.errors.length
+                ? h(
+                    'ul',
+                    { class: 'bad-text' },
+                    parsed.errors.slice(0, 8).map((e) => h('li', {}, e)),
+                  )
+                : null,
+              ...parsed.questions.slice(0, 30).map((q, i) =>
+                h(
+                  'div',
+                  { class: 'q' },
+                  h('b', {}, `${i + 1}. ${q.translations[lang.value]}`),
+                  h(
+                    'ul',
+                    {},
+                    q.options.map((o) =>
+                      h(
+                        'li',
+                        {},
+                        o.translations[lang.value] +
+                          (scored ? ` → ${outcomeLabel(quiz, o.outcome_id)}` : ''),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ].filter(Boolean),
+          );
+          addBtn.disabled = !parsed.questions.length || parsed.errors.length > 0;
+          addBtn.textContent = parsed.questions.length
+            ? `${parsed.questions.length} soruyu ekle`
+            : 'Ekle';
+        };
+        const addBtn = h(
+          'button',
+          {
+            class: 'btn primary',
+            type: 'button',
+            disabled: true,
+            onclick: () => {
+              parsed.questions.forEach((q) => (q.tier = tier ? tier.value : 'base'));
+              quiz.questions.push(...parsed.questions);
+              sheet.close();
+              done();
+              toast(`${parsed.questions.length} soru eklendi. Kaydetmeyi unutma.`);
+            },
+          },
+          'Ekle',
+        );
+        area.addEventListener('input', refresh);
+        lang.addEventListener('change', refresh);
+        const sheet = openSheet(
+          h(
+            'div',
+            {},
+            h('b', {}, '⚡ Toplu soru ekle'),
+            h('div', { class: 'muted' }, 'Yapıştır, önizle, ekle'),
+          ),
+          h(
+            'p',
+            { class: 'muted' },
+            'Her soruyu boş bir satırla ayır. Şıkları "-" ile başlat.' +
+              (scored
+                ? ' Şıkkın sonunda "=> Sonuç adı" (ya da sonuç numarası) hangi sonuca puan verdiğini söyler.'
+                : ''),
+          ),
+          h(
+            'div',
+            { class: 'row', style: 'margin:8px 0' },
+            h('span', { class: 'muted' }, 'Dil:'),
+            lang,
+            tier ? h('span', { class: 'muted' }, 'Paket:') : null,
+            tier,
+          ),
+          area,
+          preview,
+          h(
+            'div',
+            { class: 'row', style: 'margin-top:12px' },
+            addBtn,
+            h(
+              'span',
+              { class: 'muted' },
+              'Diğer dilleri sonra doldurabilir ya da bana "çevirileri tamamla" diyebilirsin.',
+            ),
+          ),
+        );
+        sheet.dlg.classList.add('wide');
+        refresh();
+      }
+      function outcomeLabel(quiz, id) {
+        const i = quiz.outcomes.findIndex((o) => o.id === id);
+        if (i < 0) return '—';
+        const o = quiz.outcomes[i];
+        return o.translations?.tr?.title || o.translations?.en?.title || `Sonuç ${i + 1}`;
+      }
+
       let editLocale = 'tr';
       async function openEditor(id) {
         const quiz = id
@@ -4076,6 +4389,9 @@
               outcomes: [],
               questions: [],
             };
+        quiz._settings = id
+          ? await rpc('admin_quiz_settings', { p_quiz: id }).catch(() => null)
+          : { shuffle_questions: false, shuffle_options: false, pool_size: null };
         dirty = false;
         renderEditor(quiz, !id);
       }
@@ -4356,6 +4672,29 @@
                 { class: 'row' },
                 h(
                   'button',
+                  {
+                    class: 'btn small',
+                    title: 'Çoğalt',
+                    onclick: () => {
+                      quiz.questions.splice(i + 1, 0, {
+                        id: uuid(),
+                        tier: qn.tier || 'base',
+                        dimension: qn.dimension || null,
+                        translations: { ...qn.translations },
+                        options: qn.options.map((o) => ({
+                          id: uuid(),
+                          outcome_id: o.outcome_id || null,
+                          translations: { ...o.translations },
+                        })),
+                      });
+                      markDirty();
+                      renderEditor(quiz, isNew);
+                    },
+                  },
+                  'Çoğalt',
+                ),
+                h(
+                  'button',
                   { class: 'btn small', title: 'Yukarı', onclick: () => moveQ(i, -1) },
                   '↑',
                 ),
@@ -4385,6 +4724,7 @@
               {
                 placeholder: `Soru metni (${LOCALE_NAMES[editLocale]})`,
                 style: 'margin-top:6px',
+                class: !tr(qn.translations) && filled ? 'missing' : null,
                 oninput: (e) => {
                   qn.translations[editLocale] = e.target.value;
                   markDirty();
@@ -4401,6 +4741,10 @@
                 h('input', {
                   type: 'text',
                   placeholder: 'Şık',
+                  class:
+                    !tr(op.translations) && Object.keys(op.translations || {}).length
+                      ? 'missing'
+                      : null,
                   value: tr(op.translations),
                   oninput: (e) => {
                     op.translations[editLocale] = e.target.value;
@@ -4501,7 +4845,15 @@
               };
               saveBtn.disabled = true;
               try {
-                const saved = await rpc('admin_quiz_save', { p: payload });
+                const { _settings, ...clean } = payload;
+                const saved = await rpc('admin_quiz_save', { p: clean });
+                if (_settings)
+                  saved._settings = await rpc('admin_quiz_settings_set', {
+                    p_quiz: saved.id,
+                    p_shuffle_questions: !!_settings.shuffle_questions,
+                    p_shuffle_options: !!_settings.shuffle_options,
+                    p_pool_size: _settings.pool_size || null,
+                  });
                 dirty = false;
                 toast('Kaydedildi');
                 renderEditor(saved, false);
@@ -4568,13 +4920,46 @@
                 )
               : null,
           ),
+          playPanel(quiz, markDirty),
           outcomesPanel,
           h(
             'div',
             {},
-            h('h3', {}, `Sorular (${quiz.questions.length})`),
+            h(
+              'div',
+              { class: 'row', style: 'justify-content:space-between;align-items:center' },
+              h('h3', {}, `Sorular (${quiz.questions.length})`),
+              h(
+                'button',
+                {
+                  class: 'btn',
+                  onclick: () =>
+                    openBulkAdd(quiz, () => {
+                      markDirty();
+                      renderEditor(quiz, isNew);
+                    }),
+                },
+                '⚡ Toplu ekle',
+              ),
+            ),
             questionCards,
-            h('button', { class: 'btn', onclick: addQuestion }, '+ Soru ekle'),
+            h(
+              'div',
+              { class: 'row' },
+              h('button', { class: 'btn', onclick: addQuestion }, '+ Soru ekle'),
+              h(
+                'button',
+                {
+                  class: 'btn',
+                  onclick: () =>
+                    openBulkAdd(quiz, () => {
+                      markDirty();
+                      renderEditor(quiz, isNew);
+                    }),
+                },
+                '⚡ Toplu ekle',
+              ),
+            ),
           ),
           h(
             'div',
