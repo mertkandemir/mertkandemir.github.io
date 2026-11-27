@@ -76,39 +76,67 @@ PERSON = json.dumps({"@context": "https://schema.org", "@type": "Person", "name"
 def home(lang):
     if lang == "tr":
         t = dict(
-            title="Mert Kandemir | Yazılım ve Üretim",
-            desc="Mert Kandemir’in kişisel sitesi. Canias ERP, TROIA ve üretim süreçleri üzerine teknik notlar.",
-            nav="Ana menü", skip="İçeriğe geç", notes="Teknik Notlar", contact="İletişim",
-            location="İzmir, Türkiye", specialty="Canias ERP ve TROIA",
-            intro="Canias ERP ve TROIA ile üretim süreçleri için yazılım geliştiriyorum. Burada üretim yazılımları üzerine teknik notlarımı paylaşıyorum.",
-            explore_notes="Teknik notları keşfet",
-            notes_intro="Üretim süreçleri, ERP ve TROIA üzerine pratik örnekler ve başvuru kaynakları.",
-            troia="TROIA’da ay sonu hesabı",
-            troia_intro="Varsayılan tarih aralığı oluştururken başlangıç ve bitiş tarihini nasıl belirleriz?",
-            troia_link="Örneği oku",
-            troia_detail="Başlangıca bugünün tarihini al. Bitiş için bir sonraki ayın ilk gününü bul ve bir gün geri git. Böylece Şubat, artık yıl ve Aralık gibi durumlar için ayın gün sayısını ayrıca hesaplamak gerekmez.",
-            troia_example="Örnek: 10 Şubat 2028 → 29 Şubat 2028",
-            contact_intro="Teknik notlar üzerine konuşmak için bana ulaşabilirsin.",
+            title="Mert Kandemir | Üretim Yazılımları ve TROIA",
+            desc="Mert Kandemir’in Canias ERP, TROIA ve üretim süreçleri üzerine kişisel teknik yazıları.",
+            nav="Ana menü", skip="İçeriğe geç", notes="Teknik Yazılar", about="Hakkımda", contact="İletişim",
+            hero_title="Üretim yazılımları", hero_emphasis="ve TROIA",
+            specialty="Canias ERP / TROIA",
+            intro="İş emirleri, ürün ağaçları ve üretim maliyetleri üzerine çalışıyorum. Bu sitede karşılaştığım problemleri ve çözüm yaklaşımlarımı paylaşıyorum.",
+            explore_notes="Teknik yazıları oku",
+            notes_intro="Canias ERP ve üretim yazılımı geliştirirken karşılaşılan problemlerden iki örnek.",
+            open_note="Örneği aç",
+            about_intro="İzmir’de yaşayan bir yazılım geliştiricisiyim. Canias ERP üzerinde üretim süreçlerini analiz ediyor, TROIA ile ekranlar ve iş akışları geliştiriyorum.",
+            about_detail="Bu sitede bir problemi nasıl ele aldığımı, hangi ayrıntıların sonucu değiştirdiğini ve uygulamada nelere dikkat ettiğimi yazıyorum.",
+            contact_intro="Buradaki yazılar üzerine konuşmak veya bir örnek hakkında görüş paylaşmak için bana ulaşabilirsin.",
             mail="E-posta", path="/", og="og-home-tr.jpg", alternate="/en/", alternate_lang="en", alternate_label="EN",
+        )
+        notes = (
+            ("TROIA", "Ay sonu tarihini hesaplamak",
+             "Varsayılan bir tarih aralığında başlangıcı bugüne, bitişi içinde bulunulan ayın son gününe ayarlamak.",
+             "Başlangıç için bugünün tarihini kullan. Bitiş için bir sonraki ayın ilk gününü bul ve bir gün geri git. Aynı yöntem artık yıllarda ve Aralık’tan Ocak’a geçerken de çalışır.",
+             "10 Şubat 2028 → 29 Şubat 2028"),
+            ("Üretim / ERP", "İş emri ve ürün ağacı karşılaştırması",
+             "Planlanan bileşenlerle ürün ağacındaki bileşenleri karşılaştırırken miktar farklarını ve eksik satırları göstermek.",
+             "Bileşenleri malzeme ve varyant bilgisine göre eşleştir. Miktarları ortak bir ölçü biriminde karşılaştır. Bir bileşen yalnızca bir tarafta varsa bunu ayrı bir sonuç olarak kaydet.",
+             "Ürün ağacı 4 adet · İş emri 5 adet → 1 adet fark"),
         )
     else:
         t = dict(
-            title="Mert Kandemir | Software and Manufacturing",
-            desc="Mert Kandemir’s personal site. Technical notes on Canias ERP, TROIA, and manufacturing processes.",
-            nav="Main navigation", skip="Skip to content", notes="Technical Notes", contact="Contact",
-            location="İzmir, Türkiye", specialty="Canias ERP and TROIA",
-            intro="I develop software for manufacturing processes with Canias ERP and TROIA. I share technical notes on manufacturing software here.",
-            explore_notes="Explore technical notes",
-            notes_intro="Practical examples and reference material on manufacturing, ERP, and TROIA.",
-            troia="Month-end dates in TROIA",
-            troia_intro="How do you set the start and end dates for a default date range?",
-            troia_link="Read the example",
-            troia_detail="Use today as the start date. For the end date, find the first day of the following month and subtract one day. This handles February, leap years, and December without calculating each month’s length separately.",
-            troia_example="Example: 10 February 2028 → 29 February 2028",
-            contact_intro="Get in touch to discuss the technical notes.",
+            title="Mert Kandemir | Manufacturing Software and TROIA",
+            desc="Mert Kandemir’s technical writing on Canias ERP, TROIA, and manufacturing processes.",
+            nav="Main navigation", skip="Skip to content", notes="Technical Writing", about="About", contact="Contact",
+            hero_title="Manufacturing software", hero_emphasis="and TROIA",
+            specialty="Canias ERP / TROIA",
+            intro="I work with production orders, bills of materials, and manufacturing costs. I write about the problems I encounter and how I approach them.",
+            explore_notes="Read the technical notes",
+            notes_intro="Two examples of problems that come up when developing manufacturing software with Canias ERP.",
+            open_note="Open example",
+            about_intro="I’m a software developer based in İzmir. I analyse manufacturing processes in Canias ERP and build screens and workflows with TROIA.",
+            about_detail="I use this site to explain how I approach a problem, which details affect the outcome, and what I look out for during implementation.",
+            contact_intro="Get in touch if you’d like to discuss a note or share your perspective on an example.",
             mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
         )
-    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=2">\n'
+        notes = (
+            ("TROIA", "Calculating the month-end date",
+             "Set the default date range from today to the last day of the current month.",
+             "Use today as the start date. To find the end date, take the first day of the next month and subtract one day. The same approach works in leap years and when moving from December to January.",
+             "10 February 2028 → 29 February 2028"),
+            ("Manufacturing / ERP", "Comparing production orders and bills of materials",
+             "Identify quantity differences and missing lines when comparing planned components with a bill of materials.",
+             "Match components by material and variant. Convert quantities to a common unit before comparing them. Record any component present on only one side as a separate result.",
+             "Bill of materials 4 units · Production order 5 units → 1 unit difference"),
+        )
+    articles = "\n".join(f'''      <article class="home-note">
+        <p class="home-label">{e(topic)}</p>
+        <h3>{e(title)}</h3>
+        <p>{e(intro)}</p>
+        <details>
+          <summary>{t["open_note"]}</summary>
+          <p>{e(detail)}</p>
+          <p class="home-example">{e(example)}</p>
+        </details>
+      </article>''' for topic, title, intro, detail, example in notes)
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=3">\n'
              f'<script type="application/ld+json">{PERSON}</script>\n')
 
     return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
@@ -118,6 +146,7 @@ def home(lang):
     <a class="home-brand" href="{t["path"]}">Mert Kandemir</a>
     <nav aria-label="{t["nav"]}">
       <a href="#notlar">{t["notes"]}</a>
+      <a href="#hakkimda">{t["about"]}</a>
       <a href="#iletisim">{t["contact"]}</a>
       <a class="home-language" href="{t["alternate"]}" lang="{t["alternate_lang"]}" hreflang="{t["alternate_lang"]}">{t["alternate_label"]}</a>
     </nav>
@@ -127,9 +156,8 @@ def home(lang):
   <section class="home-hero" aria-labelledby="home-title">
     <div class="home-wrap home-hero-layout">
       <div class="home-hero-copy">
-        <p class="home-label">{t["location"]}</p>
-        <h1 id="home-title">Mert <em>Kandemir</em></h1>
-        <p class="home-specialty">{t["specialty"]}</p>
+        <p class="home-label">{t["specialty"]}</p>
+        <h1 id="home-title">{t["hero_title"]} <em>{t["hero_emphasis"]}</em></h1>
         <p class="home-intro">{t["intro"]}</p>
         <div class="home-actions">
           <a class="home-button" href="#notlar">{t["explore_notes"]}</a>
@@ -145,16 +173,20 @@ def home(lang):
       <p>{t["notes_intro"]}</p>
     </div>
     <div class="home-notes">
-      <article class="home-note">
-        <p class="home-label">Canias ERP / TROIA</p>
-        <h3>{t["troia"]}</h3>
-        <p>{t["troia_intro"]}</p>
-        <details>
-          <summary>{t["troia_link"]}</summary>
-          <p>{t["troia_detail"]}</p>
-          <p class="home-example">{t["troia_example"]}</p>
-        </details>
-      </article>
+{articles}
+    </div>
+  </section>
+
+  <section id="hakkimda" class="home-about" aria-labelledby="about-title">
+    <div class="home-section home-wrap home-about-layout">
+      <div>
+        <h2 id="about-title">{t["about"]}</h2>
+        <p class="home-about-name">Mert Kandemir</p>
+      </div>
+      <div class="home-about-copy">
+        <p>{t["about_intro"]}</p>
+        <p>{t["about_detail"]}</p>
+      </div>
     </div>
   </section>
 
