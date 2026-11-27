@@ -26,8 +26,8 @@
 <link rel="stylesheet" href="/assets/css/fonts.css?v=9">
 <link rel="stylesheet" href="/assets/css/site.css?v=9">
 <script>document.documentElement.classList.replace('no-js','js');</script>
-<link rel="stylesheet" href="/assets/css/home.css?v=5">
-<script src="/assets/js/production-demo.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/css/home.css?v=6">
+<script src="/assets/js/code-atelier.js?v=1" defer></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body class="home-page">
@@ -36,6 +36,7 @@
   <div class="home-wrap home-navigation">
     <a class="home-brand" href="/en/"><span aria-hidden="true">MK</span>Mert Kandemir</a>
     <nav aria-label="Main navigation">
+      <a href="#atelier">Atelier</a>
       <a href="#hakkimda">About</a>
       <a href="#iletisim">Contact</a>
       <a class="home-language" href="/" lang="tr" hreflang="tr">TR</a>
@@ -49,35 +50,66 @@
         <p class="home-label">İzmir, Türkiye</p>
         <h1 id="home-title">Mert <em>Kandemir</em></h1>
         <p class="home-role">Software developer</p>
-        <p class="home-specialty">I build software for manufacturing and enterprise operations.</p>
+        <p class="home-specialty">I turn complex processes into clear, dependable digital systems.</p>
       </div>
-      <section class="production-demo" aria-labelledby="production-title">
-        <div class="production-heading">
-          <span class="production-sample">Sample data</span>
-          <h2 id="production-title">Production simulator</h2>
-          <p>Adjust the quantities to see the production variance.</p>
+      <aside class="home-manifest" aria-label="Software developer">
+        <span>MK / 001</span>
+        <ol>
+          <li><b>01</b>Enterprise systems</li>
+          <li><b>02</b>Process design</li>
+          <li><b>03</b>Digital products</li>
+        </ol>
+        <p aria-hidden="true">&#123; build / refine / deliver &#125;</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier
+    data-updated="Output updated." data-reset-done="Starter code restored.">
+    <div class="home-wrap">
+      <header class="atelier-intro">
+        <p>Interactive experience · 01</p>
+        <h2 id="atelier-title">Code Atelier</h2>
+        <div>
+          <p>Change the code. Run it. See an idea become something real, instantly.</p>
+          <span>Ctrl / ⌘ + Enter</span>
         </div>
-        <form data-production-demo>
-          <fieldset disabled>
-            <div class="production-control">
-              <label for="production-plan">Planned</label>
-              <span class="production-quantity" data-plan>100</span>
-              <input id="production-plan" name="plan" type="range" min="0" max="150" value="100">
+      </header>
+
+      <div class="atelier-window">
+        <div class="atelier-bar" aria-hidden="true"><i></i><i></i><i></i><span>mkandemir.com.tr / atelier</span></div>
+        <div class="atelier-grid">
+          <div class="atelier-editor">
+            <div class="atelier-tabs" role="tablist" aria-label="Code editor">
+              <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="panel-html" data-language="html">HTML</button>
+              <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="panel-css" data-language="css" tabindex="-1">CSS</button>
+              <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="panel-js" data-language="js" tabindex="-1">JavaScript</button>
             </div>
-            <div class="production-control">
-              <label for="production-actual">Actual</label>
-              <span class="production-quantity" data-actual>92</span>
-              <input id="production-actual" name="actual" type="range" min="0" max="150" value="92">
+            <div class="atelier-panel" id="panel-html" role="tabpanel" aria-labelledby="tab-html">
+              <label class="sr-only" for="atelier-html">HTML</label>
+              <textarea id="atelier-html" name="html" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
             </div>
-            <div class="production-result">
-              <label for="production-difference">Production variance</label>
-              <div><output id="production-difference" for="production-plan production-actual">−8</output> <span>units</span></div>
-              <button type="reset">Reset</button>
+            <div class="atelier-panel" id="panel-css" role="tabpanel" aria-labelledby="tab-css" hidden>
+              <label class="sr-only" for="atelier-css">CSS</label>
+              <textarea id="atelier-css" name="css" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
             </div>
-          </fieldset>
-        </form>
-        <noscript><p>Enable JavaScript to use the simulator.</p></noscript>
-      </section>
+            <div class="atelier-panel" id="panel-js" role="tabpanel" aria-labelledby="tab-js" hidden>
+              <label class="sr-only" for="atelier-js">JavaScript</label>
+              <textarea id="atelier-js" name="js" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
+            </div>
+            <div class="atelier-actions">
+              <button class="atelier-reset" type="button" data-reset>Reset</button>
+              <button class="atelier-run" type="button" data-run>Run<span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <div class="atelier-preview">
+            <div class="atelier-preview-title"><span>Live output</span><i aria-hidden="true"></i></div>
+            <iframe title="Live output" sandbox="allow-scripts" data-preview></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="atelier-status" role="status" aria-live="polite" data-status></p>
+      <noscript><p>Enable JavaScript to use the Code Atelier.</p></noscript>
     </div>
   </section>
 

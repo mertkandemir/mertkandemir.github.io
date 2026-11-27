@@ -80,11 +80,14 @@ def home(lang):
             desc="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.",
             nav="Ana menü", skip="İçeriğe geç", about="Hakkımda", contact="İletişim",
             location="İzmir, Türkiye", role="Yazılım geliştirici",
-            specialty="Üretim sistemleri ve kurumsal yazılım geliştiriyorum.",
-            demo="Üretim simülasyonu", sample="Örnek veri",
-            hint="Miktarları değiştir ve üretim farkını gör.",
-            plan="Planlanan", actual="Gerçekleşen", difference="Üretim farkı", units="adet",
-            reset="Sıfırla", no_script="Simülasyonu kullanmak için JavaScript’i etkinleştir.",
+            specialty="Karmaşık süreçleri, sade ve çalışan dijital sistemlere dönüştürüyorum.",
+            atelier="Code Atelier", atelier_nav="Atölye", atelier_kicker="İnteraktif deneyim · 01",
+            atelier_intro="Kodu değiştir. Çalıştır. Fikrin ekranda nasıl bir şeye dönüştüğünü anında gör.",
+            html_tab="HTML", css_tab="CSS", js_tab="JavaScript", output="Canlı çıktı",
+            run="Çalıştır", reset="Sıfırla", shortcut="Ctrl / ⌘ + Enter",
+            updated="Çıktı güncellendi.", reset_done="Başlangıç kodu geri yüklendi.",
+            no_script="Code Atelier’i kullanmak için JavaScript’i etkinleştir.",
+            proof_one="Kurumsal sistemler", proof_two="Süreç tasarımı", proof_three="Dijital ürünler",
             about_intro="Üretim süreçleri için yazılım geliştiriyorum. Çalışmalarım Canias ERP, süreç analizi ve TROIA ile uygulama geliştirme üzerine yoğunlaşıyor.",
             mail="E-posta", path="/", og="og-home-tr.jpg", alternate="/en/", alternate_lang="en", alternate_label="EN",
         )
@@ -94,16 +97,19 @@ def home(lang):
             desc="Personal website of Mert Kandemir, a software developer based in İzmir.",
             nav="Main navigation", skip="Skip to content", about="About", contact="Contact",
             location="İzmir, Türkiye", role="Software developer",
-            specialty="I build software for manufacturing and enterprise operations.",
-            demo="Production simulator", sample="Sample data",
-            hint="Adjust the quantities to see the production variance.",
-            plan="Planned", actual="Actual", difference="Production variance", units="units",
-            reset="Reset", no_script="Enable JavaScript to use the simulator.",
+            specialty="I turn complex processes into clear, dependable digital systems.",
+            atelier="Code Atelier", atelier_nav="Atelier", atelier_kicker="Interactive experience · 01",
+            atelier_intro="Change the code. Run it. See an idea become something real, instantly.",
+            html_tab="HTML", css_tab="CSS", js_tab="JavaScript", output="Live output",
+            run="Run", reset="Reset", shortcut="Ctrl / ⌘ + Enter",
+            updated="Output updated.", reset_done="Starter code restored.",
+            no_script="Enable JavaScript to use the Code Atelier.",
+            proof_one="Enterprise systems", proof_two="Process design", proof_three="Digital products",
             about_intro="I develop software for manufacturing operations, with a focus on Canias ERP, process analysis, and application development in TROIA.",
             mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
         )
-    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=5">\n'
-             '<script src="/assets/js/production-demo.js?v=1" defer></script>\n'
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=6">\n'
+             '<script src="/assets/js/code-atelier.js?v=1" defer></script>\n'
              f'<script type="application/ld+json">{PERSON}</script>\n')
 
     return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
@@ -112,6 +118,7 @@ def home(lang):
   <div class="home-wrap home-navigation">
     <a class="home-brand" href="{t["path"]}"><span aria-hidden="true">MK</span>Mert Kandemir</a>
     <nav aria-label="{t["nav"]}">
+      <a href="#atelier">{t["atelier_nav"]}</a>
       <a href="#hakkimda">{t["about"]}</a>
       <a href="#iletisim">{t["contact"]}</a>
       <a class="home-language" href="{t["alternate"]}" lang="{t["alternate_lang"]}" hreflang="{t["alternate_lang"]}">{t["alternate_label"]}</a>
@@ -127,33 +134,64 @@ def home(lang):
         <p class="home-role">{t["role"]}</p>
         <p class="home-specialty">{t["specialty"]}</p>
       </div>
-      <section class="production-demo" aria-labelledby="production-title">
-        <div class="production-heading">
-          <span class="production-sample">{t["sample"]}</span>
-          <h2 id="production-title">{t["demo"]}</h2>
-          <p>{t["hint"]}</p>
+      <aside class="home-manifest" aria-label="{t["role"]}">
+        <span>MK / 001</span>
+        <ol>
+          <li><b>01</b>{t["proof_one"]}</li>
+          <li><b>02</b>{t["proof_two"]}</li>
+          <li><b>03</b>{t["proof_three"]}</li>
+        </ol>
+        <p aria-hidden="true">&#123; build / refine / deliver &#125;</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier
+    data-updated="{e(t['updated'])}" data-reset-done="{e(t['reset_done'])}">
+    <div class="home-wrap">
+      <header class="atelier-intro">
+        <p>{t["atelier_kicker"]}</p>
+        <h2 id="atelier-title">{t["atelier"]}</h2>
+        <div>
+          <p>{t["atelier_intro"]}</p>
+          <span>{t["shortcut"]}</span>
         </div>
-        <form data-production-demo>
-          <fieldset disabled>
-            <div class="production-control">
-              <label for="production-plan">{t["plan"]}</label>
-              <span class="production-quantity" data-plan>100</span>
-              <input id="production-plan" name="plan" type="range" min="0" max="150" value="100">
+      </header>
+
+      <div class="atelier-window">
+        <div class="atelier-bar" aria-hidden="true"><i></i><i></i><i></i><span>mkandemir.com.tr / atelier</span></div>
+        <div class="atelier-grid">
+          <div class="atelier-editor">
+            <div class="atelier-tabs" role="tablist" aria-label="Code editor">
+              <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="panel-html" data-language="html">{t["html_tab"]}</button>
+              <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="panel-css" data-language="css" tabindex="-1">{t["css_tab"]}</button>
+              <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="panel-js" data-language="js" tabindex="-1">{t["js_tab"]}</button>
             </div>
-            <div class="production-control">
-              <label for="production-actual">{t["actual"]}</label>
-              <span class="production-quantity" data-actual>92</span>
-              <input id="production-actual" name="actual" type="range" min="0" max="150" value="92">
+            <div class="atelier-panel" id="panel-html" role="tabpanel" aria-labelledby="tab-html">
+              <label class="sr-only" for="atelier-html">{t["html_tab"]}</label>
+              <textarea id="atelier-html" name="html" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
             </div>
-            <div class="production-result">
-              <label for="production-difference">{t["difference"]}</label>
-              <div><output id="production-difference" for="production-plan production-actual">−8</output> <span>{t["units"]}</span></div>
-              <button type="reset">{t["reset"]}</button>
+            <div class="atelier-panel" id="panel-css" role="tabpanel" aria-labelledby="tab-css" hidden>
+              <label class="sr-only" for="atelier-css">{t["css_tab"]}</label>
+              <textarea id="atelier-css" name="css" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
             </div>
-          </fieldset>
-        </form>
-        <noscript><p>{t["no_script"]}</p></noscript>
-      </section>
+            <div class="atelier-panel" id="panel-js" role="tabpanel" aria-labelledby="tab-js" hidden>
+              <label class="sr-only" for="atelier-js">{t["js_tab"]}</label>
+              <textarea id="atelier-js" name="js" spellcheck="false" autocomplete="off" autocapitalize="off" data-code-input></textarea>
+            </div>
+            <div class="atelier-actions">
+              <button class="atelier-reset" type="button" data-reset>{t["reset"]}</button>
+              <button class="atelier-run" type="button" data-run>{t["run"]}<span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <div class="atelier-preview">
+            <div class="atelier-preview-title"><span>{t["output"]}</span><i aria-hidden="true"></i></div>
+            <iframe title="{t["output"]}" sandbox="allow-scripts" data-preview></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="atelier-status" role="status" aria-live="polite" data-status></p>
+      <noscript><p>{t["no_script"]}</p></noscript>
     </div>
   </section>
 
