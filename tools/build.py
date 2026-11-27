@@ -80,6 +80,11 @@ def home(lang):
             desc="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.",
             nav="Ana menü", skip="İçeriğe geç", about="Hakkımda", contact="İletişim",
             location="İzmir, Türkiye", role="Yazılım geliştirici",
+            specialty="Üretim sistemleri ve kurumsal yazılım geliştiriyorum.",
+            demo="Üretim simülasyonu", sample="Örnek veri",
+            hint="Miktarları değiştir ve üretim farkını gör.",
+            plan="Planlanan", actual="Gerçekleşen", difference="Üretim farkı", units="adet",
+            reset="Sıfırla", no_script="Simülasyonu kullanmak için JavaScript’i etkinleştir.",
             about_intro="Üretim süreçleri için yazılım geliştiriyorum. Çalışmalarım Canias ERP, süreç analizi ve TROIA ile uygulama geliştirme üzerine yoğunlaşıyor.",
             mail="E-posta", path="/", og="og-home-tr.jpg", alternate="/en/", alternate_lang="en", alternate_label="EN",
         )
@@ -89,17 +94,23 @@ def home(lang):
             desc="Personal website of Mert Kandemir, a software developer based in İzmir.",
             nav="Main navigation", skip="Skip to content", about="About", contact="Contact",
             location="İzmir, Türkiye", role="Software developer",
+            specialty="I build software for manufacturing and enterprise operations.",
+            demo="Production simulator", sample="Sample data",
+            hint="Adjust the quantities to see the production variance.",
+            plan="Planned", actual="Actual", difference="Production variance", units="units",
+            reset="Reset", no_script="Enable JavaScript to use the simulator.",
             about_intro="I develop software for manufacturing operations, with a focus on Canias ERP, process analysis, and application development in TROIA.",
             mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
         )
-    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=4">\n'
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=5">\n'
+             '<script src="/assets/js/production-demo.js?v=1" defer></script>\n'
              f'<script type="application/ld+json">{PERSON}</script>\n')
 
     return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
-                 theme="#f5f1e9", body_class="home-page") + f'''<a class="skip" href="#main">{t["skip"]}</a>
+                 theme="#111519", body_class="home-page") + f'''<a class="skip" href="#main">{t["skip"]}</a>
 <header class="home-header">
   <div class="home-wrap home-navigation">
-    <a class="home-brand" href="{t["path"]}">Mert Kandemir</a>
+    <a class="home-brand" href="{t["path"]}"><span aria-hidden="true">MK</span>Mert Kandemir</a>
     <nav aria-label="{t["nav"]}">
       <a href="#hakkimda">{t["about"]}</a>
       <a href="#iletisim">{t["contact"]}</a>
@@ -114,8 +125,35 @@ def home(lang):
         <p class="home-label">{t["location"]}</p>
         <h1 id="home-title">Mert <em>Kandemir</em></h1>
         <p class="home-role">{t["role"]}</p>
+        <p class="home-specialty">{t["specialty"]}</p>
       </div>
-      <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
+      <section class="production-demo" aria-labelledby="production-title">
+        <div class="production-heading">
+          <span class="production-sample">{t["sample"]}</span>
+          <h2 id="production-title">{t["demo"]}</h2>
+          <p>{t["hint"]}</p>
+        </div>
+        <form data-production-demo>
+          <fieldset disabled>
+            <div class="production-control">
+              <label for="production-plan">{t["plan"]}</label>
+              <span class="production-quantity" data-plan>100</span>
+              <input id="production-plan" name="plan" type="range" min="0" max="150" value="100">
+            </div>
+            <div class="production-control">
+              <label for="production-actual">{t["actual"]}</label>
+              <span class="production-quantity" data-actual>92</span>
+              <input id="production-actual" name="actual" type="range" min="0" max="150" value="92">
+            </div>
+            <div class="production-result">
+              <label for="production-difference">{t["difference"]}</label>
+              <div><output id="production-difference" for="production-plan production-actual">−8</output> <span>{t["units"]}</span></div>
+              <button type="reset">{t["reset"]}</button>
+            </div>
+          </fieldset>
+        </form>
+        <noscript><p>{t["no_script"]}</p></noscript>
+      </section>
     </div>
   </section>
 

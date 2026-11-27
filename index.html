@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mert Kandemir | Kişisel Web Sitesi</title>
 <meta name="description" content="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.">
-<meta name="theme-color" content="#f5f1e9">
+<meta name="theme-color" content="#111519">
 <link rel="canonical" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="tr" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/en/">
@@ -26,14 +26,15 @@
 <link rel="stylesheet" href="/assets/css/fonts.css?v=9">
 <link rel="stylesheet" href="/assets/css/site.css?v=9">
 <script>document.documentElement.classList.replace('no-js','js');</script>
-<link rel="stylesheet" href="/assets/css/home.css?v=4">
+<link rel="stylesheet" href="/assets/css/home.css?v=5">
+<script src="/assets/js/production-demo.js?v=1" defer></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body class="home-page">
 <a class="skip" href="#main">İçeriğe geç</a>
 <header class="home-header">
   <div class="home-wrap home-navigation">
-    <a class="home-brand" href="/">Mert Kandemir</a>
+    <a class="home-brand" href="/"><span aria-hidden="true">MK</span>Mert Kandemir</a>
     <nav aria-label="Ana menü">
       <a href="#hakkimda">Hakkımda</a>
       <a href="#iletisim">İletişim</a>
@@ -48,8 +49,35 @@
         <p class="home-label">İzmir, Türkiye</p>
         <h1 id="home-title">Mert <em>Kandemir</em></h1>
         <p class="home-role">Yazılım geliştirici</p>
+        <p class="home-specialty">Üretim sistemleri ve kurumsal yazılım geliştiriyorum.</p>
       </div>
-      <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
+      <section class="production-demo" aria-labelledby="production-title">
+        <div class="production-heading">
+          <span class="production-sample">Örnek veri</span>
+          <h2 id="production-title">Üretim simülasyonu</h2>
+          <p>Miktarları değiştir ve üretim farkını gör.</p>
+        </div>
+        <form data-production-demo>
+          <fieldset disabled>
+            <div class="production-control">
+              <label for="production-plan">Planlanan</label>
+              <span class="production-quantity" data-plan>100</span>
+              <input id="production-plan" name="plan" type="range" min="0" max="150" value="100">
+            </div>
+            <div class="production-control">
+              <label for="production-actual">Gerçekleşen</label>
+              <span class="production-quantity" data-actual>92</span>
+              <input id="production-actual" name="actual" type="range" min="0" max="150" value="92">
+            </div>
+            <div class="production-result">
+              <label for="production-difference">Üretim farkı</label>
+              <div><output id="production-difference" for="production-plan production-actual">−8</output> <span>adet</span></div>
+              <button type="reset">Sıfırla</button>
+            </div>
+          </fieldset>
+        </form>
+        <noscript><p>Simülasyonu kullanmak için JavaScript’i etkinleştir.</p></noscript>
+      </section>
     </div>
   </section>
 
