@@ -1,6 +1,5 @@
 .home-page {
   --home-ivory: #f5f1e9;
-  --home-paper: #ebe4d8;
   --home-dark: #171410;
   --home-gold: #dac093;
   --home-bronze: #795326;
@@ -175,8 +174,7 @@
 }
 
 .home-section-heading h2,
-.home-note h3,
-.home-project-row h3 {
+.home-note h3 {
   margin: 0;
   font-family: var(--home-display);
   font-weight: 400;
@@ -189,37 +187,27 @@
 }
 
 .home-section-heading p,
-.home-note p:not(.home-label),
-.home-project-row p {
+.home-note p:not(.home-label) {
   margin: 0;
   color: var(--home-muted);
 }
 
 .home-section-heading p { max-inline-size: 40ch; }
 
-.home-notes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-block: 1px solid var(--home-rule);
+.home-notes { border-block: 1px solid var(--home-rule); }
+
+.home-note {
+  max-inline-size: 46rem;
+  padding-block: 1.65rem 1.35rem;
 }
 
-.home-note { padding: 1.65rem clamp(0rem, 3vw, 2.5rem) 1.35rem 0; }
-
-.home-note + .home-note {
-  border-inline-start: 1px solid var(--home-rule);
-  padding-inline: clamp(1.25rem, 3vw, 2.5rem) 0;
-}
-
-.home-note h3,
-.home-project-row h3 {
+.home-note h3 {
   font-size: clamp(1.65rem, 1.25rem + 1.5vw, 2.8rem);
   line-height: 1.15;
   margin-block-end: .55rem;
 }
 
-.home-note details,
-.home-note > .home-link,
-.home-project-row .home-link { margin-block-start: .5rem; }
+.home-note details { margin-block-start: .5rem; }
 
 .home-note summary {
   min-block-size: 2.75rem;
@@ -239,19 +227,6 @@
   font-size: .875rem;
 }
 
-.home-projects { background: var(--home-paper); }
-
-.home-project-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, .66fr);
-  gap: .55rem 2rem;
-  border-block-start: 1px solid var(--home-rule);
-  padding-block: 1.35rem;
-}
-
-.home-project-row:last-child { border-block-end: 1px solid var(--home-rule); }
-.home-project-row h3 { margin: 0; }
-
 .home-contact-links {
   display: flex;
   flex-wrap: wrap;
@@ -266,16 +241,9 @@
 @media (max-width: 49rem) {
   .home-hero-layout { grid-template-columns: 1fr; gap: 2rem; }
   .home-art { aspect-ratio: 3 / 2; }
-  .home-section-heading,
-  .home-project-row { grid-template-columns: 1fr; }
+  .home-section-heading { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 34rem) {
   .home-navigation nav { flex-basis: 100%; }
-  .home-notes { grid-template-columns: 1fr; }
-  .home-note + .home-note {
-    border-inline-start: 0;
-    border-block-start: 1px solid var(--home-rule);
-    padding-inline: 0;
-  }
 }
