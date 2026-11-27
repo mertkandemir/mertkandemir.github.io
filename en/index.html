@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mert Kandemir | Manufacturing Software and TROIA</title>
-<meta name="description" content="Mert Kandemir’s technical writing on Canias ERP, TROIA, and manufacturing processes.">
-<meta name="theme-color" content="#171410">
+<title>Mert Kandemir | Personal Website</title>
+<meta name="description" content="Personal website of Mert Kandemir, a software developer based in İzmir.">
+<meta name="theme-color" content="#f5f1e9">
 <link rel="canonical" href="https://mkandemir.com.tr/en/">
 <link rel="alternate" hreflang="tr" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/en/">
 <link rel="alternate" hreflang="x-default" href="https://mkandemir.com.tr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mert Kandemir">
-<meta property="og:title" content="Mert Kandemir | Manufacturing Software and TROIA">
-<meta property="og:description" content="Mert Kandemir’s technical writing on Canias ERP, TROIA, and manufacturing processes.">
+<meta property="og:title" content="Mert Kandemir | Personal Website">
+<meta property="og:description" content="Personal website of Mert Kandemir, a software developer based in İzmir.">
 <meta property="og:url" content="https://mkandemir.com.tr/en/">
 <meta property="og:image" content="https://mkandemir.com.tr/assets/og-home-en.jpg?v=9">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/assets/css/fonts.css?v=9">
 <link rel="stylesheet" href="/assets/css/site.css?v=9">
 <script>document.documentElement.classList.replace('no-js','js');</script>
-<link rel="stylesheet" href="/assets/css/home.css?v=3">
+<link rel="stylesheet" href="/assets/css/home.css?v=4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body class="home-page">
@@ -35,7 +35,6 @@
   <div class="home-wrap home-navigation">
     <a class="home-brand" href="/en/">Mert Kandemir</a>
     <nav aria-label="Main navigation">
-      <a href="#notlar">Technical Writing</a>
       <a href="#hakkimda">About</a>
       <a href="#iletisim">Contact</a>
       <a class="home-language" href="/" lang="tr" hreflang="tr">TR</a>
@@ -46,70 +45,29 @@
   <section class="home-hero" aria-labelledby="home-title">
     <div class="home-wrap home-hero-layout">
       <div class="home-hero-copy">
-        <p class="home-label">Canias ERP / TROIA</p>
-        <h1 id="home-title">Manufacturing software <em>and TROIA</em></h1>
-        <p class="home-intro">I work with production orders, bills of materials, and manufacturing costs. I write about the problems I encounter and how I approach them.</p>
-        <div class="home-actions">
-          <a class="home-button" href="#notlar">Read the technical notes</a>
-        </div>
+        <p class="home-label">İzmir, Türkiye</p>
+        <h1 id="home-title">Mert <em>Kandemir</em></h1>
+        <p class="home-role">Software developer</p>
       </div>
       <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
     </div>
   </section>
 
-  <section class="home-section home-wrap" id="notlar" aria-labelledby="notes-title">
-    <div class="home-section-heading">
-      <h2 id="notes-title">Technical Writing</h2>
-      <p>Two examples of problems that come up when developing manufacturing software with Canias ERP.</p>
-    </div>
-    <div class="home-notes">
-      <article class="home-note">
-        <p class="home-label">TROIA</p>
-        <h3>Calculating the month-end date</h3>
-        <p>Set the default date range from today to the last day of the current month.</p>
-        <details>
-          <summary>Open example</summary>
-          <p>Use today as the start date. To find the end date, take the first day of the next month and subtract one day. The same approach works in leap years and when moving from December to January.</p>
-          <p class="home-example">10 February 2028 → 29 February 2028</p>
-        </details>
-      </article>
-      <article class="home-note">
-        <p class="home-label">Manufacturing / ERP</p>
-        <h3>Comparing production orders and bills of materials</h3>
-        <p>Identify quantity differences and missing lines when comparing planned components with a bill of materials.</p>
-        <details>
-          <summary>Open example</summary>
-          <p>Match components by material and variant. Convert quantities to a common unit before comparing them. Record any component present on only one side as a separate result.</p>
-          <p class="home-example">Bill of materials 4 units · Production order 5 units → 1 unit difference</p>
-        </details>
-      </article>
-    </div>
-  </section>
+  <div class="home-wrap home-profile">
+    <section id="hakkimda" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <p>I develop software for manufacturing operations, with a focus on Canias ERP, process analysis, and application development in TROIA.</p>
+    </section>
 
-  <section id="hakkimda" class="home-about" aria-labelledby="about-title">
-    <div class="home-section home-wrap home-about-layout">
-      <div>
-        <h2 id="about-title">About</h2>
-        <p class="home-about-name">Mert Kandemir</p>
-      </div>
-      <div class="home-about-copy">
-        <p>I’m a software developer based in İzmir. I analyse manufacturing processes in Canias ERP and build screens and workflows with TROIA.</p>
-        <p>I use this site to explain how I approach a problem, which details affect the outcome, and what I look out for during implementation.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-wrap home-contact" id="iletisim" aria-labelledby="contact-title">
-    <div class="home-section-heading">
+    <section id="iletisim" aria-labelledby="contact-title">
       <h2 id="contact-title">Contact</h2>
-      <p>Get in touch if you’d like to discuss a note or share your perspective on an example.</p>
-    </div>
-    <ul class="home-contact-links">
-      <li><a class="home-link" href="#iletisim" data-mail="mertkandemir01|gmail.com">Email</a></li>
-      <li><a class="home-link" href="https://www.linkedin.com/in/mert-kandemir-8798bb8b">LinkedIn</a></li>
-      <li><a class="home-link" href="https://github.com/mertkandemir">GitHub</a></li>
-    </ul>
-  </section>
+      <ul class="home-contact-links">
+        <li><a href="#iletisim" data-mail="mertkandemir01|gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/mert-kandemir-8798bb8b">LinkedIn</a></li>
+        <li><a href="https://github.com/mertkandemir">GitHub</a></li>
+      </ul>
+    </section>
+  </div>
 </main>
 <footer><div class="wrap"><span>© 2026 Mert Kandemir · İzmir</span><span><a href="/" lang="tr">Türkçe</a></span></div></footer>
 <script src="/assets/js/site.js?v=9" defer></script>

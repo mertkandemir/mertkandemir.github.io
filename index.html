@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mert Kandemir | Üretim Yazılımları ve TROIA</title>
-<meta name="description" content="Mert Kandemir’in Canias ERP, TROIA ve üretim süreçleri üzerine kişisel teknik yazıları.">
-<meta name="theme-color" content="#171410">
+<title>Mert Kandemir | Kişisel Web Sitesi</title>
+<meta name="description" content="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.">
+<meta name="theme-color" content="#f5f1e9">
 <link rel="canonical" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="tr" href="https://mkandemir.com.tr/">
 <link rel="alternate" hreflang="en" href="https://mkandemir.com.tr/en/">
 <link rel="alternate" hreflang="x-default" href="https://mkandemir.com.tr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mert Kandemir">
-<meta property="og:title" content="Mert Kandemir | Üretim Yazılımları ve TROIA">
-<meta property="og:description" content="Mert Kandemir’in Canias ERP, TROIA ve üretim süreçleri üzerine kişisel teknik yazıları.">
+<meta property="og:title" content="Mert Kandemir | Kişisel Web Sitesi">
+<meta property="og:description" content="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.">
 <meta property="og:url" content="https://mkandemir.com.tr/">
 <meta property="og:image" content="https://mkandemir.com.tr/assets/og-home-tr.jpg?v=9">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/assets/css/fonts.css?v=9">
 <link rel="stylesheet" href="/assets/css/site.css?v=9">
 <script>document.documentElement.classList.replace('no-js','js');</script>
-<link rel="stylesheet" href="/assets/css/home.css?v=3">
+<link rel="stylesheet" href="/assets/css/home.css?v=4">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body class="home-page">
@@ -35,7 +35,6 @@
   <div class="home-wrap home-navigation">
     <a class="home-brand" href="/">Mert Kandemir</a>
     <nav aria-label="Ana menü">
-      <a href="#notlar">Teknik Yazılar</a>
       <a href="#hakkimda">Hakkımda</a>
       <a href="#iletisim">İletişim</a>
       <a class="home-language" href="/en/" lang="en" hreflang="en">EN</a>
@@ -46,70 +45,29 @@
   <section class="home-hero" aria-labelledby="home-title">
     <div class="home-wrap home-hero-layout">
       <div class="home-hero-copy">
-        <p class="home-label">Canias ERP / TROIA</p>
-        <h1 id="home-title">Üretim yazılımları <em>ve TROIA</em></h1>
-        <p class="home-intro">İş emirleri, ürün ağaçları ve üretim maliyetleri üzerine çalışıyorum. Bu sitede karşılaştığım problemleri ve çözüm yaklaşımlarımı paylaşıyorum.</p>
-        <div class="home-actions">
-          <a class="home-button" href="#notlar">Teknik yazıları oku</a>
-        </div>
+        <p class="home-label">İzmir, Türkiye</p>
+        <h1 id="home-title">Mert <em>Kandemir</em></h1>
+        <p class="home-role">Yazılım geliştirici</p>
       </div>
       <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
     </div>
   </section>
 
-  <section class="home-section home-wrap" id="notlar" aria-labelledby="notes-title">
-    <div class="home-section-heading">
-      <h2 id="notes-title">Teknik Yazılar</h2>
-      <p>Canias ERP ve üretim yazılımı geliştirirken karşılaşılan problemlerden iki örnek.</p>
-    </div>
-    <div class="home-notes">
-      <article class="home-note">
-        <p class="home-label">TROIA</p>
-        <h3>Ay sonu tarihini hesaplamak</h3>
-        <p>Varsayılan bir tarih aralığında başlangıcı bugüne, bitişi içinde bulunulan ayın son gününe ayarlamak.</p>
-        <details>
-          <summary>Örneği aç</summary>
-          <p>Başlangıç için bugünün tarihini kullan. Bitiş için bir sonraki ayın ilk gününü bul ve bir gün geri git. Aynı yöntem artık yıllarda ve Aralık’tan Ocak’a geçerken de çalışır.</p>
-          <p class="home-example">10 Şubat 2028 → 29 Şubat 2028</p>
-        </details>
-      </article>
-      <article class="home-note">
-        <p class="home-label">Üretim / ERP</p>
-        <h3>İş emri ve ürün ağacı karşılaştırması</h3>
-        <p>Planlanan bileşenlerle ürün ağacındaki bileşenleri karşılaştırırken miktar farklarını ve eksik satırları göstermek.</p>
-        <details>
-          <summary>Örneği aç</summary>
-          <p>Bileşenleri malzeme ve varyant bilgisine göre eşleştir. Miktarları ortak bir ölçü biriminde karşılaştır. Bir bileşen yalnızca bir tarafta varsa bunu ayrı bir sonuç olarak kaydet.</p>
-          <p class="home-example">Ürün ağacı 4 adet · İş emri 5 adet → 1 adet fark</p>
-        </details>
-      </article>
-    </div>
-  </section>
+  <div class="home-wrap home-profile">
+    <section id="hakkimda" aria-labelledby="about-title">
+      <h2 id="about-title">Hakkımda</h2>
+      <p>Üretim süreçleri için yazılım geliştiriyorum. Çalışmalarım Canias ERP, süreç analizi ve TROIA ile uygulama geliştirme üzerine yoğunlaşıyor.</p>
+    </section>
 
-  <section id="hakkimda" class="home-about" aria-labelledby="about-title">
-    <div class="home-section home-wrap home-about-layout">
-      <div>
-        <h2 id="about-title">Hakkımda</h2>
-        <p class="home-about-name">Mert Kandemir</p>
-      </div>
-      <div class="home-about-copy">
-        <p>İzmir’de yaşayan bir yazılım geliştiricisiyim. Canias ERP üzerinde üretim süreçlerini analiz ediyor, TROIA ile ekranlar ve iş akışları geliştiriyorum.</p>
-        <p>Bu sitede bir problemi nasıl ele aldığımı, hangi ayrıntıların sonucu değiştirdiğini ve uygulamada nelere dikkat ettiğimi yazıyorum.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-wrap home-contact" id="iletisim" aria-labelledby="contact-title">
-    <div class="home-section-heading">
+    <section id="iletisim" aria-labelledby="contact-title">
       <h2 id="contact-title">İletişim</h2>
-      <p>Buradaki yazılar üzerine konuşmak veya bir örnek hakkında görüş paylaşmak için bana ulaşabilirsin.</p>
-    </div>
-    <ul class="home-contact-links">
-      <li><a class="home-link" href="#iletisim" data-mail="mertkandemir01|gmail.com">E-posta</a></li>
-      <li><a class="home-link" href="https://www.linkedin.com/in/mert-kandemir-8798bb8b">LinkedIn</a></li>
-      <li><a class="home-link" href="https://github.com/mertkandemir">GitHub</a></li>
-    </ul>
-  </section>
+      <ul class="home-contact-links">
+        <li><a href="#iletisim" data-mail="mertkandemir01|gmail.com">E-posta</a></li>
+        <li><a href="https://www.linkedin.com/in/mert-kandemir-8798bb8b">LinkedIn</a></li>
+        <li><a href="https://github.com/mertkandemir">GitHub</a></li>
+      </ul>
+    </section>
+  </div>
 </main>
 <footer><div class="wrap"><span>© 2026 Mert Kandemir · İzmir</span><span><a href="/en/" lang="en">English</a></span></div></footer>
 <script src="/assets/js/site.js?v=9" defer></script>

@@ -76,76 +76,31 @@ PERSON = json.dumps({"@context": "https://schema.org", "@type": "Person", "name"
 def home(lang):
     if lang == "tr":
         t = dict(
-            title="Mert Kandemir | Üretim Yazılımları ve TROIA",
-            desc="Mert Kandemir’in Canias ERP, TROIA ve üretim süreçleri üzerine kişisel teknik yazıları.",
-            nav="Ana menü", skip="İçeriğe geç", notes="Teknik Yazılar", about="Hakkımda", contact="İletişim",
-            hero_title="Üretim yazılımları", hero_emphasis="ve TROIA",
-            specialty="Canias ERP / TROIA",
-            intro="İş emirleri, ürün ağaçları ve üretim maliyetleri üzerine çalışıyorum. Bu sitede karşılaştığım problemleri ve çözüm yaklaşımlarımı paylaşıyorum.",
-            explore_notes="Teknik yazıları oku",
-            notes_intro="Canias ERP ve üretim yazılımı geliştirirken karşılaşılan problemlerden iki örnek.",
-            open_note="Örneği aç",
-            about_intro="İzmir’de yaşayan bir yazılım geliştiricisiyim. Canias ERP üzerinde üretim süreçlerini analiz ediyor, TROIA ile ekranlar ve iş akışları geliştiriyorum.",
-            about_detail="Bu sitede bir problemi nasıl ele aldığımı, hangi ayrıntıların sonucu değiştirdiğini ve uygulamada nelere dikkat ettiğimi yazıyorum.",
-            contact_intro="Buradaki yazılar üzerine konuşmak veya bir örnek hakkında görüş paylaşmak için bana ulaşabilirsin.",
+            title="Mert Kandemir | Kişisel Web Sitesi",
+            desc="İzmir’de yaşayan yazılım geliştiricisi Mert Kandemir’in kişisel web sitesi.",
+            nav="Ana menü", skip="İçeriğe geç", about="Hakkımda", contact="İletişim",
+            location="İzmir, Türkiye", role="Yazılım geliştirici",
+            about_intro="Üretim süreçleri için yazılım geliştiriyorum. Çalışmalarım Canias ERP, süreç analizi ve TROIA ile uygulama geliştirme üzerine yoğunlaşıyor.",
             mail="E-posta", path="/", og="og-home-tr.jpg", alternate="/en/", alternate_lang="en", alternate_label="EN",
-        )
-        notes = (
-            ("TROIA", "Ay sonu tarihini hesaplamak",
-             "Varsayılan bir tarih aralığında başlangıcı bugüne, bitişi içinde bulunulan ayın son gününe ayarlamak.",
-             "Başlangıç için bugünün tarihini kullan. Bitiş için bir sonraki ayın ilk gününü bul ve bir gün geri git. Aynı yöntem artık yıllarda ve Aralık’tan Ocak’a geçerken de çalışır.",
-             "10 Şubat 2028 → 29 Şubat 2028"),
-            ("Üretim / ERP", "İş emri ve ürün ağacı karşılaştırması",
-             "Planlanan bileşenlerle ürün ağacındaki bileşenleri karşılaştırırken miktar farklarını ve eksik satırları göstermek.",
-             "Bileşenleri malzeme ve varyant bilgisine göre eşleştir. Miktarları ortak bir ölçü biriminde karşılaştır. Bir bileşen yalnızca bir tarafta varsa bunu ayrı bir sonuç olarak kaydet.",
-             "Ürün ağacı 4 adet · İş emri 5 adet → 1 adet fark"),
         )
     else:
         t = dict(
-            title="Mert Kandemir | Manufacturing Software and TROIA",
-            desc="Mert Kandemir’s technical writing on Canias ERP, TROIA, and manufacturing processes.",
-            nav="Main navigation", skip="Skip to content", notes="Technical Writing", about="About", contact="Contact",
-            hero_title="Manufacturing software", hero_emphasis="and TROIA",
-            specialty="Canias ERP / TROIA",
-            intro="I work with production orders, bills of materials, and manufacturing costs. I write about the problems I encounter and how I approach them.",
-            explore_notes="Read the technical notes",
-            notes_intro="Two examples of problems that come up when developing manufacturing software with Canias ERP.",
-            open_note="Open example",
-            about_intro="I’m a software developer based in İzmir. I analyse manufacturing processes in Canias ERP and build screens and workflows with TROIA.",
-            about_detail="I use this site to explain how I approach a problem, which details affect the outcome, and what I look out for during implementation.",
-            contact_intro="Get in touch if you’d like to discuss a note or share your perspective on an example.",
+            title="Mert Kandemir | Personal Website",
+            desc="Personal website of Mert Kandemir, a software developer based in İzmir.",
+            nav="Main navigation", skip="Skip to content", about="About", contact="Contact",
+            location="İzmir, Türkiye", role="Software developer",
+            about_intro="I develop software for manufacturing operations, with a focus on Canias ERP, process analysis, and application development in TROIA.",
             mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
         )
-        notes = (
-            ("TROIA", "Calculating the month-end date",
-             "Set the default date range from today to the last day of the current month.",
-             "Use today as the start date. To find the end date, take the first day of the next month and subtract one day. The same approach works in leap years and when moving from December to January.",
-             "10 February 2028 → 29 February 2028"),
-            ("Manufacturing / ERP", "Comparing production orders and bills of materials",
-             "Identify quantity differences and missing lines when comparing planned components with a bill of materials.",
-             "Match components by material and variant. Convert quantities to a common unit before comparing them. Record any component present on only one side as a separate result.",
-             "Bill of materials 4 units · Production order 5 units → 1 unit difference"),
-        )
-    articles = "\n".join(f'''      <article class="home-note">
-        <p class="home-label">{e(topic)}</p>
-        <h3>{e(title)}</h3>
-        <p>{e(intro)}</p>
-        <details>
-          <summary>{t["open_note"]}</summary>
-          <p>{e(detail)}</p>
-          <p class="home-example">{e(example)}</p>
-        </details>
-      </article>''' for topic, title, intro, detail, example in notes)
-    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=3">\n'
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=4">\n'
              f'<script type="application/ld+json">{PERSON}</script>\n')
 
     return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
-                 theme="#171410", body_class="home-page") + f'''<a class="skip" href="#main">{t["skip"]}</a>
+                 theme="#f5f1e9", body_class="home-page") + f'''<a class="skip" href="#main">{t["skip"]}</a>
 <header class="home-header">
   <div class="home-wrap home-navigation">
     <a class="home-brand" href="{t["path"]}">Mert Kandemir</a>
     <nav aria-label="{t["nav"]}">
-      <a href="#notlar">{t["notes"]}</a>
       <a href="#hakkimda">{t["about"]}</a>
       <a href="#iletisim">{t["contact"]}</a>
       <a class="home-language" href="{t["alternate"]}" lang="{t["alternate_lang"]}" hreflang="{t["alternate_lang"]}">{t["alternate_label"]}</a>
@@ -156,51 +111,29 @@ def home(lang):
   <section class="home-hero" aria-labelledby="home-title">
     <div class="home-wrap home-hero-layout">
       <div class="home-hero-copy">
-        <p class="home-label">{t["specialty"]}</p>
-        <h1 id="home-title">{t["hero_title"]} <em>{t["hero_emphasis"]}</em></h1>
-        <p class="home-intro">{t["intro"]}</p>
-        <div class="home-actions">
-          <a class="home-button" href="#notlar">{t["explore_notes"]}</a>
-        </div>
+        <p class="home-label">{t["location"]}</p>
+        <h1 id="home-title">Mert <em>Kandemir</em></h1>
+        <p class="home-role">{t["role"]}</p>
       </div>
       <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
     </div>
   </section>
 
-  <section class="home-section home-wrap" id="notlar" aria-labelledby="notes-title">
-    <div class="home-section-heading">
-      <h2 id="notes-title">{t["notes"]}</h2>
-      <p>{t["notes_intro"]}</p>
-    </div>
-    <div class="home-notes">
-{articles}
-    </div>
-  </section>
+  <div class="home-wrap home-profile">
+    <section id="hakkimda" aria-labelledby="about-title">
+      <h2 id="about-title">{t["about"]}</h2>
+      <p>{t["about_intro"]}</p>
+    </section>
 
-  <section id="hakkimda" class="home-about" aria-labelledby="about-title">
-    <div class="home-section home-wrap home-about-layout">
-      <div>
-        <h2 id="about-title">{t["about"]}</h2>
-        <p class="home-about-name">Mert Kandemir</p>
-      </div>
-      <div class="home-about-copy">
-        <p>{t["about_intro"]}</p>
-        <p>{t["about_detail"]}</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-wrap home-contact" id="iletisim" aria-labelledby="contact-title">
-    <div class="home-section-heading">
+    <section id="iletisim" aria-labelledby="contact-title">
       <h2 id="contact-title">{t["contact"]}</h2>
-      <p>{t["contact_intro"]}</p>
-    </div>
-    <ul class="home-contact-links">
-      <li><a class="home-link" href="#iletisim" data-mail="{MAIL}">{t["mail"]}</a></li>
-      <li><a class="home-link" href="{LINKEDIN}">LinkedIn</a></li>
-      <li><a class="home-link" href="{GITHUB}">GitHub</a></li>
-    </ul>
-  </section>
+      <ul class="home-contact-links">
+        <li><a href="#iletisim" data-mail="{MAIL}">{t["mail"]}</a></li>
+        <li><a href="{LINKEDIN}">LinkedIn</a></li>
+        <li><a href="{GITHUB}">GitHub</a></li>
+      </ul>
+    </section>
+  </div>
 </main>
 ''' + footer(lang))
 
