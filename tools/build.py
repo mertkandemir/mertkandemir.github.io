@@ -86,6 +86,15 @@ def home(lang):
             html_tab="HTML", css_tab="CSS", js_tab="JavaScript", output="Canlı çıktı",
             run="Çalıştır", reset="Sıfırla", shortcut="Ctrl / ⌘ + Enter",
             updated="Çıktı güncellendi.", reset_done="Başlangıç kodu geri yüklendi.",
+            lab_nav="Atölye modu", web_lab="Web Lab", troia_lab="TROIA Lab",
+            troia_intro="Gerçek üretim problemlerinin TROIA ile nasıl modellendiğini keşfet.",
+            scenarios="TROIA senaryoları", production_diff="Üretim farkı", month_end="Ay sonu tarihi",
+            material_cost="Malzeme maliyeti", scenario_code="Senaryo kodu",
+            simulation="ERP çıktı simülasyonu", simulation_note="Bu alan TROIA motoru değildir. Sonuçlar örnek ERP senaryosunu güvenli biçimde simüle eder.",
+            plan_qty="Planlanan miktar", actual_qty="Gerçekleşen miktar", start_date="Başlangıç tarihi",
+            main_cost="Ana malzeme maliyeti", reuse_cost="Geri kullanım maliyeti", extra_cost="Ek maliyet",
+            run_simulation="Simülasyonu çalıştır", status_label="Durum", difference_label="Fark",
+            total_label="Toplam", successful="Başarılı", troia_updated="ERP simülasyonu güncellendi.",
             no_script="Code Atelier’i kullanmak için JavaScript’i etkinleştir.",
             proof_one="Kurumsal sistemler", proof_two="Süreç tasarımı", proof_three="Dijital ürünler",
             about_intro="Üretim süreçleri için yazılım geliştiriyorum. Çalışmalarım Canias ERP, süreç analizi ve TROIA ile uygulama geliştirme üzerine yoğunlaşıyor.",
@@ -103,13 +112,22 @@ def home(lang):
             html_tab="HTML", css_tab="CSS", js_tab="JavaScript", output="Live output",
             run="Run", reset="Reset", shortcut="Ctrl / ⌘ + Enter",
             updated="Output updated.", reset_done="Starter code restored.",
+            lab_nav="Atelier mode", web_lab="Web Lab", troia_lab="TROIA Lab",
+            troia_intro="Explore how real manufacturing problems can be modeled with TROIA.",
+            scenarios="TROIA scenarios", production_diff="Production variance", month_end="Month-end date",
+            material_cost="Material cost", scenario_code="Scenario code",
+            simulation="ERP output simulation", simulation_note="This is not a TROIA runtime. The results safely simulate an example ERP scenario.",
+            plan_qty="Planned quantity", actual_qty="Actual quantity", start_date="Start date",
+            main_cost="Main material cost", reuse_cost="Reuse material cost", extra_cost="Additional cost",
+            run_simulation="Run simulation", status_label="Status", difference_label="Difference",
+            total_label="Total", successful="Successful", troia_updated="ERP simulation updated.",
             no_script="Enable JavaScript to use the Code Atelier.",
             proof_one="Enterprise systems", proof_two="Process design", proof_three="Digital products",
             about_intro="I develop software for manufacturing operations, with a focus on Canias ERP, process analysis, and application development in TROIA.",
             mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
         )
-    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=6">\n'
-             '<script src="/assets/js/code-atelier.js?v=1" defer></script>\n'
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=7">\n'
+             '<script src="/assets/js/code-atelier.js?v=2" defer></script>\n'
              f'<script type="application/ld+json">{PERSON}</script>\n')
 
     return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
@@ -146,8 +164,8 @@ def home(lang):
     </div>
   </section>
 
-  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier
-    data-updated="{e(t['updated'])}" data-reset-done="{e(t['reset_done'])}">
+  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier data-lang="{lang}"
+    data-updated="{e(t['updated'])}" data-reset-done="{e(t['reset_done'])}" data-troia-updated="{e(t['troia_updated'])}">
     <div class="home-wrap">
       <header class="atelier-intro">
         <p>{t["atelier_kicker"]}</p>
@@ -158,14 +176,20 @@ def home(lang):
         </div>
       </header>
 
+      <div class="lab-switch" role="tablist" aria-label="{t['lab_nav']}">
+        <button id="lab-web-tab" type="button" role="tab" aria-selected="true" data-lab-tab="web">{t["web_lab"]}</button>
+        <button id="lab-troia-tab" type="button" role="tab" aria-selected="false" data-lab-tab="troia" tabindex="-1">{t["troia_lab"]}</button>
+      </div>
+
+      <div id="lab-web-panel" role="tabpanel" aria-labelledby="lab-web-tab" data-lab-panel="web">
       <div class="atelier-window">
         <div class="atelier-bar" aria-hidden="true"><i></i><i></i><i></i><span>mkandemir.com.tr / atelier</span></div>
         <div class="atelier-grid">
           <div class="atelier-editor">
-            <div class="atelier-tabs" role="tablist" aria-label="Code editor">
-              <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="panel-html" data-language="html">{t["html_tab"]}</button>
-              <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="panel-css" data-language="css" tabindex="-1">{t["css_tab"]}</button>
-              <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="panel-js" data-language="js" tabindex="-1">{t["js_tab"]}</button>
+            <div class="atelier-tabs" role="tablist" aria-label="Code editor" data-code-tabs>
+              <button id="tab-html" type="button" role="tab" aria-selected="true" data-language="html">{t["html_tab"]}</button>
+              <button id="tab-css" type="button" role="tab" aria-selected="false" data-language="css" tabindex="-1">{t["css_tab"]}</button>
+              <button id="tab-js" type="button" role="tab" aria-selected="false" data-language="js" tabindex="-1">{t["js_tab"]}</button>
             </div>
             <div class="atelier-panel" id="panel-html" role="tabpanel" aria-labelledby="tab-html">
               <label class="sr-only" for="atelier-html">{t["html_tab"]}</label>
@@ -181,13 +205,53 @@ def home(lang):
             </div>
             <div class="atelier-actions">
               <button class="atelier-reset" type="button" data-reset>{t["reset"]}</button>
-              <button class="atelier-run" type="button" data-run>{t["run"]}<span aria-hidden="true">↗</span></button>
+              <button class="atelier-run" type="button" data-run>{t["run"]}</button>
             </div>
           </div>
           <div class="atelier-preview">
             <div class="atelier-preview-title"><span>{t["output"]}</span><i aria-hidden="true"></i></div>
             <iframe title="{t["output"]}" sandbox="allow-scripts" data-preview></iframe>
           </div>
+        </div>
+      </div>
+      </div>
+
+      <div id="lab-troia-panel" role="tabpanel" aria-labelledby="lab-troia-tab" data-lab-panel="troia" hidden>
+        <div class="troia-heading">
+          <p>{t["troia_intro"]}</p>
+          <span>CANIAS ERP / TROIA</span>
+        </div>
+        <div class="troia-scenarios" aria-label="{t['scenarios']}">
+          <button type="button" aria-pressed="true" data-scenario="production">{t["production_diff"]}</button>
+          <button type="button" aria-pressed="false" data-scenario="date">{t["month_end"]}</button>
+          <button type="button" aria-pressed="false" data-scenario="cost">{t["material_cost"]}</button>
+        </div>
+
+        <div class="troia-workspace">
+          <section class="troia-code" aria-labelledby="troia-code-title">
+            <div class="troia-pane-title"><h3 id="troia-code-title">{t["scenario_code"]}</h3><span>TROIA</span></div>
+            <pre tabindex="0"><code data-troia-code></code></pre>
+            <form class="troia-controls" data-troia-form>
+              <div data-field="first"><label for="troia-first" data-field-label>{t["plan_qty"]}</label><input id="troia-first" name="first" type="number" value="100" inputmode="decimal"></div>
+              <div data-field="second"><label for="troia-second" data-field-label>{t["actual_qty"]}</label><input id="troia-second" name="second" type="number" value="92" inputmode="decimal"></div>
+              <div data-field="third" hidden><label for="troia-third" data-field-label>{t["extra_cost"]}</label><input id="troia-third" name="third" type="number" value="0" inputmode="decimal"></div>
+              <button type="submit">{t["run_simulation"]}</button>
+            </form>
+          </section>
+
+          <section class="troia-output" aria-labelledby="troia-output-title">
+            <div class="troia-pane-title"><h3 id="troia-output-title">{t["simulation"]}</h3><span>SIMULATION</span></div>
+            <div class="erp-screen">
+              <div class="erp-screen-top"><span>ERP / OUTPUT</span><b data-erp-state>ONLINE</b></div>
+              <dl>
+                <div><dt data-output-label="first">{t["plan_qty"]}</dt><dd data-output-value="first">100</dd></div>
+                <div><dt data-output-label="second">{t["actual_qty"]}</dt><dd data-output-value="second">92</dd></div>
+                <div><dt data-output-label="result">{t["difference_label"]}</dt><dd class="erp-result" data-output-value="result">−8</dd></div>
+                <div><dt>{t["status_label"]}</dt><dd data-output-value="status">{t["successful"]}</dd></div>
+              </dl>
+            </div>
+            <p class="simulation-note">{t["simulation_note"]}</p>
+          </section>
         </div>
       </div>
       <p class="atelier-status" role="status" aria-live="polite" data-status></p>

@@ -26,8 +26,8 @@
 <link rel="stylesheet" href="/assets/css/fonts.css?v=9">
 <link rel="stylesheet" href="/assets/css/site.css?v=9">
 <script>document.documentElement.classList.replace('no-js','js');</script>
-<link rel="stylesheet" href="/assets/css/home.css?v=6">
-<script src="/assets/js/code-atelier.js?v=1" defer></script>
+<link rel="stylesheet" href="/assets/css/home.css?v=7">
+<script src="/assets/js/code-atelier.js?v=2" defer></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Mert Kandemir", "url": "https://mkandemir.com.tr/", "address": {"@type": "PostalAddress", "addressLocality": "İzmir", "addressCountry": "TR"}, "sameAs": ["https://github.com/mertkandemir", "https://www.linkedin.com/in/mert-kandemir-8798bb8b"]}</script>
 </head>
 <body class="home-page">
@@ -64,8 +64,8 @@
     </div>
   </section>
 
-  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier
-    data-updated="Output updated." data-reset-done="Starter code restored.">
+  <section class="atelier-section" id="atelier" aria-labelledby="atelier-title" data-code-atelier data-lang="en"
+    data-updated="Output updated." data-reset-done="Starter code restored." data-troia-updated="ERP simulation updated.">
     <div class="home-wrap">
       <header class="atelier-intro">
         <p>Interactive experience · 01</p>
@@ -76,14 +76,20 @@
         </div>
       </header>
 
+      <div class="lab-switch" role="tablist" aria-label="Atelier mode">
+        <button id="lab-web-tab" type="button" role="tab" aria-selected="true" data-lab-tab="web">Web Lab</button>
+        <button id="lab-troia-tab" type="button" role="tab" aria-selected="false" data-lab-tab="troia" tabindex="-1">TROIA Lab</button>
+      </div>
+
+      <div id="lab-web-panel" role="tabpanel" aria-labelledby="lab-web-tab" data-lab-panel="web">
       <div class="atelier-window">
         <div class="atelier-bar" aria-hidden="true"><i></i><i></i><i></i><span>mkandemir.com.tr / atelier</span></div>
         <div class="atelier-grid">
           <div class="atelier-editor">
-            <div class="atelier-tabs" role="tablist" aria-label="Code editor">
-              <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="panel-html" data-language="html">HTML</button>
-              <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="panel-css" data-language="css" tabindex="-1">CSS</button>
-              <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="panel-js" data-language="js" tabindex="-1">JavaScript</button>
+            <div class="atelier-tabs" role="tablist" aria-label="Code editor" data-code-tabs>
+              <button id="tab-html" type="button" role="tab" aria-selected="true" data-language="html">HTML</button>
+              <button id="tab-css" type="button" role="tab" aria-selected="false" data-language="css" tabindex="-1">CSS</button>
+              <button id="tab-js" type="button" role="tab" aria-selected="false" data-language="js" tabindex="-1">JavaScript</button>
             </div>
             <div class="atelier-panel" id="panel-html" role="tabpanel" aria-labelledby="tab-html">
               <label class="sr-only" for="atelier-html">HTML</label>
@@ -99,13 +105,53 @@
             </div>
             <div class="atelier-actions">
               <button class="atelier-reset" type="button" data-reset>Reset</button>
-              <button class="atelier-run" type="button" data-run>Run<span aria-hidden="true">↗</span></button>
+              <button class="atelier-run" type="button" data-run>Run</button>
             </div>
           </div>
           <div class="atelier-preview">
             <div class="atelier-preview-title"><span>Live output</span><i aria-hidden="true"></i></div>
             <iframe title="Live output" sandbox="allow-scripts" data-preview></iframe>
           </div>
+        </div>
+      </div>
+      </div>
+
+      <div id="lab-troia-panel" role="tabpanel" aria-labelledby="lab-troia-tab" data-lab-panel="troia" hidden>
+        <div class="troia-heading">
+          <p>Explore how real manufacturing problems can be modeled with TROIA.</p>
+          <span>CANIAS ERP / TROIA</span>
+        </div>
+        <div class="troia-scenarios" aria-label="TROIA scenarios">
+          <button type="button" aria-pressed="true" data-scenario="production">Production variance</button>
+          <button type="button" aria-pressed="false" data-scenario="date">Month-end date</button>
+          <button type="button" aria-pressed="false" data-scenario="cost">Material cost</button>
+        </div>
+
+        <div class="troia-workspace">
+          <section class="troia-code" aria-labelledby="troia-code-title">
+            <div class="troia-pane-title"><h3 id="troia-code-title">Scenario code</h3><span>TROIA</span></div>
+            <pre tabindex="0"><code data-troia-code></code></pre>
+            <form class="troia-controls" data-troia-form>
+              <div data-field="first"><label for="troia-first" data-field-label>Planned quantity</label><input id="troia-first" name="first" type="number" value="100" inputmode="decimal"></div>
+              <div data-field="second"><label for="troia-second" data-field-label>Actual quantity</label><input id="troia-second" name="second" type="number" value="92" inputmode="decimal"></div>
+              <div data-field="third" hidden><label for="troia-third" data-field-label>Additional cost</label><input id="troia-third" name="third" type="number" value="0" inputmode="decimal"></div>
+              <button type="submit">Run simulation</button>
+            </form>
+          </section>
+
+          <section class="troia-output" aria-labelledby="troia-output-title">
+            <div class="troia-pane-title"><h3 id="troia-output-title">ERP output simulation</h3><span>SIMULATION</span></div>
+            <div class="erp-screen">
+              <div class="erp-screen-top"><span>ERP / OUTPUT</span><b data-erp-state>ONLINE</b></div>
+              <dl>
+                <div><dt data-output-label="first">Planned quantity</dt><dd data-output-value="first">100</dd></div>
+                <div><dt data-output-label="second">Actual quantity</dt><dd data-output-value="second">92</dd></div>
+                <div><dt data-output-label="result">Difference</dt><dd class="erp-result" data-output-value="result">−8</dd></div>
+                <div><dt>Status</dt><dd data-output-value="status">Successful</dd></div>
+              </dl>
+            </div>
+            <p class="simulation-note">This is not a TROIA runtime. The results safely simulate an example ERP scenario.</p>
+          </section>
         </div>
       </div>
       <p class="atelier-status" role="status" aria-live="polite" data-status></p>
