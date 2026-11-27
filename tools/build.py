@@ -129,12 +129,13 @@ def slug(s):
 e = html.escape
 
 # --------------------------------------------------------------------------
-def head(lang, title, desc, path, og, alt=None, extra=""):
+def head(lang, title, desc, path, og, alt=None, extra="", theme="#f3efe6", body_class=""):
     alts = ""
     if alt:
         alts = (f'<link rel="alternate" hreflang="tr" href="{SITE}/">\n'
                 f'<link rel="alternate" hreflang="en" href="{SITE}/en/">\n'
                 f'<link rel="alternate" hreflang="x-default" href="{SITE}/">\n')
+    body_class = f' class="{body_class}"' if body_class else ""
     return f'''<!DOCTYPE html>
 <html lang="{lang}" class="no-js">
 <head>
@@ -142,7 +143,7 @@ def head(lang, title, desc, path, og, alt=None, extra=""):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<meta name="theme-color" content="#f3efe6">
+<meta name="theme-color" content="{theme}">
 <link rel="canonical" href="{SITE}{path}">
 {alts}<meta property="og:type" content="website">
 <meta property="og:site_name" content="Mert Kandemir">
@@ -161,7 +162,7 @@ def head(lang, title, desc, path, og, alt=None, extra=""):
 <link rel="stylesheet" href="/assets/css/site.css?v={V}">
 <script>document.documentElement.classList.replace('no-js','js');</script>
 {extra}</head>
-<body>
+<body{body_class}>
 '''
 
 def topbar(lang, current):
@@ -190,35 +191,137 @@ PERSON = json.dumps({"@context": "https://schema.org", "@type": "Person", "name"
 
 def home(lang):
     if lang == "tr":
-        t = dict(title="Mert Kandemir", desc="İzmir'de yaşayan bir yazılımcı. Üretim yazılımları, atölyede PLC ve sensörler, hafta sonları deniz ve kort.",
-                 hello="Merhaba · İzmir",
-                 intro="İzmir'de yaşayan bir yazılımcıyım. Günlerim <strong>üretim yazılımlarıyla</strong>, akşamlarım atölyede PLC ve sensörlerle, hafta sonlarım çoğu zaman <strong>denizde ya da kortta</strong> geçiyor.",
-                 links=[("/sozluk/", "Üretim Sözlüğü", "Ücretsiz kaynak →", True), (LINKEDIN, "LinkedIn", "↗", False), (GITHUB, "GitHub", "↗", False)],
-                 mail="E-posta", clock="İzmir'de saat şu an", path="/", og="og-home-tr.jpg")
+        t = dict(
+            title="Mert Kandemir | Yazılım ve Üretim",
+            desc="Mert Kandemir’in kişisel sitesi. Canias ERP ve TROIA notları, üretim sözlüğü ve mobil uygulamalar.",
+            nav="Ana menü", skip="İçeriğe geç", notes="Teknik Notlar", projects="Projeler", contact="İletişim",
+            location="İzmir, Türkiye", specialty="Üretim yazılımları ve mobil uygulamalar",
+            intro="Canias ERP ve TROIA ile üretim süreçleri için yazılım geliştiriyorum. Burada teknik notlarımı ve kendi mobil projelerimi paylaşıyorum.",
+            explore_notes="Teknik notları keşfet", explore_projects="Projeleri gör",
+            notes_intro="Üretim süreçleri, ERP ve TROIA üzerine pratik örnekler ve başvuru kaynakları.",
+            glossary="Üretim Sözlüğü",
+            glossary_intro="İş emri, ürün ağacı, rota, MRP ve diğer üretim terimleri. Türkçe açıklamalar ve İngilizce karşılıklar.",
+            glossary_link="Sözlüğü aç", troia="TROIA’da ay sonu hesabı",
+            troia_intro="Varsayılan tarih aralığı oluştururken başlangıç ve bitiş tarihini nasıl belirleriz?",
+            troia_link="Örneği oku",
+            troia_detail="Başlangıca bugünün tarihini al. Bitiş için bir sonraki ayın ilk gününü bul ve bir gün geri git. Böylece Şubat, artık yıl ve Aralık gibi durumlar için ayın gün sayısını ayrıca hesaplamak gerekmez.",
+            troia_example="Örnek: 10 Şubat 2028 → 29 Şubat 2028",
+            projects_intro="Kendi geliştirdiğim mobil uygulamalardan bir seçki.",
+            vibe="Kişilik testleri ile arkadaşların ve çiftlerin yanıtlarını karşılaştırabildiği eşleşme testleri.",
+            vibe_link="VibeCheck’i incele",
+            moto="Motosiklet sürücüleri için yol uyarıları, rota paylaşımı ve kulüp deneyimleri üzerine geliştirdiğim uygulama.",
+            contact_intro="Teknik notlar ve projeler üzerine konuşmak için bana ulaşabilirsin.",
+            mail="E-posta", path="/", og="og-home-tr.jpg", alternate="/en/", alternate_lang="en", alternate_label="EN",
+        )
     else:
-        t = dict(title="Mert Kandemir", desc="A software developer in İzmir. Manufacturing software, PLCs and sensors in the workshop, and weekends on the water or the court.",
-                 hello="Hello · İzmir",
-                 intro="I'm a software developer living in İzmir. My days go into <strong>manufacturing software</strong>, my evenings into PLCs and sensors in the workshop, and my weekends usually <strong>on the water or the court</strong>.",
-                 links=[("/sozluk/", "Manufacturing glossary", "Free · in Turkish →", True), (LINKEDIN, "LinkedIn", "↗", False), (GITHUB, "GitHub", "↗", False)],
-                 mail="E-mail", clock="Local time in İzmir", path="/en/", og="og-home-en.jpg")
-    items = "".join(
-        f'<li><a{" class=\"feature\"" if f else ""} href="{h}"{" target=\"_blank\" rel=\"noopener\"" if h.startswith("http") else ""}>{n}<span>{s}</span></a></li>'
-        for h, n, s, f in t["links"])
-    items += f'<li><a href="#" data-mail="{MAIL}"><span data-mail-text style="font:inherit;letter-spacing:inherit;color:inherit">{t["mail"]}</span><span>@</span></a></li>'
-    return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True,
-                 extra=f'<script type="application/ld+json">{PERSON}</script>\n')
-            + topbar(lang, "home") + f'''<main id="main" class="home">
-  <div class="wrap">
-    <div>
-      <div class="hello rise"><i aria-hidden="true"></i>{t["hello"]}</div>
-      <h1 class="rise d1">Mert<br><em>Kandemir.</em></h1>
-      <p class="intro rise d2">{t["intro"]}</p>
-    </div>
-    <div class="rise d3">
-      <ul class="links">{items}</ul>
-      <p class="clock mono">{t["clock"]} <span data-clock>—</span></p>
-    </div>
+        t = dict(
+            title="Mert Kandemir | Software and Manufacturing",
+            desc="Mert Kandemir’s personal site. Canias ERP and TROIA notes, a manufacturing glossary, and mobile apps.",
+            nav="Main navigation", skip="Skip to content", notes="Technical Notes", projects="Projects", contact="Contact",
+            location="İzmir, Türkiye", specialty="Manufacturing software and mobile apps",
+            intro="I develop software for manufacturing processes with Canias ERP and TROIA. I share technical notes and my own mobile projects here.",
+            explore_notes="Explore technical notes", explore_projects="View projects",
+            notes_intro="Practical examples and reference material on manufacturing, ERP, and TROIA.",
+            glossary="Manufacturing Glossary",
+            glossary_intro="Work orders, bills of materials, routing, MRP, and other manufacturing terms, with Turkish definitions and English equivalents.",
+            glossary_link="Open Turkish glossary", troia="Month-end dates in TROIA",
+            troia_intro="How do you set the start and end dates for a default date range?",
+            troia_link="Read the example",
+            troia_detail="Use today as the start date. For the end date, find the first day of the following month and subtract one day. This handles February, leap years, and December without calculating each month’s length separately.",
+            troia_example="Example: 10 February 2028 → 29 February 2028",
+            projects_intro="A selection of the mobile apps I’ve built.",
+            vibe="Personality quizzes and matching tests that let friends and couples compare their answers.",
+            vibe_link="Explore VibeCheck",
+            moto="An app I’m developing for motorcyclists, focused on road alerts, route sharing, and club features.",
+            contact_intro="Get in touch to discuss any of the technical notes or projects.",
+            mail="Email", path="/en/", og="og-home-en.jpg", alternate="/", alternate_lang="tr", alternate_label="TR",
+        )
+    extra = (f'<link rel="stylesheet" href="/assets/css/home.css?v=1">\n'
+             f'<script type="application/ld+json">{PERSON}</script>\n')
+
+    return (head(lang, t["title"], t["desc"], t["path"], t["og"], alt=True, extra=extra,
+                 theme="#171410", body_class="home-page") + f'''<a class="skip" href="#main">{t["skip"]}</a>
+<header class="home-header">
+  <div class="home-wrap home-navigation">
+    <a class="home-brand" href="{t["path"]}">Mert Kandemir</a>
+    <nav aria-label="{t["nav"]}">
+      <a href="#notlar">{t["notes"]}</a>
+      <a href="#projeler">{t["projects"]}</a>
+      <a href="#iletisim">{t["contact"]}</a>
+      <a class="home-language" href="{t["alternate"]}" lang="{t["alternate_lang"]}" hreflang="{t["alternate_lang"]}">{t["alternate_label"]}</a>
+    </nav>
   </div>
+</header>
+<main id="main">
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="home-wrap home-hero-layout">
+      <div class="home-hero-copy">
+        <p class="home-label">{t["location"]}</p>
+        <h1 id="home-title">Mert <em>Kandemir</em></h1>
+        <p class="home-specialty">{t["specialty"]}</p>
+        <p class="home-intro">{t["intro"]}</p>
+        <div class="home-actions">
+          <a class="home-button" href="#notlar">{t["explore_notes"]}</a>
+          <a class="home-link" href="#projeler">{t["explore_projects"]}</a>
+        </div>
+      </div>
+      <img class="home-art" src="/assets/bronze-study.webp" width="1200" height="800" fetchpriority="high" alt="">
+    </div>
+  </section>
+
+  <section class="home-section home-wrap" id="notlar" aria-labelledby="notes-title">
+    <div class="home-section-heading">
+      <h2 id="notes-title">{t["notes"]}</h2>
+      <p>{t["notes_intro"]}</p>
+    </div>
+    <div class="home-notes">
+      <article class="home-note">
+        <p class="home-label">ERP</p>
+        <h3>{t["glossary"]}</h3>
+        <p>{t["glossary_intro"]}</p>
+        <a class="home-link" href="/sozluk/" hreflang="tr">{t["glossary_link"]}</a>
+      </article>
+      <article class="home-note">
+        <p class="home-label">Canias ERP / TROIA</p>
+        <h3>{t["troia"]}</h3>
+        <p>{t["troia_intro"]}</p>
+        <details>
+          <summary>{t["troia_link"]}</summary>
+          <p>{t["troia_detail"]}</p>
+          <p class="home-example">{t["troia_example"]}</p>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section class="home-projects" id="projeler" aria-labelledby="projects-title">
+    <div class="home-section home-wrap">
+      <div class="home-section-heading">
+        <h2 id="projects-title">{t["projects"]}</h2>
+        <p>{t["projects_intro"]}</p>
+      </div>
+      <div class="home-project-row">
+        <h3>VibeCheck</h3>
+        <div><p>{t["vibe"]}</p><a class="home-link" href="/vibecheck/">{t["vibe_link"]}</a></div>
+      </div>
+      <div class="home-project-row">
+        <h3>MotoHane</h3>
+        <p>{t["moto"]}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-wrap home-contact" id="iletisim" aria-labelledby="contact-title">
+    <div class="home-section-heading">
+      <h2 id="contact-title">{t["contact"]}</h2>
+      <p>{t["contact_intro"]}</p>
+    </div>
+    <ul class="home-contact-links">
+      <li><a class="home-link" href="#iletisim" data-mail="{MAIL}">{t["mail"]}</a></li>
+      <li><a class="home-link" href="{LINKEDIN}">LinkedIn</a></li>
+      <li><a class="home-link" href="{GITHUB}">GitHub</a></li>
+    </ul>
+  </section>
 </main>
 ''' + footer(lang))
 
